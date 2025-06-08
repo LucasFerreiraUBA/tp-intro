@@ -1,0 +1,162 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
+/* Ajusto el header, el main y el footer de modo que quede
+el header pegado arriba de todo, el footer abajo de todo y el
+main en el centro.*/
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+/*Ordena el header, el main y el footer de modo que quede todo
+bien distribuido.*/
+.envoltorio-pagina {
+    display: grid;
+    min-height: 100dvh; /*asegura que el contenedor ocupe al menos el 100% de la altura de la ventana*/
+    grid-template-rows: 
+        auto 1fr auto; /* auto --> adapta el tamaño del encabezado
+                          1fr --> ocupa el espacio restante entre el header y el footer 
+                          auto --> para que el footer se quede siempre al final de la página*/
+}
+
+header {
+    background: #0e0e0e; /* Cambiar fondo del header */
+    display: flex; /*Ordenando y alineando los elementos dentro del header*/
+    align-items: center; 
+    justify-content: space-between; 
+    border-bottom: 1px solid #98fd92; /* Borde verde brillante abajo del header */
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 0;
+}
+
+/* Estilo y moviendo la posición del texto Atlas+ en el header*/
+.txt-atlas {
+    font-family: 'Montserrat', sans-serif;
+    background: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-background-clip: text; /* Para que se vean nada mas las siluetas del texto, esto para aplicar el gradiente en el hover */
+    -webkit-text-fill-color: transparent; /* El color normal del texto es invisible */
+    background-clip: text; /* Para que se vean nada mas las siluetas del texto, esto para aplicar el gradiente en el hover */
+    color: #FFFFFF;
+    font-size: 32px;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.txt-atlas:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%); 
+}
+
+/*Container del contenido del header, excluye el h1 */
+.container-contenido-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 40px;
+}
+
+
+/* Clases de los anchor tags */
+.txt-home, .txt-dashboard {
+    font-family: 'Montserrat', sans-serif;
+    color:#ffffff;
+    text-decoration: none;
+    margin: auto;
+    padding-right: 40px;
+    cursor: pointer;
+    font-size: 20px;
+    color: #fff;
+    text-shadow: 0 0 5px #000000, 0 0 10px #000000, 0 0 20px #000000, 0 0 40px #98FD92, 0 0 80px #98FD92;
+    animation: glow 1.5s infinite alternate;
+}
+@keyframes glow { /* Keyframes sirve para controlar los pasos intermedios de una secuencia de animación en un elemento */
+    0% {
+        text-shadow: 0 0 5px #000000, 0 0 10px #000000, 0 0 20px #98FD92, 0 0 40px #98FD92, 0 0 80px #98FD92;
+    }
+    100% {
+        text-shadow: 0 0 10px #98FD92, 0 0 20px #98FD92, 0 0 40px #98FD92, 0 0 80px #98FD92, 0 0 160px #98FD92;
+    }
+}
+
+.txt-home:hover, .txt-dashboard:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.btn-rutinas {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #00ff55;
+    color: rgb(0, 0, 0);
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: rgb(0, 255, 0) 0.3s ease;
+}
+
+.btn-rutinas:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+}
+
+
+/*==================== ACA IRIA EL MAIN =======================*/
+
+
+
+
+
+/*==================== ACA IRIA EL MAIN =======================*/
+
+
+
+
+
+/*============== ACA IRIA EL FOOTER =============================*/
+
+footer {
+    background: #0e0e0e; /* Cambiar fondo del header */
+    display: flex; /*Ordenando y alineando los elementos dentro del footer*/
+    align-items: center; 
+    justify-content: space-between; 
+    border-top: 1px solid #98fd92; /* Borde verde brillante arriba del footer */
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 0;
+}
+
+.container-contenido-footer {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin: 0;
+    padding-left: 10px;
+    font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #e8fde6;
+}
+
+.equipo-facultad {
+    margin: 0;
+    padding: 0;
+    display: flexbox;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: start;
+    list-style-type: none;
+}
+
+
+
