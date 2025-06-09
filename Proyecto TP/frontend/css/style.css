@@ -108,17 +108,47 @@ header {
 .btn-rutinas:hover {
     background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
 }
-
-
 /*==================== ACA IRIA EL MAIN =======================*/
+.icon-container{
+    display: flex;
+    justify-content: space-evenly;
+}
+.icon-content{
+    width: 20%;
 
+    display: flex;
+    flex-direction: column;     
+    justify-content: center;    
+    align-items: center;         
+    text-align: center;
 
+    margin-top: 20px;
+}
+.icon-circle{
+    width: 100px;
+    height: 100px;
+    background-color: #00ff55;
 
+    box-shadow: 0 0 30px rgba(0, 255, 85, 0.6);
+    transition: transform 0.5s ease;
 
+    border-radius: 100%;
 
-/*==================== ACA IRIA EL MAIN =======================*/
-
-
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.fa-solid{
+    font-size: 40px;
+}
+.icon-circle:hover {
+  transform: scale(1.08);
+}
+.icon-content p{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    width: 70%;
+}
 
 
 
