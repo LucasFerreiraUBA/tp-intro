@@ -174,10 +174,6 @@ main {
     width: 70%;
 }
 
-.fa-solid{
-    font-size: 40px;
-}
-
 .container-info-button:hover {
     transform: scale(1.08);
     cursor: pointer;
