@@ -112,52 +112,49 @@ header {
 main {
     background-color: #000000;
 }
-.d-block {
-    
-    height:800px;
-}
 
-.icon-container{
+.section-container{
     display: flex;
     justify-content: center;
     flex-direction: column;
     align-items: center;
 }
-.icon-content{
+
+.div-container{
     width: 70%;
     height: 300px;
+    margin: 30px;
+
     display: flex;     
     justify-content: center;    
     align-items: center;         
-    text-align: center;
-
-    margin: 30px;
-    
+    text-align: center;    
 }
-.icon-circle{
+
+.container-info-button{
     width:40%;
     height:70px;
     background-color: #00ff55;
 
-    box-shadow: 0 0 30px rgba(0, 255, 85, 0.6);
-    transition: transform 0.5s ease;
-    
     display:flex;
     align-items: center;
     justify-content: center;
+
+    box-shadow: 0 0 30px rgba(0, 255, 85, 0.6);
+    transition: transform 0.5s ease;
 }
 
-.imagen-rutina img {
+.container-img img {
     width: 100%;
     height: 100%;
-
 }
 
-.imagen-rutina {
+.container-img {
     width: 50%;
     height:100%
     
 }
+
 .container-info {
     width: 50%;
     height: 100%;
@@ -167,28 +164,29 @@ main {
     justify-content: center;
 }
 
-.parrafo-rutina {
+.text-rutina {
     font-weight: bold;
     text-align:center;
-    
 }
-.diseño-rutina {
-    color:white
+
+.container-info-text {
+    color:white;
+    width: 70%;
 }
+
 .fa-solid{
     font-size: 40px;
 }
-.icon-circle:hover {
-  transform: scale(1.08);
+
+.container-info-button:hover {
+    transform: scale(1.08);
+    cursor: pointer;
 }
-.icon-content p{
+
+.div-container p{
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
-    width: 70%;
-    
 }
-
-
 
 /*============== ACA IRIA EL FOOTER =============================*/
 
