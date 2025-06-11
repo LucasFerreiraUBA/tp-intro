@@ -46,6 +46,7 @@ header {
     font-size: 32px;
     padding-left: 30px;
     cursor: pointer;
+    font-weight: 700;
 }
 
 .txt-atlas:hover {
@@ -184,6 +185,66 @@ main {
     font-size: 18px;
 }
 
+/*============== ACA IRIA EL QUIENES SOMOS =============================*/
+.quienes_somos-img{
+    height: 900px;
+    width: 100%;
+    opacity: 0.7;
+}
+.quienes_somos-seccion{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.quienes_somos-infoBox{
+    margin-top: 50px;
+
+    width: 70%;
+    height: 500px;
+    
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+.quienes_somos-h1{
+    color: white;
+    font-size: 50px;
+    font-family: 'Montserrat', sans-serif;
+}
+.quienes_somos-infoBox p{
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    width: 65%;
+    line-height: 25px;
+}
+
+.quienes_somos-second-box{
+    width: 100%;
+    height: 700px;
+    margin-top: 60px;
+    margin-bottom: 100px;
+
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+
+}
+#quienes_somos-second-contenedor{
+    width: 100%;
+    height: 65%;
+
+    display: flex;
+    justify-content: space-evenly;
+}
+.box{
+    width: 15%;
+    height: 100%;
+    background-color: #dce3ea;
+
+}
 /*============== ACA IRIA EL FOOTER =============================*/
 
 footer {
