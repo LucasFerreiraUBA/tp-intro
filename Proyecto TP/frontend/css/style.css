@@ -38,7 +38,7 @@ header {
     background: #ffffff;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items:center;
     -webkit-background-clip: text; /* Para que se vean nada mas las siluetas del texto, esto para aplicar el gradiente en el hover */
     -webkit-text-fill-color: transparent; /* El color normal del texto es invisible */
     background-clip: text; /* Para que se vean nada mas las siluetas del texto, esto para aplicar el gradiente en el hover */
@@ -166,7 +166,7 @@ main {
 
 .text-rutina {
     font-weight: bold;
-    text-align:center;
+    text-align: center;
 }
 
 .container-info-text {
