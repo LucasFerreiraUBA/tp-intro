@@ -47,6 +47,7 @@ header {
     padding-left: 30px;
     cursor: pointer;
     font-weight: 700;
+    text-decoration: none;
 }
 
 .txt-atlas:hover {
@@ -54,6 +55,7 @@ header {
 }
 
 /*Container del contenido del header, excluye el h1 */
+
 .container-contenido-header {
     display: flex;
     justify-content: center;
@@ -112,6 +114,10 @@ header {
 /*==================== ACA IRIA EL MAIN =======================*/
 main {
     background-color: #000000;
+}
+
+.imagen-carrusel {
+    width: 100%;
 }
 
 .section-container{
