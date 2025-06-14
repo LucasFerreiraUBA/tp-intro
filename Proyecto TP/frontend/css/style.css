@@ -175,13 +175,10 @@ header {
     justify-content: center;
 }
 
-
 .text-rutina {
     font-weight: bold;
     text-align: center;
 }
-
-
 
 .container-info-text {
     color:white;
@@ -274,8 +271,34 @@ header {
 .box{
     width: 15%;
     height: 100%;
-    background-color: #dce3ea;
+    background-color: #1a1a1a;
+    padding: 20px;
+    margin: 15px;
+    border-radius: 12px;
+    color: white;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s ease;
 
+}
+
+.box:hover {
+    transform: scale(1.05);
+}
+
+.box h3 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+    color: white; 
+}
+
+.box p {
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.icono {
+    font-size: 60px;
 }
 /*============== ACA IRIA EL FOOTER =============================*/
 
@@ -289,6 +312,10 @@ footer {
     width: 100%;
     min-height: 80px;
     padding: 10px 0;
+}
+
+.copyrightTeam {
+    font-size: 15px;
 }
 
 .container-contenido-footer {
