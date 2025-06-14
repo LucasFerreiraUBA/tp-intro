@@ -4,6 +4,11 @@
 /* Ajusto el header, el main y el footer de modo que quede
 el header pegado arriba de todo, el footer abajo de todo y el
 main en el centro.*/
+
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     margin: 0;
     padding: 0;
@@ -95,6 +100,9 @@ header {
 
 .btn-rutinas {
     font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    line-height: 2px;
+    height:45px;
     background-color: #00ff55;
     color: rgb(0, 0, 0);
     padding: 15px 20px;
@@ -216,9 +224,11 @@ header {
 
 /*============== ACA IRIA EL QUIENES SOMOS =============================*/
 .quienes_somos-img{
-    height: 900px;
+    height: 800px;
     width: 100%;
     opacity: 0.7;
+    object-fit: cover;
+    
 }
 .quienes_somos-seccion{
     display: flex;
@@ -277,7 +287,7 @@ header {
     border-radius: 12px;
     color: white;
     text-align: center;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 10px rgb(236, 235, 235);
     transition: transform 0.3s ease;
 
 }
@@ -295,11 +305,15 @@ header {
 .box p {
     font-size: 1em;
     line-height: 1.5;
+    padding-inline: 1.75rem;
 }
 
-.icono {
-    font-size: 60px;
+.box i {
+    font-size: 70px;
+    margin-top: 45px;
 }
+
+
 /*============== ACA IRIA EL FOOTER =============================*/
 
 footer {
