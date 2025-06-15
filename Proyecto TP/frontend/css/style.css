@@ -27,26 +27,26 @@ bien distribuido.*/
 }
 
 header {
-    background:#0e0e0e ; /* Cambiar fondo del header */
-    display: flex; /*Ordenando y alineando los elementos dentro del header*/
-    align-items: center; 
-    justify-content: space-between; 
-    border-bottom: 1px solid #98fd92; /* Borde verde brillante abajo del header */
+    background: #0e0e0e;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #98fd92;
     width: 100%;
     min-height: 80px;
     padding: 10px 0;
 }
 
-/* Estilo y moviendo la posición del texto Atlas+ en el header*/
+/* Logo Atlas+ */
 .txt-atlas {
     font-family: 'Montserrat', sans-serif;
     background: #ffffff;
     display: flex;
     justify-content: center;
-    align-items:center;
-    -webkit-background-clip: text; /* Para que se vean nada mas las siluetas del texto, esto para aplicar el gradiente en el hover */
-    -webkit-text-fill-color: transparent; /* El color normal del texto es invisible */
-    background-clip: text; /* Para que se vean nada mas las siluetas del texto, esto para aplicar el gradiente en el hover */
+    align-items: center;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     color: #FFFFFF;
     font-size: 2rem;
     padding-left: 30px;
@@ -56,32 +56,41 @@ header {
 }
 
 .txt-atlas:hover {
-    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%); 
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
 }
 
-/*Container del contenido del header, excluye el h1 */
-
+/* Nav container */
 .container-contenido-header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     margin-right: 40px;
 }
 
-/* Clases de los anchor tags */
-.txt-home, .txt-dashboard {
+.container-contenido-header ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    gap: 20px; /* Separación entre ítems */
+}
+
+.container-contenido-header li {
+    display: flex;
+    align-items: center;
+}
+
+/* Enlaces del menú */
+.txt-home,
+.txt-dashboard {
     font-family: 'Montserrat', sans-serif;
-    color:#ffffff;
+    color: #ffffff;
     text-decoration: none;
-    margin: auto;
-    padding-right: 40px;
+    padding-right: 20px;
     cursor: pointer;
     font-size: 20px;
-    color: #fff;
     text-shadow: 0 0 5px #000000, 0 0 10px #000000, 0 0 20px #000000, 0 0 40px #98FD92, 0 0 80px #98FD92;
     animation: glow 1.5s infinite alternate;
 }
-@keyframes glow { /* Keyframes sirve para controlar los pasos intermedios de una secuencia de animación en un elemento */
+
+@keyframes glow {
     0% {
         text-shadow: 0 0 5px #000000, 0 0 10px #000000, 0 0 20px #98FD92, 0 0 40px #98FD92, 0 0 80px #98FD92;
     }
@@ -90,20 +99,22 @@ header {
     }
 }
 
-.txt-home:hover, .txt-dashboard:hover {
+.txt-home:hover,
+.txt-dashboard:hover {
     background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
-.btn-rutinas {
+/* Botón como enlace */
+.nav-rutinas-btn {
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
     line-height: 2px;
-    height:45px;
+    height: 45px;
     background-color: #00ff55;
-    color: rgb(0, 0, 0);
+    color: #000;
     padding: 15px 20px;
     border: none;
     border-radius: 5px;
@@ -112,12 +123,13 @@ header {
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: rgb(0, 255, 0) 0.3s ease;
+    transition: background-color 0.3s ease;
 }
 
 .btn-rutinas:hover {
     background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
 }
+
 /*==================== ACA IRIA EL MAIN =======================*/
 .envoltorio-pagina {
     background-color: #000000;
