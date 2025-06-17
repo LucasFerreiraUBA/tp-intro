@@ -3,7 +3,7 @@
     background: #0e0e0e; /* Cambiar fondo del header */
     display: flex; /*Ordenando y alineando los elementos dentro del footer*/
     align-items: center; 
-    justify-content: space-between; 
+    justify-content: center; 
     border-top: 1px solid #98fd92; /* Borde verde brillante arriba del footer */
     width: 100%;
     min-height: 80px;
@@ -21,8 +21,7 @@
     align-items: flex-start;
     text-align: left;
     margin: 0;
-    padding-left: 10px;
-    font-size: 10px;
+    font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
     color: #e8fde6;
 }

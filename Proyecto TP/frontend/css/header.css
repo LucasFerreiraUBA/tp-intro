@@ -7,8 +7,13 @@ header {
     width: 100%;
     min-height: 80px;
     padding: 10px 0;
+    flex-wrap: wrap;
 }
-
+nav > ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
 /* Logo Atlas+ */
 .txt-atlas {
     font-family: 'Montserrat', sans-serif;

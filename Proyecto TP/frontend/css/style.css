@@ -18,13 +18,3 @@ html, body {
     min-height: 100vh;
 }
 
-/*Ordena el header, el main y el footer de modo que quede todo
-bien distribuido.*/
-.envoltorio-pagina {
-    display: grid;
-    min-height: 100dvh; /*asegura que el contenedor ocupe al menos el 100% de la altura de la ventana*/
-    grid-template-rows: 
-        auto 1fr auto; /* auto --> adapta el tamaño del encabezado
-                          1fr --> ocupa el espacio restante entre el header y el footer 
-                          auto --> para que el footer se quede siempre al final de la página*/
-}
