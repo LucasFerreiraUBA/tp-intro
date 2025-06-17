@@ -75,6 +75,7 @@ nav > ul {
     margin-right: 40px;
 }
 
+
 .container-contenido-header ul {
     display: flex;
     list-style: none;
@@ -91,6 +92,7 @@ nav > ul {
 /* Enlaces del menú */
 .txt-home,
 .txt-dashboard {
+
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
     text-decoration: none;
@@ -371,5 +373,45 @@ nav > ul {
 .box i {
     font-size: 70px;
     margin-top: 45px;
+}
 
+/*============== ACA IRIA EL FOOTER =============================*/
+
+.footer-seccion {
+    margin-top: 50px;
+    background: #0e0e0e; /* Cambiar fondo del header */
+    display: flex; /*Ordenando y alineando los elementos dentro del footer*/
+    align-items: center; 
+    justify-content: space-between; 
+    border-top: 1px solid #98fd92; /* Borde verde brillante arriba del footer */
+    width: 100%;
+    min-height: 80px;
+    padding: 10px 0;
+}
+
+.copyrightTeam {
+    font-size: 20px;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
+    margin: 0;
+    padding-left: 10px;
+    font-size: 10px;
+    font-family: 'Montserrat', sans-serif;
+    color: #e8fde6;
+}
+
+.equipo-facultad {
+    margin: 0;
+    padding: 0;
+    display: flexbox;
+    justify-content: flex-start;
+    align-items: center;
+    text-align: start;
+    list-style-type: none;
 }
