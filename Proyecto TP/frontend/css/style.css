@@ -90,8 +90,7 @@ nav > ul {
 }
 
 /* Enlaces del menú */
-.txt-home,
-.txt-dashboard {
+.txt-home {
 
     font-family: 'Montserrat', sans-serif;
     color: #ffffff;
@@ -112,8 +111,7 @@ nav > ul {
     }
 }
 
-.txt-home:hover,
-.txt-dashboard:hover {
+.txt-home:hover {
     background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
     -webkit-background-clip: text;
     background-clip: text;
