@@ -145,9 +145,14 @@ nav > ul {
 
 /* =========== MAIN =============== */
 
+main {
+    flex-grow: 1; /*Para que crezca y ocupe todo el espacio disponible*/
+    padding-top: 80px;
+}
 .envoltorio-pagina {
     background-color: #000000;
-    display: grid;
+    display: flex;
+    flex-direction: column;
     min-height: 100dvh;
     grid-template-rows: 
         auto 1fr auto;
@@ -412,4 +417,218 @@ nav > ul {
     align-items: center;
     text-align: start;
     list-style-type: none;
+}
+
+
+
+/* ============================== RUTINAS Y ALIMENTACION ================================== */
+
+/* ============ Sección y Alimentación ================== */
+
+.rutinas-seccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.rutinas-container {
+    background: url(../Media/Rutinas_alimentacion/gym2.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 450px;
+    box-shadow: 0 0 10px whitesmoke;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 70%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.titulo-rutina {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    background: url(../Media/Rutinas_alimentacion/gradiente.jpeg);
+    background-size: cover;
+    background-clip: text;
+    color: transparent;
+    animation: animate 3s linear infinite;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 20px auto auto auto;
+}
+
+@keyframes animate {
+    to {
+        background-position-x: -500px;
+    }
+}
+
+.rutinas-texto {
+    color: whitesmoke;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    max-width: 600px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 5px auto auto auto;
+}
+
+.boton-container {
+    margin: 10px auto 10px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    top: -30px;
+    gap: 20px;
+}
+
+.rutina-boton {
+    width: 9em;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 1px 1px 5px #98FD92,
+    -1px -1px 5px #00ff55;
+}
+
+.rutina-boton::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(
+        to right,
+        #0fd850 0%,
+        #f9f047 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+
+.rutina-boton:hover::before {
+    width: 9em;
+}
+
+/* ================== Sección Alimentación ============================ */
+
+.alimentacion-seccion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.alimentacion-container {
+    background: url(../Media/Rutinas_alimentacion/gym2.png);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 450px;
+    box-shadow: 0 0 10px whitesmoke;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+    width: 70%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.titulo-alimentacion {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem;
+    background: url(../Media/Rutinas_alimentacion/gradiente.jpeg);
+    background-size: cover;
+    background-clip: text;
+    color: transparent;
+    animation: animate 3s linear infinite;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 20px auto auto auto;
+}
+
+@keyframes animate {
+    to {
+        background-position-x: -500px;
+    }
+}
+
+.alimentacion-texto {
+    color: whitesmoke;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 300;
+    max-width: 600px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    margin: 5px auto auto auto;
+}
+
+.boton-container {
+    margin: 10px auto 10px auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+    top: -30px;
+    gap: 20px;
+}
+
+.alimentacion-boton {
+    width: 12em;
+    height: 3em;
+    border-radius: 30em;
+    font-size: 15px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    border: none;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    z-index: 1;
+    box-shadow: 1px 1px 5px #98FD92,
+    -1px -1px 5px #00ff55;
+}
+
+.alimentacion-boton::before {
+    content: '';
+    width: 0;
+    height: 3em;
+    border-radius: 30em;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-image: linear-gradient(
+        to right,
+        #0fd850 0%,
+        #f9f047 100%);
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+}
+
+.alimentacion-boton:hover::before {
+    width: 12em;
 }
