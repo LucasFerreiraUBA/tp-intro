@@ -1,11 +1,27 @@
-## TP Final - Refactor 2
+## TP Final Introducción al Desarrollo de Software 
 
-## Home
+Estructura de la base de datos en el archivo
+```
+./backend/scripts/db.sql
+```
 
-Se agrego al primer boton de 'Arma tu rutina' un comando JavaScript llamado onclick, para que el usuario cuando clickee
-pueda ir directamente a la sección "Arma tu Rutina"
+Para levantar el proyecto ejecutar 
+```
+run-backend-all
+```
 
-## Rutinas y Alimentación
+Para solo levantar la base de datos
 
-- Se agrego un archivo HTML
-- Se armo una box para poder hacer el Armador de Rutinas y linkearlo a la BB.DD Con el Backend
+```
+start-db
+```
+Para solo detener la base de datos
+
+```
+stop-db
+```
+
+Para solo levantar el backend
+```
+start-backend
+```
