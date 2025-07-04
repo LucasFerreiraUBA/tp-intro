@@ -11,14 +11,23 @@ const {
   createEjercicio,
   deleteEjercicio,
   getAllGrupo_musculares,
+  updateEjercicio
 } = require('../scripts/arma_rutina');  // llama al archivo atlas para hacer las consultas a la base de datos
+
+const {
+  getAllComidas,
+  getOneComida,
+  createComida,
+  deleteComida,
+  updateComida
+} = require('../scripts/alimentacion');
 
 
 // Sample route
 app.get('/api/health', (req, res) => { //http://localhost:3000/api/health
   res.json({ status: 'Todo OK' });
 });
-//---------------------------------------------- gurpo_muscular ---------------------------------------------------------------------------
+//---------------------------------------------- grupo_muscular ---------------------------------------------------------------------------
 app.get('/api/grupo_muscular', async (req, res) => {
   const grupo_musculares = await getAllGrupo_musculares(); 
   res.json(grupo_musculares);
@@ -90,8 +99,104 @@ app.delete('/api/arma_rutina/:id', async (req, res) => {
 });
 
 // update
-app.delete('/api/arma_rutina', (req, res) => { 
-  res.json({ status: 'Todo OK' });
+app.put('/api/arma_rutina/:id', async (req, res) => {
+  const ejercicio = await updateEjercicio(
+    req.params.id,
+    req.body.ejercicio,
+    req.body.repeticiones,
+    req.body.peso,
+    req.body.grupo_muscular,
+    req.body.rir,
+    req.body.tiempo_descanso,
+    req.body.descripcion
+  );
+
+  if (!ejercicio) {
+      return res.status(404).json({ error: 'Ejercicio no encontrado para actualizar' });
+    }
+  res.json(ejercicio);
+})
+
+//---------------------------------------------------------------alimentacion----------------------------------------------------------------
+
+//Obtiene todas las comidas
+app.get('/api/alimentacion', async (req, res) => {
+    const comidas = await getAllComidas();
+    res.json(comidas);
+});
+
+//Obtiene una comida por id
+app.get('/api/alimentacion/:id', async (req, res) => {
+    const comida = await getOneComida(req.params.id);
+    if (!comida) {
+      return res.status(404).json({ error: 'Comida no encontrada' });
+    }
+    res.json(comida);
+});
+
+//Crear una nueva comida
+app.post('/api/alimentacion', async (req, res) => {
+  const {
+    nombre_comida,
+    tipo_comida,
+    calorias,
+    proteinas,
+    carbohidratos,
+    grasas,
+    ejercicio_relacionado, 
+    descripcion
+  } = req.body;
+
+  
+  if (!nombre_comida || !tipo_comida || !calorias || !proteinas || !carbohidratos || !grasas) {
+    return res.status(400).json({ error: 'Faltan datos obligatorios' });
+  }
+
+  // Crear la comida
+  const comida = await createComida(
+    nombre_comida,
+    tipo_comida,
+    calorias,
+    proteinas,
+    carbohidratos,
+    grasas,
+    ejercicio_relacionado, 
+    descripcion
+  );
+
+  if (!comida) {
+    return res.status(500).json({ error: 'Error al crear la comida' });
+  }
+
+  res.json(comida);
+});
+
+//Actualizar comida
+app.put('/api/alimentacion/:id', async (req, res) => {
+    const comida = await updateComida(
+        req.params.id,
+        req.body.nombre_comida,
+        req.body.tipo_comida,
+        req.body.calorias,
+        req.body.proteinas,
+        req.body.carbohidratos,
+        req.body.grasas,
+        req.body.ejercicio_relacionado,
+        req.body.descripcion
+    );
+    if (!comida) {
+      return res.status(404).json({ error: 'Comida no encontrada para actualizar' });
+    }
+    res.json(comida);
+});
+
+//Eliminar comida
+app.delete('/api/alimentacion/:id', async (req, res) => {
+    const comida = await deleteComida(req.params.id);
+    if (!comida) {
+      return res.status(404).json({ error: 'Comida no encontrada' });
+    }
+    res.json({ status: 'OK', id: comida });
 });
 
 app.listen(PORT, () => {

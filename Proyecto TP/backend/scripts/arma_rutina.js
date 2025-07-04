@@ -86,6 +86,22 @@ async function deleteEjercicio(id){
   return id;
 }
 
+async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular, rir, tiempo_descanso, descripcion) {
+  const result = await dbClient.query(`
+    UPDATE arma_rutina SET
+      ejercicio = $1,
+      repeticiones = $2,
+      peso = $3,
+      grupo_muscular = $4,
+      rir = $5,
+      tiempo_descanso = $6,
+      descripcion = $7
+    WHERE id = $8 RETURNING *`, 
+  [ejercicio, repeticiones, peso, grupo_muscular, rir, tiempo_descanso, descripcion, id]);
+
+  return result.rows[0];
+}
+
 
 module.exports = {
   getAllEjercicios,
@@ -93,4 +109,5 @@ module.exports = {
   createEjercicio,
   deleteEjercicio,
   getAllGrupo_musculares,
+  updateEjercicio
 };
