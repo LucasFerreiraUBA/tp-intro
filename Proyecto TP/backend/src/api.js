@@ -25,6 +25,13 @@ const {
   updateComida
 } = require('../scripts/alimentacion');
 
+const {
+  getAllEntrenamientos,
+  getOneEntrenamiento,
+  createEntrenamiento,
+  deleteEntrenamiento,
+  updateEntrenamiento
+} = require("../scripts/entrenamiento");
 
 // Sample route
 app.get('/api/health', (req, res) => { //http://localhost:3000/api/health
@@ -200,6 +207,87 @@ app.delete('/api/alimentacion/:id', async (req, res) => {
       return res.status(404).json({ error: 'Comida no encontrada' });
     }
     res.json({ status: 'OK', id: comida });
+});
+
+//----------------------------------------------------------Entrenamiento--------------------------------------------------------------------
+
+// Obtener todos los entrenamientos
+app.get("/api/entrenamientos", async (req, res) => {
+  const entrenamientos = await getAllEntrenamientos();
+  res.json(entrenamientos);
+});
+
+// Obtener un entrenamiento completo por id
+app.get("/api/entrenamientos/:id", async (req, res) => {
+  const entrenamiento = await getOneEntrenamiento(req.params.id);
+  if (!entrenamiento) {
+    return res.status(404).json({ error: "Entrenamiento no encontrado" });
+  }
+  res.json(entrenamiento);
+});
+
+// Crear un nuevo entrenamiento
+app.post("/api/entrenamientos", async (req, res) => {
+  const {
+    dia_semana,
+    objetivo,
+    nivel_usuario,
+    duracion_minutos,
+    descripcion,
+    ejercicios,
+    comidas
+  } = req.body;
+
+  if (!dia_semana || !objetivo || !nivel_usuario || !duracion_minutos || !descripcion || !ejercicios) {
+    return res.status(400).json({ error: "Faltan datos obligatorios" });
+  }
+  //Crea el entrenamiento
+  const entrenamiento = await createEntrenamiento({
+    dia_semana,
+    objetivo,
+    nivel_usuario,
+    duracion_minutos,
+    descripcion,
+    ejercicios,
+    comidas: comidas || []
+  });
+
+  if (!entrenamiento) {
+    return res.status(500).json({ error: "Error al crear el entrenamiento" });
+  }
+
+  res.json(entrenamiento);
+});
+
+// Actualizar entrenamiento
+app.put("/api/entrenamientos/:id", async (req, res) => {
+  const entrenamiento = await updateEntrenamiento(
+    req.params.id,
+    req.body.dia_semana,
+    req.body.objetivo,
+    req.body.nivel_usuario,
+    req.body.duracion_minutos,
+    req.body.descripcion,
+    req.body.ejercicios,
+    req.body.comidas
+  );
+
+  if (!entrenamiento) {
+    return res.status(404).json({ error: "Entrenamiento no encontrado para actualizar" });
+  }
+
+  res.json(entrenamiento);
+});
+
+// Eliminar entrenamiento
+app.delete("/api/entrenamientos/:id", async (req, res) => {
+  const entrenamiento = await deleteEntrenamiento(req.params.id);
+
+  if (!entrenamiento) {
+    return res.status(404).json({ error: "Entrenamiento no encontrado" });
+  }
+
+  res.json({ status: "OK", id: eliminado });
 });
 
 app.listen(PORT, () => {

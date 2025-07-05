@@ -26,7 +26,27 @@ create table alimentacion (
     descripcion varchar(100)
 );
 
- 
+create table entrenamiento (
+    id serial primary key,
+    dia_semana varchar(15) NOT NULL,
+    objetivo varchar(50) NOT NULL,
+    nivel_usuario varchar(20),
+    duracion_minutos int,
+    descripcion varchar(100)
+);
+
+create table entrenamiento_ejercicio (
+    id serial primary key,
+    entrenamiento_id int REFERENCES entrenamiento(id),
+    rutina_id int REFERENCES arma_rutina(id)
+);
+
+create table entrenamiento_alimentacion (
+    id serial primary key,
+    entrenamiento_id int REFERENCES entrenamiento(id),
+    alimentacion_id int REFERENCES alimentacion(id)
+);
+
 INSERT INTO arma_rutina (
     ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion
 ) VALUES
@@ -75,6 +95,54 @@ INSERT INTO alimentacion (
 ('Tostadas con mantequilla de maní', 'merienda', 300, 12, 25, 18, 2, 'Energía rápida pre entreno'),
 ('Sándwich de pollo y palta', 'almuerzo', 600, 35, 40, 20, 4, 'Perfecto para recuperación de espalda'),
 ('Yogur griego con nueces', 'desayuno', 400, 20, 25, 18, 4, 'Desayuno balanceado antes de entrenar');
+
+
+INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos, descripcion) VALUES
+('Lunes', 'Hipertrofia tren superior', 'Intermedio', 70, 'Pecho, tríceps y hombros'),
+('Martes', 'Cardio y core', 'Principiante', 45, 'Entrenamiento aeróbico y abdominales'),
+('Miércoles', 'Fuerza tren inferior', 'Avanzado', 80, 'Piernas y core'),
+('Jueves', 'Espalda y bíceps', 'Intermedio', 65, 'Tirón y brazos'),
+('Viernes', 'Fullbody', 'Principiante', 60, 'Circuito de cuerpo completo'),
+('Sábado', 'Alta intensidad HIIT', 'Avanzado', 40, 'Interválico con ejercicios compuestos'),
+('Domingo', 'Recuperación activa', 'Todos', 30, 'Movilidad, estiramientos y core');
+
+INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id) VALUES
+(1, 1), 
+(1, 5), 
+(1, 7), 
+(2, 6), 
+(2, 4), 
+(2, 7), 
+(3, 2), 
+(3, 3), 
+(3, 6), 
+(4, 2), 
+(4, 4), 
+(4, 7), 
+(5, 1), 
+(5, 3), 
+(5, 4), 
+(5, 6), 
+(6, 3), 
+(6, 5), 
+(6, 6), 
+(7, 6); 
+
+INSERT INTO entrenamiento_alimentacion (entrenamiento_id, alimentacion_id) VALUES
+(1, 2), 
+(1, 4), 
+(2, 6), 
+(2, 1), 
+(3, 1), 
+(3, 5), 
+(4, 2), 
+(4, 3), 
+(5, 3), 
+(5, 6), 
+(6, 1), 
+(6, 5), 
+(7, 4); 
+
 
 
 
