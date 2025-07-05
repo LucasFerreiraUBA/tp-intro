@@ -1,4 +1,3 @@
-
 function shadowHeader() {
     const scrollHeader = () => {
     const header = document.getElementById('header')

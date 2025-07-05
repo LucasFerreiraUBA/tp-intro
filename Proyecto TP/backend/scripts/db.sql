@@ -1,3 +1,8 @@
+create table grupo_muscular (
+    id serial primary key,
+    nombre varchar(30) NOT NULL
+);
+
 create table arma_rutina (
     id serial primary key,
     ejercicio varchar(30) NOT NULL,
@@ -7,11 +12,6 @@ create table arma_rutina (
     rir int,
     tiempo_descanso int,
     descripcion varchar(100)
-);
-
-create table grupo_muscular (
-    id serial primary key,
-    nombre varchar(30) NOT NULL
 );
 
 create table alimentacion (

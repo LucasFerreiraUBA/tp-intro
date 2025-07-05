@@ -1,7 +1,10 @@
 const express = require('express');
+var cors = require('cors'); // Importamos cors para permitir peticiones desde el frontend
 
 const app = express();
 app.use(express.json());
+app.use(cors()); 
+
 
 const PORT = process.env.PORT || 3000;
 
