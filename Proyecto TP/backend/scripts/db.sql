@@ -106,6 +106,9 @@ INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos
 ('Sábado', 'Alta intensidad HIIT', 'Avanzado', 40, 'Interválico con ejercicios compuestos'),
 ('Domingo', 'Recuperación activa', 'Todos', 30, 'Movilidad, estiramientos y core');
 
+INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos, descripcion) VALUES
+('Probando', 'Hipertrofia tren superior', 'Intermedio', 70, 'Pecho, tríceps y hombros');
+
 INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id) VALUES
 (1, 1), 
 (1, 5), 

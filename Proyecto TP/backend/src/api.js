@@ -15,7 +15,7 @@ const {
   deleteEjercicio,
   getAllGrupo_musculares,
   updateEjercicio
-} = require('../scripts/arma_rutina');  // llama al archivo atlas para hacer las consultas a la base de datos
+} = require('../scripts/ejercicios');  // llama al archivo atlas para hacer las consultas a la base de datos
 
 const {
   getAllComidas,
@@ -49,13 +49,13 @@ app.get('/api/grupo_muscular', async (req, res) => {
   // END point
 
 // get all
-app.get('/api/arma_rutina', async (req, res) => {
+app.get('/api/ejercicios', async (req, res) => {
   const ejercicios = await getAllEjercicios(); 
   res.json(ejercicios);
 });
 
 // get one
-app.get('/api/arma_rutina/:id', async (req, res) => { // get one mediante el id
+app.get('/api/ejercicios/:id', async (req, res) => { // get one mediante el id
   const ejercicios = await getOneEjercicios(req.params.id); 
   
   if (!ejercicios) {
@@ -65,7 +65,7 @@ app.get('/api/arma_rutina/:id', async (req, res) => { // get one mediante el id
   res.json(ejercicios);
 });
 
-app.post('/api/arma_rutina', async (req, res) => { 
+app.post('/api/ejercicios', async (req, res) => { 
 
   if (
     !req.body.ejercicio || 
@@ -98,7 +98,7 @@ app.post('/api/arma_rutina', async (req, res) => {
 curl --request DELET http://localhost:3000/api/personajes/id
 */
 
-app.delete('/api/arma_rutina/:id', async (req, res) => { 
+app.delete('/api/ejercicios/:id', async (req, res) => { 
   const ejercicios = await deleteEjercicio(req.params.id); 
 
   if (!ejercicios) {
@@ -109,11 +109,11 @@ app.delete('/api/arma_rutina/:id', async (req, res) => {
 });
 
 // update
-app.put('/api/arma_rutina/:id', async (req, res) => {
+app.put('/api/ejercicios/:id', async (req, res) => {
   const ejercicio = await updateEjercicio(
     req.params.id,
     req.body.ejercicio,
-    req.body.repeticiones,
+    req.body.repeticiones, 
     req.body.peso,
     req.body.grupo_muscular,
     req.body.rir,
@@ -125,7 +125,7 @@ app.put('/api/arma_rutina/:id', async (req, res) => {
       return res.status(404).json({ error: 'Ejercicio no encontrado para actualizar' });
     }
   res.json(ejercicio);
-})
+});
 
 //---------------------------------------------------------------alimentacion----------------------------------------------------------------
 

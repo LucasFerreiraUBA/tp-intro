@@ -1,91 +1,80 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
-    <title>Arma rutina</title>
-</head>
-<body>
-    <div class="container">
-        <div class="content"><h1>Hola</h1></div>
-    </div>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Ejercicio</th>
-                <th>Repeticiones</th>
-                <th>Peso</th>
-                <th>Grupo_muscular_id</th>
-                <th>Rir</th>
-                <th>Tiempo_descanso</th>
-                <th>Descripcion</th>
-                <th>Ver</th>
-                <th>Editar</th>
-                <th>Borrar</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-    <script>
-        const arma_rutinaBackURL = "http://localhost:3000/api/arma_rutina";
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+         <!-- CSS -->
+        <link rel="stylesheet" href="../css/style.css">
+        <title>Arma rutina</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content"><h1>Hola</h1></div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Dia de la Semana </th>
+                    <th>Objetivo</th>
+                    <th>Nivel Usuario</th>
+                    <th>Duracion</th>
+                    <th>Descripcion</th>
+                    <th>Editar</th>
+                    <th>Borrar</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script>
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
 
-        fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
-            return response.json();
-        }).then((data) => { // una vez que consulta vuelve con la data
-            const table = document.querySelector("tbody");
-            data.forEach(Ejercicio => {
-                const newRow = document.createElement("tr");
+            fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
+                return response.json();
+            }).then((data) => { // una vez que consulta vuelve con la data
+                const table = document.querySelector("tbody");
+                data.forEach(Entrenamiento => {
+                    const newRow = document.createElement("tr");
 
-                const NewEjercicio = document.createElement("td");
-                NewEjercicio.innerHTML = Ejercicio.ejercicio;
-                newRow.appendChild(NewEjercicio);
+                    const DiaSemana = document.createElement("td"); // Dia de la Semana
+                    DiaSemana.innerHTML = Entrenamiento.dia_semana;
+                    newRow.appendChild(DiaSemana);
 
-                const NewRepeticiones = document.createElement("td");
-                NewRepeticiones.innerHTML = Ejercicio.repeticiones;
-                newRow.appendChild(NewRepeticiones);
+                    const Objetivo = document.createElement("td"); // Objetivo
+                    Objetivo.innerHTML = Entrenamiento.objetivo;
+                    newRow.appendChild(Objetivo);
 
-                const NewPeso = document.createElement("td");
-                NewPeso.innerHTML = Ejercicio.peso;
-                newRow.appendChild(NewPeso);
+                    const NivelUsuario = document.createElement("td"); // Nivel Usuario
+                    NivelUsuario.innerHTML = Entrenamiento.nivel_usuario ?? "-";
+                    newRow.appendChild(NivelUsuario);
 
-                const NewGrupomuscular = document.createElement("td");
-                NewGrupomuscular.innerHTML = Ejercicio.grupo_muscular_id;
-                newRow.appendChild(NewGrupomuscular);
+                    const Duracion = document.createElement("td"); // Duracion
+                    Duracion.innerHTML = Entrenamiento.duracion ?? "-";
+                    newRow.appendChild(Duracion);
 
-                const Newrir = document.createElement("td");
-                Newrir.innerHTML = Ejercicio.rir;
-                Newrir.innerHTML = Ejercicio.rir ?? "-"
-                newRow.appendChild(Newrir);
+                    const Descripcion = document.createElement("td"); // Descripcion
+                    Descripcion.innerHTML = Entrenamiento.descripcion ?? "-";
+                    newRow.appendChild(Descripcion);
 
-                const NewTiempodedescanso = document.createElement("td");
-                NewTiempodedescanso.innerHTML = Ejercicio.tiempo_descanso;
-                NewTiempodedescanso.innerHTML = Ejercicio.tiempo_descanso ?? "-"
-                newRow.appendChild(NewTiempodedescanso);
+                    const NewEditar = document.createElement("td"); // Editar
+                    const EditarLink = document.createElement("a");
+                    EditarLink.innerHTML = "Editar";
+                    EditarLink.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
+                    NewEditar.appendChild(EditarLink);
+                    newRow.appendChild(NewEditar);
+            
+                    const NewBorrar = document.createElement("td"); // Borrar
+                    const BorrarLink = document.createElement("a");
+                    BorrarLink.innerHTML = "Borrar";
+                    BorrarLink.href = "#";
+                    NewBorrar.appendChild(BorrarLink);
+                    newRow.appendChild(NewBorrar);
 
-                const NewDescripcion = document.createElement("td");
-                NewDescripcion.innerHTML = Ejercicio.descripcion;
-                NewDescripcion.innerHTML = Ejercicio.descripcion ?? "-"; // si es null o undefined, pone un guion
-                newRow.appendChild(NewDescripcion);
-
-                const NewVer = document.createElement("a");
-                NewVer.innerHTML = "Ver";
-                newRow.appendChild(NewVer);
-
-                const NewEditar = document.createElement("a");
-                NewEditar.innerHTML = "Editar";
-                newRow.appendChild(NewEditar);
-
-                const NewBorrar = document.createElement("a");
-                NewBorrar.innerHTML = "Borrar";
-                newRow.appendChild(NewBorrar);
-
-                table.appendChild(newRow);
+                    table.appendChild(newRow);
+                });
+                console.log(data);
             });
-            console.log(data);
-        });
 
-    </script>
-</div>
-</body>
+        </script>
+    </body>
 </html>

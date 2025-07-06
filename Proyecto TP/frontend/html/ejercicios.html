@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+        <!-- CSS -->
+        <link rel="stylesheet" href="../css/style.css">
+        <title>Arma rutina</title>
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Grupo Muscular</th>
+                    <th>Ejercicio</th>
+                    <th>Series</th>
+                    <th>Repeticiones</th>
+                    <th>Peso</th>
+                    <th>Rir</th>
+                    <th>Tiempo de descanso</th>
+                    <th>Descripcion</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            console.log(urlParams);
+            const id = urlParams.get("id");
+
+            const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
+
+            fetch(arma_rutinaBackURL).then((response) => { 
+                return response.json();
+            }).then((data) => { 
+                const tbody = document.querySelector("table.table tbody");
+                const newRow = document.createElement("tr");
+
+                const grupoMuscular = document.createElement("td");
+                grupoMuscular.innerHTML = data.grupo_muscular;
+                newRow.appendChild(grupoMuscular);
+
+                const ejercicio = document.createElement("td");
+                ejercicio.innerHTML = data.ejercicio;
+                newRow.appendChild(ejercicio);
+
+                const series = document.createElement("td");
+                series.innerHTML = data.series;
+                newRow.appendChild(series);
+
+                const repeticiones = document.createElement("td");
+                repeticiones.innerHTML = data.repeticiones;
+                newRow.appendChild(repeticiones);
+
+                const peso = document.createElement("td");
+                peso.innerHTML = data.peso;
+                newRow.appendChild(peso);
+
+                const rir = document.createElement("td");
+                rir.innerHTML = data.rir ?? "-";
+                newRow.appendChild(rir);
+
+                const tiempoDescanso = document.createElement("td");
+                tiempoDescanso.innerHTML = data.tiempo_descanso ?? "-";
+                newRow.appendChild(tiempoDescanso);
+
+                const descripcion = document.createElement("td");
+                descripcion.innerHTML = data.descripcion ?? "-";
+                newRow.appendChild(descripcion);
+
+                tbody.appendChild(newRow);
+                console.log(data);
+            });
+        </script>
+    </body>
+</html>
