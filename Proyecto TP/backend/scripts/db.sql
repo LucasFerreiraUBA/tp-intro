@@ -138,6 +138,19 @@ INSERT INTO entrenamiento_alimentacion (entrenamiento_id, alimentacion_id) VALUE
 (6, 1), (6, 5),
 (7, 4);
 
+ALTER TABLE arma_rutina ADD COLUMN series INTEGER;
+
+UPDATE arma_rutina SET series = 4 WHERE id = 1;  
+UPDATE arma_rutina SET series = 3 WHERE id = 5;  
+UPDATE arma_rutina SET series = 5 WHERE id = 7;
+UPDATE arma_rutina SET series = 4 WHERE id = 2; 
+UPDATE arma_rutina SET series = 3 WHERE id = 3; 
+UPDATE arma_rutina SET series = 4 WHERE id = 4; 
+UPDATE arma_rutina SET series = 3 WHERE id = 6; 
+UPDATE arma_rutina SET series = 5 WHERE id = 8; 
+UPDATE arma_rutina SET series = 4 WHERE id = 9; 
+UPDATE arma_rutina SET series = 3 WHERE id = 10; 
+
 DO
 $$
 DECLARE

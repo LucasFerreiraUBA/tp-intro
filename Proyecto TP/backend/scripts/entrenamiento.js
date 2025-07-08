@@ -28,6 +28,7 @@ async function getOneEntrenamiento(id) {
     SELECT 
       ar.id,
       ar.ejercicio,
+      ar.series,
       ar.repeticiones,
       ar.peso,
       gm.nombre AS grupo_muscular,
