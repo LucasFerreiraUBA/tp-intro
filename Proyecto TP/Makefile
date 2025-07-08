@@ -8,3 +8,6 @@ start-db:
 
 stop-db:
 	cd ./backend && docker compose down
+
+install-backend:
+	cd ./backend && npm install
