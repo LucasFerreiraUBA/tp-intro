@@ -28,4 +28,3 @@ reset-db-hard:
 	cd backend && sudo rm -rf ./.volumes/postgres/data
 	cd backend && docker compose up -d
 	sleep 5
-	cd backend && docker exec -it backend-postgres-1 psql -U postgres -d atlas -c "SELECT * FROM grupo_muscular LIMIT 5;"

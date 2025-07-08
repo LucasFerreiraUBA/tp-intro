@@ -6,14 +6,6 @@ DROP TABLE IF EXISTS arma_rutina;
 DROP TABLE IF EXISTS grupo_muscular;
 
 
-DO
-$$
-BEGIN
-  RAISE NOTICE 'Ejecutando script db.sql...';
-END;
-$$;
-
-
 CREATE TABLE grupo_muscular (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(30) NOT NULL
@@ -118,7 +110,6 @@ INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos
 ('Viernes', 'Fullbody', 'Principiante', 60, 'Circuito de cuerpo completo'),
 ('Sábado', 'Alta intensidad HIIT', 'Avanzado', 40, 'Interválico con ejercicios compuestos'),
 ('Domingo', 'Recuperación activa', 'Todos', 30, 'Movilidad, estiramientos y core'),
-('Probando', 'Hipertrofia tren superior', 'Intermedio', 70, 'Pecho, tríceps y hombros');
 
 INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id) VALUES
 (1, 1), (1, 5), (1, 7),
@@ -150,15 +141,3 @@ UPDATE arma_rutina SET series = 3 WHERE id = 6;
 UPDATE arma_rutina SET series = 5 WHERE id = 8; 
 UPDATE arma_rutina SET series = 4 WHERE id = 9; 
 UPDATE arma_rutina SET series = 3 WHERE id = 10; 
-
-DO
-$$
-DECLARE
-    rec RECORD;
-BEGIN
-    RAISE NOTICE 'Tablas actuales en la base:';
-    FOR rec IN SELECT tablename FROM pg_tables WHERE schemaname = 'public' LOOP
-        RAISE NOTICE '%', rec.tablename;
-    END LOOP;
-END;
-$$;
