@@ -26,51 +26,55 @@
         </table>
         <script>
             const urlParams = new URLSearchParams(window.location.search);
-            console.log(urlParams);
             const id = urlParams.get("id");
 
-            const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
 
-            fetch(arma_rutinaBackURL).then((response) => { 
-                return response.json();
-            }).then((data) => { 
+            fetch(arma_rutinaBackURL)
+            .then((response) => response.json())
+            .then((data) => {
                 const tbody = document.querySelector("table.table tbody");
+
+                data.ejercicios.forEach((ej) => {
                 const newRow = document.createElement("tr");
 
                 const grupoMuscular = document.createElement("td");
-                grupoMuscular.innerHTML = data.grupo_muscular;
+                grupoMuscular.innerHTML = ej.grupo_muscular_id ?? "-"; 
                 newRow.appendChild(grupoMuscular);
 
                 const ejercicio = document.createElement("td");
-                ejercicio.innerHTML = data.ejercicio;
+                ejercicio.innerHTML = ej.ejercicio ?? "-";
                 newRow.appendChild(ejercicio);
 
                 const series = document.createElement("td");
-                series.innerHTML = data.series;
+                series.innerHTML = ej.series ?? "-"; 
                 newRow.appendChild(series);
 
                 const repeticiones = document.createElement("td");
-                repeticiones.innerHTML = data.repeticiones;
+                repeticiones.innerHTML = ej.repeticiones ?? "-";
                 newRow.appendChild(repeticiones);
 
                 const peso = document.createElement("td");
-                peso.innerHTML = data.peso;
+                peso.innerHTML = ej.peso ?? "-";
                 newRow.appendChild(peso);
 
                 const rir = document.createElement("td");
-                rir.innerHTML = data.rir ?? "-";
+                rir.innerHTML = ej.rir ?? "-";
                 newRow.appendChild(rir);
 
                 const tiempoDescanso = document.createElement("td");
-                tiempoDescanso.innerHTML = data.tiempo_descanso ?? "-";
+                tiempoDescanso.innerHTML = ej.tiempo_descanso ?? "-";
                 newRow.appendChild(tiempoDescanso);
 
                 const descripcion = document.createElement("td");
-                descripcion.innerHTML = data.descripcion ?? "-";
+                descripcion.innerHTML = ej.descripcion ?? "-";
                 newRow.appendChild(descripcion);
 
                 tbody.appendChild(newRow);
-                console.log(data);
+                });
+            })
+            .catch((error) => {
+                console.error("Error al cargar los ejercicios:", error);
             });
         </script>
     </body>
