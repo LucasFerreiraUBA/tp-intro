@@ -50,9 +50,15 @@ app.get('/api/grupo_muscular', async (req, res) => {
 
 // get all
 app.get('/api/ejercicios', async (req, res) => {
-  const ejercicios = await getAllEjercicios(); 
-  res.json(ejercicios);
+  try {
+    const ejercicios = await getAllEjercicios();
+    res.json(ejercicios);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
+
 
 // get one
 app.get('/api/ejercicios/:id', async (req, res) => { // get one mediante el id
@@ -291,5 +297,5 @@ app.delete("/api/entrenamientos/:id", async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log("Server Listening on PORT:", PORT);
+    console.log(`Servidor escuchando en https://localhost:${PORT}`);
 });

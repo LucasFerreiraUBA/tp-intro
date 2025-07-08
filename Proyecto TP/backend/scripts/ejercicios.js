@@ -2,7 +2,7 @@
 
 const { Pool } = require("pg");
 
-const dbClient = new Pool({// conectandonos con la base de datos
+const dbClient = new Pool({ // conectándonos con la base de datos
   user: "postgres",
   port: 5432,
   host: "localhost",
@@ -25,7 +25,7 @@ async function getAllEjercicios() {
       arma_rutina ar
     JOIN 
       grupo_muscular gm ON ar.grupo_muscular_id = gm.id
-  `); // hacemos un JOIN entre la tabla arma_rutina y grupo_muscular para obtener el nombre del grupo muscular a partir del ID 
+  `);
   return result.rows;
 }
 
@@ -57,51 +57,56 @@ async function getOneEjercicios(id) {
   return result.rows[0];
 }
 
-
 async function createEjercicio(
-    ejercicio,
-    repeticiones,
-    peso,
-    grupo_muscular,
-    rir,
-    tiempo_descanso,
-    descripcion,
-    ) {
+  ejercicio,
+  repeticiones,
+  peso,
+  grupo_muscular_id,
+  rir,
+  tiempo_descanso,
+  descripcion,
+) {
   const result = await dbClient.query(
-    "INSERT INTO arma_rutina (ejercicio, repeticiones, peso, grupo_muscular, rir, tiempo_descanso, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *",
-
-    [ejercicio, repeticiones, peso, grupo_muscular, rir, tiempo_descanso, descripcion]);
+    `INSERT INTO arma_rutina 
+      (ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) 
+    VALUES 
+      ($1, $2, $3, $4, $5, $6, $7) 
+    RETURNING *`,
+    [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion]
+  );
   
-    console.log("rowCount", result.rowCount);
-    return result.rows[0];
+  return result.rows[0];
 }
 
 async function deleteEjercicio(id){
   const result = await dbClient.query("DELETE FROM arma_rutina WHERE id = $1", [id]); 
   
   if (result.rowCount === 0) {
-    return ("Ejercicio no encontrado");
+    return null;  // Cambié para que retorne null si no existe
   }
 
   return id;
 }
 
-async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular, rir, tiempo_descanso, descripcion) {
+async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) {
   const result = await dbClient.query(`
     UPDATE arma_rutina SET
       ejercicio = $1,
       repeticiones = $2,
       peso = $3,
-      grupo_muscular = $4,
+      grupo_muscular_id = $4,
       rir = $5,
       tiempo_descanso = $6,
       descripcion = $7
     WHERE id = $8 RETURNING *`, 
-  [ejercicio, repeticiones, peso, grupo_muscular, rir, tiempo_descanso, descripcion, id]);
+  [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion, id]);
 
-  return result.rows[0];
+  if (result.rows.length === 0) {
+    return null
+  }
+
+  return result.rows[0]
 }
-
 
 module.exports = {
   getAllEjercicios,
