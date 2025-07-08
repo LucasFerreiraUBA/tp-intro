@@ -18,10 +18,25 @@ async function getAllEntrenamientos() {
 async function getOneEntrenamiento(id) {
   const entrenamiento = await dbClient.query("SELECT * FROM entrenamiento WHERE id = $1", [id]);
   
+  // const ejercicios = await dbClient.query(`
+  //   SELECT ar.*
+  //   FROM entrenamiento_ejercicio ee
+  //   JOIN arma_rutina ar ON ar.id = ee.rutina_id
+  //   WHERE ee.entrenamiento_id = $1
+  // `, [id]);
   const ejercicios = await dbClient.query(`
-    SELECT ar.*
+    SELECT 
+      ar.id,
+      ar.ejercicio,
+      ar.repeticiones,
+      ar.peso,
+      gm.nombre AS grupo_muscular,
+      ar.rir,
+      ar.tiempo_descanso,
+      ar.descripcion
     FROM entrenamiento_ejercicio ee
     JOIN arma_rutina ar ON ar.id = ee.rutina_id
+    JOIN grupo_muscular gm ON ar.grupo_muscular_id = gm.id
     WHERE ee.entrenamiento_id = $1
   `, [id]);
 
