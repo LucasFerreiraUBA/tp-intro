@@ -497,6 +497,64 @@ main {
     width: 9em;
 }
 
+/* ================== Entrenamiento y Ejercicios ============================ */
+
+
+.section-table{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 100px;
+}
+
+.table{
+    background: black;
+    width: 80%;
+    font-size: 20px;
+}
+
+.entrenamiento-title{
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;          
+    width: 80%;
+}
+
+.entrenamiento-title div h1{
+    font-size: 40px;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+
+.entrenamiento-title div button{
+    background-color: #00ff55;
+    color: black;
+    transform: scale(1.2);
+    transform-origin: center;
+}
+.entrenamiento-title div button:hover{
+    background-color: #00ff55;
+    color: black;
+    transform: scale(1.2);
+    transform-origin: center;
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+}
+
+#button-volver{
+    margin-right: 30px;
+}
+
+
+.entrenamiento-title div a { 
+    text-decoration: none;      /* Saca el subrayado */
+    color: inherit;             /* Usa el color del botón */
+    font-size: inherit;
+    font-weight: inherit;
+    font-family: inherit;
+}
+
 /* ================== Sección Alimentación ============================ */
 
 .alimentacion-seccion {
@@ -653,58 +711,3 @@ main {
 
 
 
-
-.section-table{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 100px;
-}
-
-.table{
-    background: black;
-    width: 80%;
-    font-size: 20px;
-}
-
-.entrenamiento-title{
-    margin-bottom: 25px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;          
-    width: 80%;
-}
-
-.entrenamiento-title div h1{
-    font-size: 40px;
-    font-family: 'Poppins', sans-serif;
-    color: white;
-}
-
-.entrenamiento-title div button{
-    background-color: #00ff55;
-    color: black;
-    transform: scale(1.2);
-    transform-origin: center;
-}
-.entrenamiento-title div button:hover{
-    background-color: #00ff55;
-    color: black;
-    transform: scale(1.2);
-    transform-origin: center;
-    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
-}
-
-#button-volver{
-    margin-right: 30px;
-}
-
-
-.entrenamiento-title div a { 
-    text-decoration: none;      /* Saca el subrayado */
-    color: inherit;             /* Usa el color del botón */
-    font-size: inherit;
-    font-weight: inherit;
-    font-family: inherit;
-}
