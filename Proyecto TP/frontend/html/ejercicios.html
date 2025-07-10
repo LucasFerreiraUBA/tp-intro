@@ -9,73 +9,137 @@
         <title>Arma rutina</title>
     </head>
     <body>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Grupo Muscular</th>
-                    <th>Ejercicio</th>
-                    <th>Series</th>
-                    <th>Repeticiones</th>
-                    <th>Peso</th>
-                    <th>Rir</th>
-                    <th>Tiempo de descanso</th>
-                    <th>Descripcion</th>
-                </tr>
-            </thead>
-            <tbody></tbody>
-        </table>
-        <script>
-            const urlParams = new URLSearchParams(window.location.search);
-            const id = urlParams.get("id");
-
-            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
-
-            fetch(arma_rutinaBackURL)
-            .then((response) => response.json())
-            .then((data) => {
-                const tbody = document.querySelector("table.table tbody");
-
-                data.ejercicios.forEach((ej) => {
-                const newRow = document.createElement("tr");
-
-                const grupoMuscular = document.createElement("td");
-                grupoMuscular.innerHTML = ej.grupo_muscular ?? "-"; 
-                newRow.appendChild(grupoMuscular);
-
-                const ejercicio = document.createElement("td");
-                ejercicio.innerHTML = ej.ejercicio ?? "-";
-                newRow.appendChild(ejercicio);
-
-                const series = document.createElement("td");
-                series.innerHTML = ej.series ?? "-"; 
-                newRow.appendChild(series);
-
-                const repeticiones = document.createElement("td");
-                repeticiones.innerHTML = ej.repeticiones ?? "-";
-                newRow.appendChild(repeticiones);
-
-                const peso = document.createElement("td");
-                peso.innerHTML = ej.peso ?? "-";
-                newRow.appendChild(peso);
-
-                const rir = document.createElement("td");
-                rir.innerHTML = ej.rir ?? "-";
-                newRow.appendChild(rir);
-
-                const tiempoDescanso = document.createElement("td");
-                tiempoDescanso.innerHTML = ej.tiempo_descanso ?? "-";
-                newRow.appendChild(tiempoDescanso);
-
-                const descripcion = document.createElement("td");
-                descripcion.innerHTML = ej.descripcion ?? "-";
-                newRow.appendChild(descripcion);
-
-                tbody.appendChild(newRow);
-                });
-            })
-            .catch((error) => {
-                console.error("Error al cargar los ejercicios:", error);
-            });
-        </script>
+        <div class="envoltorio-pagina">
+            <!-- HEADER -->
+            <header class="header" id="header">
+            <!-- Sección de navegación -->
+                <a href="index.html" class="txt-atlas" aria-label="Texto de la marca de la página llamada Atlas+">Atlas+</a>
+                <nav class="container-contenido-header" aria-label="Navegación principal">
+                    <ul class="nav_list" id="nav-list">
+                        <li>
+                            <button class="txt-home" href="index.html"><a>Inicio</a></button>
+                        </li>
+                        <li class="nav-link">
+                            <a class="txt-home" href="quienes_somos.html">Quienes Somos</a>
+                        </li>
+                        <li>
+                            <a class="nav-rutinas-btn" href="rutinas_alimentacion.html">Armá tu rutina</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section class="section-table">
+                    <div class="entrenamiento-title">
+                        <div>
+                            <h1>Ejercicios</h1>
+                        </div>
+                        <div>
+                            <button class="button" id="button-volver"><a href="arma_rutina.html">Volver</a></button>
+                            <button class="button"><a href="#">Agregar</a></button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Grupo Muscular</th>
+                                <th>Ejercicio</th>
+                                <th>Series</th>
+                                <th>Repeticiones</th>
+                                <th>Peso</th>
+                                <th>Rir</th>
+                                <th>Tiempo de descanso</th>
+                                <th>Descripcion</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+            </main>
+            <footer class="footer-seccion">
+                <div class="footer-container">
+                    <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
+                    <div class="equipo-facultad">
+                        <ul>Rodrigo Riera</ul>
+                        <ul>Tomas Diaz</ul>
+                        <ul>Tiago Nehuen Sedano</ul>
+                        <ul>Lucas Ferreira</ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </body>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+
+        const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+
+        fetch(arma_rutinaBackURL)
+        .then((response) => response.json())
+        .then((data) => {
+            const tbody = document.querySelector("table.table tbody");
+
+            data.ejercicios.forEach((ej) => {
+            const newRow = document.createElement("tr");
+
+            const grupoMuscular = document.createElement("td");
+            grupoMuscular.innerHTML = ej.grupo_muscular ?? "-"; 
+            newRow.appendChild(grupoMuscular);
+
+            const ejercicio = document.createElement("td");
+            ejercicio.innerHTML = ej.ejercicio ?? "-";
+            newRow.appendChild(ejercicio);
+
+            const series = document.createElement("td");
+            series.innerHTML = ej.series ?? "-"; 
+            newRow.appendChild(series);
+
+            const repeticiones = document.createElement("td");
+            repeticiones.innerHTML = ej.repeticiones ?? "-";
+            newRow.appendChild(repeticiones);
+
+            const peso = document.createElement("td");
+            peso.innerHTML = ej.peso ?? "-";
+            newRow.appendChild(peso);
+
+            const rir = document.createElement("td");
+            rir.innerHTML = ej.rir ?? "-";
+            newRow.appendChild(rir);
+
+            const tiempoDescanso = document.createElement("td");
+            tiempoDescanso.innerHTML = ej.tiempo_descanso ?? "-";
+            newRow.appendChild(tiempoDescanso);
+
+            const descripcion = document.createElement("td");
+            descripcion.innerHTML = ej.descripcion ?? "-";
+            newRow.appendChild(descripcion);
+
+            const NewEditar = document.createElement("td"); // Editar
+            const EditarLink = document.createElement("a");
+            EditarLink.className = "button";
+            EditarLink.innerHTML = "Editar";
+            // EditarLink.href = "ejercicios.html?id=" + ej.id; //
+            NewEditar.appendChild(EditarLink);
+            newRow.appendChild(NewEditar);
+    
+            const NewBorrar = document.createElement("td"); // Borrar
+            const BorrarLink = document.createElement("a");
+            BorrarLink.className = "button";
+            BorrarLink.innerHTML = "Borrar";
+            BorrarLink.href = "#";
+            NewBorrar.appendChild(BorrarLink);
+            newRow.appendChild(NewBorrar);
+
+            tbody.appendChild(newRow);
+            });
+        })
+        .catch((error) => {
+            console.error("Error al cargar los ejercicios:", error);
+        });
+    </script>
 </html>
+
+
