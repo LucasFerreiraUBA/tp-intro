@@ -16,6 +16,7 @@ reset-db:
 	cd ./backend && docker compose down
 	sudo rm -rf ./backend/.volumes/postgres/data/*
 	cd ./backend && docker compose up -d
+	
 check-db:
 	docker exec -it backend-postgres-1 psql -U postgres -d atlas -c "SELECT * FROM alimentacion LIMIT 5;" -P pager=off
 

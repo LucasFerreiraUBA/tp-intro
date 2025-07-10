@@ -50,7 +50,7 @@
                             <th>Borrar</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody class="body-table"></tbody>
                 </table>
                 </section>
             </main>
@@ -66,56 +66,87 @@
                 </div>
             </footer>
         </div>
-    </body>
     <script>
-        const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
+        tablaEntrenos();
 
-        fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
-            return response.json();
-        }).then((data) => { // una vez que consulta vuelve con la data
-            const table = document.querySelector("tbody");
-            data.forEach(Entrenamiento => {
-                const newRow = document.createElement("tr");
+        function tablaEntrenos(){
+            document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
 
-                const DiaSemana = document.createElement("td"); // Dia de la Semana
-                DiaSemana.innerHTML = Entrenamiento.dia_semana;
-                newRow.appendChild(DiaSemana);
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
 
-                const Objetivo = document.createElement("td"); // Objetivo
-                Objetivo.innerHTML = Entrenamiento.objetivo;
-                newRow.appendChild(Objetivo);
+            fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
+                return response.json();
+            }).then((data) => { // una vez que consulta vuelve con la data
+                const table = document.querySelector("tbody");
+                data.forEach(Entrenamiento => {
+                    const newRow = document.createElement("tr");
 
-                const NivelUsuario = document.createElement("td"); // Nivel Usuario
-                NivelUsuario.innerHTML = Entrenamiento.nivel_usuario ?? "-";
-                newRow.appendChild(NivelUsuario);
+                    const DiaSemana = document.createElement("td"); // Dia de la Semana
+                    DiaSemana.innerHTML = Entrenamiento.dia_semana;
+                    newRow.appendChild(DiaSemana);
 
-                const Duracion = document.createElement("td"); // Duracion
-                Duracion.innerHTML = Entrenamiento.duracion_minutos ?? "-";
-                newRow.appendChild(Duracion);
+                    const Objetivo = document.createElement("td"); // Objetivo
+                    Objetivo.innerHTML = Entrenamiento.objetivo;
+                    newRow.appendChild(Objetivo);
 
-                const Descripcion = document.createElement("td"); // Descripcion
-                Descripcion.innerHTML = Entrenamiento.descripcion ?? "-";
-                newRow.appendChild(Descripcion);
+                    const NivelUsuario = document.createElement("td"); // Nivel Usuario
+                    NivelUsuario.innerHTML = Entrenamiento.nivel_usuario ?? "-";
+                    newRow.appendChild(NivelUsuario);
 
-                const NewEditar = document.createElement("td"); // Editar
-                const EditarLink = document.createElement("a");
-                EditarLink.className = "button";
-                EditarLink.innerHTML = "Editar";
-                EditarLink.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
-                NewEditar.appendChild(EditarLink);
-                newRow.appendChild(NewEditar);
-        
-                const NewBorrar = document.createElement("td"); // Borrar
+                    const Duracion = document.createElement("td"); // Duracion
+                    Duracion.innerHTML = Entrenamiento.duracion_minutos ?? "-";
+                    newRow.appendChild(Duracion);
+
+                    const Descripcion = document.createElement("td"); // Descripcion
+                    Descripcion.innerHTML = Entrenamiento.descripcion ?? "-";
+                    newRow.appendChild(Descripcion);
+
+                    const NewEditar = document.createElement("td"); // Editar
+                    const EditarLink = document.createElement("a");
+                    EditarLink.className = "button";
+                    EditarLink.innerHTML = "Editar";
+                    EditarLink.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
+                    NewEditar.appendChild(EditarLink);
+                    newRow.appendChild(NewEditar);
+            
+                    const NewBorrar = document.createElement("td"); // Borrar
+                    const BorrarLink = document.createElement("a");
+                    BorrarLink.className = "button";
+                    BorrarLink.innerHTML = "Borrar";
+                    BorrarLink.onclick = function(){deleteEntrenamiento(Entrenamiento.id)}
+                    NewBorrar.appendChild(BorrarLink);
+                    newRow.appendChild(NewBorrar);
+
+                    table.appendChild(newRow);
+                });
+            });
+        }
+
+        function deleteEntrenamiento(id){
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+            fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEntrenos()); // vuelve a cargar la tabla
+        }
+    </script>
+    </body>
+</html>
+
+
+                <!-- const NewBorrar = document.createElement("td"); // Borrar
                 const BorrarLink = document.createElement("a");
                 BorrarLink.className = "button";
                 BorrarLink.innerHTML = "Borrar";
                 BorrarLink.href = "#";
+                BorrarLink.onclick = function(e) {
+                    e.preventDefault();
+                    deleteEntrenamiento(Entrenamiento.id);
+                };
                 NewBorrar.appendChild(BorrarLink);
                 newRow.appendChild(NewBorrar);
 
                 table.appendChild(newRow);
             });
-            console.log(data);
-        });
-    </script>
-</html>
+            function deleteEntrenamiento(id){
+                const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+                fetch(arma_rutinaBackURL, {method: "DELETE"})
+                    .then(() => location.reload());
+            } -->

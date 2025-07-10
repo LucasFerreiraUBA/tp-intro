@@ -293,7 +293,7 @@ app.delete("/api/entrenamientos/:id", async (req, res) => {
     return res.status(404).json({ error: "Entrenamiento no encontrado" });
   }
 
-  res.json({ status: "OK", id: eliminado });
+  res.json({ status: "OK", id: entrenamiento.id });
 });
 
 app.listen(PORT, () => {
