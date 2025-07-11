@@ -32,7 +32,7 @@
                 <section class="section-table">
                     <div class="entrenamiento-title">
                         <div>
-                            <h1>Ejercicios</h1>
+                            <h1 id="titulo-ejercicios"></h1>
                         </div>
                         <div>
                             <button class="button" id="button-volver"><a href="arma_rutina.html">Volver</a></button>
@@ -54,7 +54,7 @@
                                 <th>Borrar</th>
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody class="ejercicio-table"></tbody>
                     </table>
                 </section>
             </main>
@@ -73,72 +73,84 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get("id");
+        tablaEjercicios();
 
-        const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+        function tablaEjercicios(){
+            document.getElementsByClassName("ejercicio-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
+        
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
 
-        fetch(arma_rutinaBackURL)
-        .then((response) => response.json())
-        .then((data) => {
-            const tbody = document.querySelector("table.table tbody");
+            fetch(arma_rutinaBackURL)
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById("titulo-ejercicios").textContent = `${data.dia_semana}`; /*especifica el dia del entrenamiento como titulo*/
+                const tbody = document.querySelector("table.table tbody");
 
-            data.ejercicios.forEach((ej) => {
-            const newRow = document.createElement("tr");
+                data.ejercicios.forEach((ej) => {
+                const newRow = document.createElement("tr");
 
-            const grupoMuscular = document.createElement("td");
-            grupoMuscular.innerHTML = ej.grupo_muscular ?? "-"; 
-            newRow.appendChild(grupoMuscular);
+                const grupoMuscular = document.createElement("td");
+                grupoMuscular.innerHTML = ej.grupo_muscular ?? "-"; 
+                newRow.appendChild(grupoMuscular);
 
-            const ejercicio = document.createElement("td");
-            ejercicio.innerHTML = ej.ejercicio ?? "-";
-            newRow.appendChild(ejercicio);
+                const ejercicio = document.createElement("td");
+                ejercicio.innerHTML = ej.ejercicio ?? "-";
+                newRow.appendChild(ejercicio);
 
-            const series = document.createElement("td");
-            series.innerHTML = ej.series ?? "-"; 
-            newRow.appendChild(series);
+                const series = document.createElement("td");
+                series.innerHTML = ej.series ?? "-"; 
+                newRow.appendChild(series);
 
-            const repeticiones = document.createElement("td");
-            repeticiones.innerHTML = ej.repeticiones ?? "-";
-            newRow.appendChild(repeticiones);
+                const repeticiones = document.createElement("td");
+                repeticiones.innerHTML = ej.repeticiones ?? "-";
+                newRow.appendChild(repeticiones);
 
-            const peso = document.createElement("td");
-            peso.innerHTML = ej.peso ?? "-";
-            newRow.appendChild(peso);
+                const peso = document.createElement("td");
+                peso.innerHTML = ej.peso ?? "-";
+                newRow.appendChild(peso);
 
-            const rir = document.createElement("td");
-            rir.innerHTML = ej.rir ?? "-";
-            newRow.appendChild(rir);
+                const rir = document.createElement("td");
+                rir.innerHTML = ej.rir ?? "-";
+                newRow.appendChild(rir);
 
-            const tiempoDescanso = document.createElement("td");
-            tiempoDescanso.innerHTML = ej.tiempo_descanso ?? "-";
-            newRow.appendChild(tiempoDescanso);
+                const tiempoDescanso = document.createElement("td");
+                tiempoDescanso.innerHTML = ej.tiempo_descanso ?? "-";
+                newRow.appendChild(tiempoDescanso);
 
-            const descripcion = document.createElement("td");
-            descripcion.innerHTML = ej.descripcion ?? "-";
-            newRow.appendChild(descripcion);
+                const descripcion = document.createElement("td");
+                descripcion.innerHTML = ej.descripcion ?? "-";
+                newRow.appendChild(descripcion);
 
-            const NewEditar = document.createElement("td"); // Editar
-            const EditarLink = document.createElement("a");
-            EditarLink.className = "button";
-            EditarLink.innerHTML = "Editar";
-            // EditarLink.href = "ejercicios.html?id=" + ej.id; //
-            NewEditar.appendChild(EditarLink);
-            newRow.appendChild(NewEditar);
-    
-            const NewBorrar = document.createElement("td"); // Borrar
-            const BorrarLink = document.createElement("a");
+                const NewEditar = document.createElement("td"); // Editar
+                const EditarLink = document.createElement("a");
+                EditarLink.className = "button";
+                EditarLink.innerHTML = "Editar";
+                // EditarLink.href = "ejercicios.html?id=" + ej.id; //
+                NewEditar.appendChild(EditarLink);
+                newRow.appendChild(NewEditar);
+        
+                const NewBorrar = document.createElement("td"); // Borrar
+                const BorrarLink = document.createElement("a");
 
-            BorrarLink.className = "button";
-            BorrarLink.innerHTML = "Borrar";
-            BorrarLink.href = "#";
-            NewBorrar.appendChild(BorrarLink);
-            newRow.appendChild(NewBorrar);
+                BorrarLink.className = "button";
+                BorrarLink.innerHTML = "Borrar";
+                BorrarLink.href = "#";
+                BorrarLink.onclick = function(event){deleteEjercicio(ej.id)};
+                NewBorrar.appendChild(BorrarLink);
+                newRow.appendChild(NewBorrar);
 
-            tbody.appendChild(newRow);
+                tbody.appendChild(newRow);
+                });
+            })
+            .catch((error) => {
+                console.error("Error al cargar los ejercicios:", error);
             });
-        })
-        .catch((error) => {
-            console.error("Error al cargar los ejercicios:", error);
-        });
+    }
+
+        function deleteEjercicio(id){
+            const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
+            fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
+        }
     </script>
     </body>
 </html>

@@ -64,6 +64,9 @@ nav > ul {
     text-decoration: none;
 }
 
+.txt-atlas:hover {
+    background-image: linear-gradient(to right, #43e97b 0%, #38f9d7 100%);
+}
 
 /* Nav container */
 .container-contenido-header {
