@@ -135,7 +135,12 @@
                 BorrarLink.className = "button";
                 BorrarLink.innerHTML = "Borrar";
                 BorrarLink.href = "#";
-                BorrarLink.onclick = function(){deleteEjercicio(ej.id)};
+                BorrarLink.onclick = function(){
+                    if(confirm("Estas seguro de que deseas eliminar este ejercicio?")){
+                        deleteEjercicio(ej.id);
+                        alert("Ejercicio eliminado");
+                    }
+                };
                 NewBorrar.appendChild(BorrarLink);
                 newRow.appendChild(NewBorrar);
 
