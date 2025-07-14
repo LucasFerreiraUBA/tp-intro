@@ -6,6 +6,7 @@
         <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
         <!-- CSS -->
         <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="./ejercicios.css">
         <title>Arma rutina</title>
     </head>
     <body>
@@ -87,7 +88,9 @@
                 const tbody = document.querySelector("table.table tbody");
 
                 data.ejercicios.forEach((ej) => {
+                    console.log(ej)
                 const newRow = document.createElement("tr");
+                newRow.setAttribute("data-id",ej.id)
 
                 const grupoMuscular = document.createElement("td");
                 grupoMuscular.innerHTML = ej.grupo_muscular ?? "-"; 
@@ -125,6 +128,10 @@
                 const EditarLink = document.createElement("a");
                 EditarLink.className = "button";
                 EditarLink.innerHTML = "Editar";
+                EditarLink.onclick = () => {
+
+                    crearModal(ej)
+}
                 // EditarLink.href = "ejercicios.html?id=" + ej.id; //
                 NewEditar.appendChild(EditarLink);
                 newRow.appendChild(NewEditar);
@@ -152,10 +159,47 @@
             });
     }
 
-        function deleteEjercicio(id){
-            const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
-            fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
-        }
+    function deleteEjercicio(id){
+        const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
+        fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
+    }
+    const editarEjercicio = ( id ) =>{
+        const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
+        fetch(arma_rutinaBackURL, {method: 'PUT'}).then(() => tablaEjercicios()); 
+    }
+    const crearModal = (ej) => {
+    const dialog = document.createElement("dialog");
+    dialog.classList.add("modal-editar");
+
+    const titulo = document.createElement("h2");
+    titulo.innerHTML = "Editar Ejercicio";
+
+    const parrafo = document.createElement("p");
+    parrafo.innerText = JSON.stringify(ej, null, 2); // más legible
+
+    const botonEditar = document.createElement("button");
+    botonEditar.innerText = "EDITAR";
+    botonEditar.classList.add("button", "is-primary");
+
+    const botonCerrar = document.createElement("button");
+    botonCerrar.innerText = "Cancelar";
+    botonCerrar.classList.add("button", "is-light");
+
+    botonCerrar.addEventListener("click", () => {
+        dialog.close();
+        dialog.remove(); // limpia el DOM
+    });
+
+    // Agregar contenido
+    dialog.appendChild(titulo);
+    dialog.appendChild(parrafo);
+    dialog.appendChild(botonEditar);
+    dialog.appendChild(botonCerrar);
+
+    document.body.appendChild(dialog);  // ⬅️ importante: insertarlo al DOM
+    dialog.showModal();                 // ⬅️ muestra el modal
+};
+
     </script>
     </body>
 </html>

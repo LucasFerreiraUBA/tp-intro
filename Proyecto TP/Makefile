@@ -24,8 +24,9 @@ recreate-db:
 	cd ./backend && docker compose down -v
 	cd ./backend && docker compose up -d
 
-reset-db-hard:
+init-all:
 	cd backend && docker compose down -v
 	cd backend && sudo rm -rf ./.volumes/postgres/data
 	cd backend && docker compose up -d
 	sleep 5
+	make start-backend
