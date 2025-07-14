@@ -13,21 +13,23 @@
 </head>
 <body>
     <div class="envoltorio-pagina">
-        <header>
-            <a href="index.html" class="txt-atlas" alt="Texto de la marca de la página llamada Atlas+">Atlas+</a>
-            <div class="container-contenido-header">
-                <div class="home-link">
-                    <a class="txt-home" href="quienes_somos.html" alt="Volver a la página principal">Quienes Somos</a>
-                </div>
-                <div class="dashboardLink">
-                    <a class="txt-dashboard" href="#dashboard" alt="Se habla sobre la marca Atlas">Dashboard</a>
-                </div>
-                <div class="alimentacionLink">
-                    <a class="txt-dashboard" href="#alimentacion" alt="Se habla sobre seguir tu alimentacion">Alimentacion</a>
-                </div>
-                <button class="btn-rutinas" href="#rutinas" alt="Para pedir armar una rutina personalizada">Arma tu rutina</button>    
-            </div>
-                
+        <!-- HEADER -->
+        <header class="header" id="header">
+        <!-- Sección de navegación -->
+            <a href="index.html" class="txt-atlas" aria-label="Texto de la marca de la página llamada Atlas+">Atlas+</a>
+            <nav class="container-contenido-header" aria-label="Navegación principal">
+                <ul class="nav_list" id="nav-list">
+                    <li>
+                        <a class="txt-home" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-link">
+                        <a class="txt-home" href="quienes_somos.html">Quienes Somos</a>
+                    </li>
+                    <li>
+                        <a class="nav-rutinas-btn" href="rutinas_alimentacion.html">Armá tu rutina</a>
+                    </li>
+                </ul>
+            </nav>
         </header>
         <main>
             <div id="carouselExampleIndicators" class="carousel slide">
@@ -56,35 +58,31 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            <section class="section-container">
-                <div class="div-container">
-                    <div class="container-img" >
+            <section class="tarjeta-section">
+                    <div class="tarjeta-img" >
                         <img src="https://www.sportlife.es/uploads/s1/98/42/45/0/las-claves-del-exito-en-tu-entrenamiento.jpeg" alt="imagen entrenando">
                     </div>
-                    <div class="container-info" >
-                        <p class="container-info-text">Diseñá tu propio plan de entrenamiento y empezá a construir el cuerpo que siempre soñaste.
+                    <div class="tarjeta-info" >
+                        <p class="tarjeta-info-text">Diseñá tu propio plan de entrenamiento y empezá a construir el cuerpo que siempre soñaste.
                         ¡No esperes más para dar el primer paso hacia tu mejor versión!</p>
-                        <button class="container-btn">ARMA TU RUTINA</button>
+                        <button class="tarjeta-info-btn" onclick="window.location.href='rutinas_alimentacion.html'">ARMA TU RUTINA</button>
                     </div>
-                </div>
-                <div class="div-container">
-                    <div class="container-info">
-                        <p class="container-info-text">Tomá el control de tu tiempo y progresá de forma constante con una rutina adaptada a vos.
+                    <div class="tarjeta-info">
+                        <p class="tarjeta-info-text">Tomá el control de tu tiempo y progresá de forma constante con una rutina adaptada a vos.
                         ¡Entrená con propósito y alcanzá resultados reales!</p>
-                        <button class="container-btn">ORGANIZA TU RUTINA</button>
+                        <!-- Hay que cambiar esto y el linkeo ! -->
+                        <button class="tarjeta-info-btn">ORGANIZA TU RUTINA</button>
                     </div>
-                    <div class="container-img" >
+                    <div class="tarjeta-img" >
                         <img src="https://images.unsplash.com/photo-1734668487893-d686f3c8d0cf?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fGVudHJlbmFkb3IlMjBhcm1hbmRvJTIwcnV0aW5hfGVufDB8fDB8fHww" alt="imagen de entrenamiento">
                     </div>
-                </div>
-                <div class="div-container">
-                    <div class="container-img" >
+                    <div class="tarjeta-img" >
                         <img src="https://www.gndiario.com/sites/default/files/noticias/tuppers-comida-saludable.jpg" alt="imagen de comida saludable">
                     </div>
-                    <div class="container-info" >
-                        <p class="container-info-text">Comé de forma inteligente y alineá tu alimentación con tus objetivos físicos y de salud.
+                    <div class="tarjeta-info" >
+                        <p class="tarjeta-info-text">Comé de forma inteligente y alineá tu alimentación con tus objetivos físicos y de salud.
                         ¡La constancia en la dieta es clave para transformar tu cuerpo!</p>
-                        <button class="container-btn">SEGUI TU DIETA</button>
+                        <button class="tarjeta-info-btn">SEGUI TU DIETA</button>
                     </div>
             </section>
         </main>
@@ -101,5 +99,6 @@
         </footer>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO" crossorigin="anonymous"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+         <!-- CSS -->
+        <link rel="stylesheet" href="../css/style.css">
+        <title>Arma rutina</title>
+    </head>
+    <body>
+        <div class="envoltorio-pagina">
+            <!-- HEADER -->
+            <header class="header" id="header">
+            <!-- Sección de navegación -->
+                <a href="index.html" class="txt-atlas" aria-label="Texto de la marca de la página llamada Atlas+">Atlas+</a>
+                <nav class="container-contenido-header" aria-label="Navegación principal">
+                    <ul class="nav_list" id="nav-list">
+                        <li class="nav-link">
+                             <a class="txt-home" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="txt-home" href="quienes_somos.html">Quienes Somos</a>
+                        </li>
+                        <li>
+                            <a class="nav-rutinas-btn" href="rutinas_alimentacion.html">Armá tu rutina</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section class="section-table">
+                    <div class="entrenamiento-title">
+                        <div>
+                            <h1>Organiza tus entrenamientos</h1>
+                        </div>
+                        <div>
+                            <button class="button">Agregar</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Dia de la Semana </th>
+                            <th>Objetivo</th>
+                            <th>Nivel Usuario</th>
+                            <th>Duracion</th>
+                            <th>Descripcion</th>
+                            <th>Editar</th>
+                            <th>Borrar</th>
+                        </tr>
+                    </thead>
+                    <tbody class="body-table"></tbody>
+                </table>
+                </section>
+            </main>
+            <footer class="footer-seccion">
+                <div class="footer-container">
+                    <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
+                    <div class="equipo-facultad">
+                        <ul>Rodrigo Riera</ul>
+                        <ul>Tomas Diaz</ul>
+                        <ul>Tiago Nehuen Sedano</ul>
+                        <ul>Lucas Ferreira</ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    <script>
+        tablaEntrenos();
+
+        function tablaEntrenos(){
+            document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
+
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
+
+            fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
+                return response.json();
+            }).then((data) => { // una vez que consulta vuelve con la data
+                const table = document.querySelector("tbody");
+                data.forEach(Entrenamiento => {
+                    const newRow = document.createElement("tr");
+
+                    const DiaSemana = document.createElement("td"); // Dia de la Semana
+                    DiaSemana.innerHTML = Entrenamiento.dia_semana;
+                    newRow.appendChild(DiaSemana);
+
+                    const Objetivo = document.createElement("td"); // Objetivo
+                    Objetivo.innerHTML = Entrenamiento.objetivo;
+                    newRow.appendChild(Objetivo);
+
+                    const NivelUsuario = document.createElement("td"); // Nivel Usuario
+                    NivelUsuario.innerHTML = Entrenamiento.nivel_usuario ?? "-";
+                    newRow.appendChild(NivelUsuario);
+
+                    const Duracion = document.createElement("td"); // Duracion
+                    Duracion.innerHTML = Entrenamiento.duracion_minutos ?? "-";
+                    newRow.appendChild(Duracion);
+
+                    const Descripcion = document.createElement("td"); // Descripcion
+                    Descripcion.innerHTML = Entrenamiento.descripcion ?? "-";
+                    newRow.appendChild(Descripcion);
+
+                    const NewEditar = document.createElement("td"); // Editar
+                    const EditarLink = document.createElement("a");
+                    EditarLink.className = "button";
+                    EditarLink.innerHTML = "Editar";
+                    EditarLink.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
+                    NewEditar.appendChild(EditarLink);
+                    newRow.appendChild(NewEditar);
+            
+                    const NewBorrar = document.createElement("td"); // Borrar
+                    const BorrarLink = document.createElement("a");
+                    BorrarLink.className = "button";
+                    BorrarLink.innerHTML = "Borrar";
+                    BorrarLink.onclick = function(){
+                        if(confirm("Estas seguro de que deseas eliminar este entrenamiento?")){
+                            deleteEntrenamiento(Entrenamiento.id);
+                            alert("Entrenamiento eliminado");
+                        } 
+                    };
+                    NewBorrar.appendChild(BorrarLink);
+                    newRow.appendChild(NewBorrar);
+
+                    table.appendChild(newRow);
+                });
+            });
+        }
+
+        function deleteEntrenamiento(id){
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+            fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEntrenos()); // vuelve a cargar la tabla
+        }
+    </script>
+    </body>
+</html>
+
+
+                <!-- const NewBorrar = document.createElement("td"); // Borrar
+                const BorrarLink = document.createElement("a");
+                BorrarLink.className = "button";
+                BorrarLink.innerHTML = "Borrar";
+                BorrarLink.href = "#";
+                BorrarLink.onclick = function(e) {
+                    e.preventDefault();
+                    deleteEntrenamiento(Entrenamiento.id);
+                };
+                NewBorrar.appendChild(BorrarLink);
+                newRow.appendChild(NewBorrar);
+
+                table.appendChild(newRow);
+            });
+            function deleteEntrenamiento(id){
+                const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+                fetch(arma_rutinaBackURL, {method: "DELETE"})
+                    .then(() => location.reload());
+            } -->
