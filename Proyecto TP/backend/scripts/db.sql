@@ -15,7 +15,7 @@ CREATE TABLE arma_rutina (
     id SERIAL PRIMARY KEY,
     ejercicio VARCHAR(30) NOT NULL,
     repeticiones INT NOT NULL,
-    peso INT NOT NULL,
+    peso INT,
     grupo_muscular_id INT NOT NULL REFERENCES grupo_muscular(id) ON DELETE CASCADE,
     rir INT,
     tiempo_descanso INT,
@@ -85,7 +85,12 @@ INSERT INTO arma_rutina (
 ('Prensa de piernas', 12, 200, 3, 2, 60, 'Desarrollo de cuádriceps y glúteos'),
 ('Curl femoral', 10, 50, 3, 2, 45, 'Enfocado en isquiotibiales'),
 ('Curl de bíceps con barra', 10, 30, 4, 2, NULL, 'Hipertrofia de bíceps'),
-('Tríceps en polea', 12, 40, 5, 2, 45, 'Trabajo de tríceps con cuerda');
+('Tríceps en polea', 12, 40, 5, 2, 45, 'Trabajo de tríceps con cuerda'),
+('Vuelos laterales', 12, 10, 6, 0, 2, 'Ejercicio para hombros'),
+('Elevaciones de pierna', 12, NULL, 7, 1, 2, 'Ejercicio para el abdomen'),
+('Burpees', 20, NULL, 7, 0, 2, 'Ejercicio aerobico de alta intensidad'),
+('Saltos en soga', 20, NULL, 7, 0, 3, 'Ejercicio aerobico para el abdomen'),
+('Flexiones de brazo', 20, NULL, 1, 2, 3, 'Ejercicio de peso corporal para pecho');
 
 INSERT INTO alimentacion (
     nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, rutina_id, descripcion
@@ -112,13 +117,13 @@ INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos
 ('Domingo', 'Recuperación activa', 'Todos', 30, 'Movilidad, estiramientos y core');
 
 INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id) VALUES
-(1, 1), (1, 5), (1, 7),
-(2, 6), (2, 4), (2, 7),
-(3, 2), (3, 3), (3, 6),
-(4, 2), (4, 4), (4, 7),
+(1, 1), (1, 12), (1, 11),
+(2, 14), (2, 15), (2, 13),
+(3, 7), (3, 8), (3, 9),
+(4, 4), (4, 5), (4, 10),
 (5, 1), (5, 3), (5, 4), (5, 6),
-(6, 3), (6, 5), (6, 6),
-(7, 6);
+(6, 7), (6, 14), (6, 16),
+(7, 13);
 
 INSERT INTO entrenamiento_alimentacion (entrenamiento_id, alimentacion_id) VALUES
 (1, 2), (1, 4),
@@ -141,3 +146,9 @@ UPDATE arma_rutina SET series = 3 WHERE id = 6;
 UPDATE arma_rutina SET series = 5 WHERE id = 8; 
 UPDATE arma_rutina SET series = 4 WHERE id = 9; 
 UPDATE arma_rutina SET series = 3 WHERE id = 10; 
+UPDATE arma_rutina SET series = 3 WHERE id = 11; 
+UPDATE arma_rutina SET series = 4 WHERE id = 12; 
+UPDATE arma_rutina SET series = 3 WHERE id = 13; 
+UPDATE arma_rutina SET series = 3 WHERE id = 14; 
+UPDATE arma_rutina SET series = 4 WHERE id = 15; 
+UPDATE arma_rutina SET series = 3 WHERE id = 16;
