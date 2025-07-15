@@ -15,10 +15,10 @@ CREATE TABLE arma_rutina (
     id SERIAL PRIMARY KEY,
     ejercicio VARCHAR(30) NOT NULL,
     repeticiones INT NOT NULL,
-    peso INT,
+    peso FLOAT,
     grupo_muscular_id INT NOT NULL REFERENCES grupo_muscular(id) ON DELETE CASCADE,
     rir INT,
-    tiempo_descanso INT,
+    tiempo_descanso FLOAT,
     descripcion VARCHAR(100)
 );
 

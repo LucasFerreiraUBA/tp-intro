@@ -72,24 +72,38 @@ app.get('/api/ejercicios/:id', async (req, res) => { // get one mediante el id
 });
 
 app.post('/api/ejercicios', async (req, res) => { 
+  const {
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    grupo_muscular,  
+    rir,
+    tiempo_descanso,
+    descripcion,
+    entrenamiento_id
+  } = req.body;
 
   if (
     !req.body.ejercicio || 
-    !req.body.repeticiones || 
-    !req.body.peso || 
-    !req.body.grupo_muscular) {
+    !req.body.repeticiones ||
+    !req.body.series ||  
+    !req.body.grupo_muscular ||
+    !req.body.entrenamiento_id) {
     return res.status(400).json({ error: 'Faltan datos obligatorios' }); // ckeckea que los datos obligatorios esten presentes
   }
   
   const ejercicios = await createEjercicio(
-    req.body.ejercicio,
-    req.body.repeticiones,
-    req.body.peso,
-    req.body.grupo_muscular,
-    req.body.rir,
-    req.body.tiempo_descanso,
-    req.body.descripcion  
-  ); 
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    grupo_muscular, 
+    rir,
+    tiempo_descanso,
+    descripcion,
+    entrenamiento_id
+  );
 
   if (!ejercicios) {
     return res.status(500).json({ error: 'Error al crear el ejercicio' });
@@ -244,7 +258,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     comidas
   } = req.body;
 
-  if (!dia_semana || !objetivo || !nivel_usuario || !duracion_minutos || !descripcion || !ejercicios) {
+  if (!dia_semana || !objetivo || !nivel_usuario || !duracion_minutos || !descripcion) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
   //Crea el entrenamiento
@@ -254,7 +268,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     nivel_usuario,
     duracion_minutos,
     descripcion,
-    ejercicios,
+    ejercicios: ejercicios || [],
     comidas: comidas || []
   });
 

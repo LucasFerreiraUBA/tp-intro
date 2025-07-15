@@ -37,7 +37,7 @@
                         </div>
                         <div>
                             <button class="button" id="button-volver"><a href="arma_rutina.html">Volver</a></button>
-                            <button class="button"><a href="#">Agregar</a></button>
+                            <button class="button" id="btn-abrir-modal">Agregar</button>
                         </div>
                     </div>
                     <table class="table">
@@ -47,9 +47,9 @@
                                 <th>Ejercicio</th>
                                 <th>Series</th>
                                 <th>Repeticiones</th>
-                                <th>Peso</th>
+                                <th>Peso (kg)</th>
                                 <th>Rir</th>
-                                <th>Tiempo de Descanso</th>
+                                <th>Tiempo de Descanso (minutos)</th>
                                 <th>Descripcion</th>
                                 <th>Editar</th>
                                 <th>Borrar</th>
@@ -59,6 +59,76 @@
                     </table>
                 </section>
             </main>
+            <dialog id="modal-agregar-ejercicio" class="modal-editar">
+                <form method="dialog" id="form-agregar-ejercicio">
+                    <h2 class="title is-4">Agregar ejercicio</h2>
+
+                    <div class="field">
+                        <label class="label">Grupo muscular</label>
+                        <div class="control">
+                            <input class="input" type="text" name="grupo_muscular" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Ejercicio</label>
+                        <div class="control">
+                            <input class="input" type="text" name="ejercicio" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Series</label>
+                        <div class="control">
+                            <input class="input" type="number" name="series" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Repeticiones</label>
+                        <div class="control">
+                            <input class="input" type="number" name="repeticiones" required>
+                         </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Peso (kg)</label>
+                        <div class="control">
+                            <input class="input" type="number" name="peso" step="any" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">RIR</label>
+                        <div class="control">
+                            <input class="input" type="number" name="rir" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tiempo de descanso (minutos)</label>
+                        <div class="control">
+                            <input class="input" type="number" name="tiempo_descanso" step="any" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-success">Guardar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
             <footer class="footer-seccion">
                 <div class="footer-container">
                     <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
@@ -75,6 +145,55 @@
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get("id");
         tablaEjercicios();
+
+        const modal = document.getElementById("modal-agregar-ejercicio");
+        const formEj = document.getElementById("form-agregar-ejercicio");
+
+        // Abrir modal
+        document.getElementById("btn-abrir-modal").addEventListener("click", () => {
+            modal.showModal();
+        });
+
+        // Cerrar modal
+        document.getElementById("cancelar-modal").addEventListener("click", () => {
+            modal.close();
+        });
+
+        // Enviar nuevo ejercicio
+        formEj.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const datos = {
+                entrenamiento_id: parseInt(id), // id del entrenamiento
+                grupo_muscular: formEj.grupo_muscular.value,
+                ejercicio: formEj.ejercicio.value,
+                series: parseInt(formEj.series.value),
+                repeticiones: parseInt(formEj.repeticiones.value),
+                peso: parseFloat(formEj.peso.value),
+                rir: parseInt(formEj.rir.value),
+                tiempo_descanso: parseFloat(formEj.tiempo_descanso.value),
+                descripcion: formEj.descripcion.value
+            };
+
+            try {
+                const respuesta = await fetch("http://localhost:3000/api/ejercicios", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+
+            if (respuesta.ok) {
+                modal.close();
+                formEj.reset();
+                tablaEjercicios(); // recarga la tabla
+                alert("Ejercicio agregado");
+            } else {
+                alert("Error al agregar el ejercicio");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
 
         function tablaEjercicios(){
             document.getElementsByClassName("ejercicio-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
@@ -131,7 +250,7 @@
                 EditarLink.onclick = () => {
 
                     crearModal(ej)
-}
+                }
                 // EditarLink.href = "ejercicios.html?id=" + ej.id; //
                 NewEditar.appendChild(EditarLink);
                 newRow.appendChild(NewEditar);

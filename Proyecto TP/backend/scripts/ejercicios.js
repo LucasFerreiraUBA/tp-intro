@@ -60,22 +60,50 @@ async function getOneEjercicios(id) {
 async function createEjercicio(
   ejercicio,
   repeticiones,
+  series,
   peso,
-  grupo_muscular_id,
+  grupo_muscular_nombre,
   rir,
   tiempo_descanso,
   descripcion,
+  entrenamiento_id
 ) {
-  const result = await dbClient.query(
-    `INSERT INTO arma_rutina 
-      (ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) 
-    VALUES 
-      ($1, $2, $3, $4, $5, $6, $7) 
-    RETURNING *`,
-    [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion]
-  );
-  
-  return result.rows[0];
+  try {
+    //busca el id del grupo muscular por su nombre
+    const grupoResult = await dbClient.query(
+      'SELECT id FROM grupo_muscular WHERE nombre = $1',
+      [grupo_muscular_nombre]
+    );
+
+    if (grupoResult.rowCount === 0) {
+      return null;
+    }
+
+    const grupo_muscular_id = grupoResult.rows[0].id;
+
+    const result = await dbClient.query(
+      `INSERT INTO arma_rutina 
+        (ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) 
+      VALUES 
+        ($1, $2, $3, $4, $5, $6, $7, $8) 
+      RETURNING id`,
+      [ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion]
+    );
+
+    const arma_rutina_id = result.rows[0].id;
+    
+    await dbClient.query(
+        `INSERT INTO entrenamiento_ejercicio (entrenamiento_id, arma_rutina_id)
+        VALUES ($1, $2)`,
+        [entrenamiento_id, arma_rutina_id]
+      );
+    
+    
+    return result.rows[0];
+  } catch(error) {
+    console.error("Error al crear el ejercicio", error);
+    return null;
+  }
 }
 
 async function deleteEjercicio(id){

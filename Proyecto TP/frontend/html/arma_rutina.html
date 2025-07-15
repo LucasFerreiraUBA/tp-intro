@@ -35,7 +35,7 @@
                             <h1>Organiza tus entrenamientos</h1>
                         </div>
                         <div>
-                            <button class="button">Agregar</button>
+                            <button class="button" id="btn-abrir-modal">Agregar</button>
                         </div>
                     </div>
                     <table class="table">
@@ -44,7 +44,7 @@
                             <th>Dia de la Semana </th>
                             <th>Objetivo</th>
                             <th>Nivel Usuario</th>
-                            <th>Duracion</th>
+                            <th>Duracion (minutos)</th>
                             <th>Descripcion</th>
                             <th>Editar</th>
                             <th>Borrar</th>
@@ -54,6 +54,57 @@
                 </table>
                 </section>
             </main>
+            <div class="modal" id="modal-agregar">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Agregar entrenamiento</p>
+                        <button class="delete" aria-label="close" id="cerrar-modal"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="form-entrenamiento">
+                            <div class="field">
+                                <label class="label"> Dia de la semana</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="dia_semana" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Objetivo</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="objetivo" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Nivel Usuario</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="nivel_usuario" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Duracion (minutos)</label>
+                                <div class="control">
+                                    <input class="input" type="number" name="duracion_minutos" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Descripcion</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="descripcion"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" id="btn-guardar">Guardar</button>
+                        <button class="button" id="btn-cancelar">Cancelar</button>
+                    </footer>
+                </div>
+            </div>
             <footer class="footer-seccion">
                 <div class="footer-container">
                     <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
@@ -68,6 +119,48 @@
         </div>
     <script>
         tablaEntrenos();
+
+        //mostrar modal
+        document.querySelector('#btn-abrir-modal').addEventListener('click', () => {
+            document.getElementById('modal-agregar').classList.add('is-active');
+        });
+        //ocultar modal
+        function cerrarModal(){
+            document.getElementById('modal-agregar').classList.remove('is-active');
+            document.getElementById('form-entrenamiento').reset();
+        }
+        document.getElementById('cerrar-modal').addEventListener('click', cerrarModal);
+        document.getElementById('btn-cancelar').addEventListener('click', cerrarModal);
+        document.querySelector('#modal-agregar .modal-background').addEventListener('click', cerrarModal);
+        //enviar formulario
+        document.getElementById('btn-guardar').addEventListener('click', async () => {
+            const form = document.getElementById('form-entrenamiento');
+            const datos = {
+                dia_semana: form.dia_semana.value,
+                objetivo: form.objetivo.value,
+                nivel_usuario: form.nivel_usuario.value,
+                duracion_minutos: parseInt(form.duracion_minutos.value),
+                descripcion: form.descripcion.value
+            };
+
+            try {
+                const respuesta = await fetch("http://localhost:3000/api/entrenamientos", {
+                    method: "POST",
+                    headers: {"Content-type": "application/json"},
+                    body: JSON.stringify(datos)
+                });
+
+                if(respuesta.ok) {
+                    cerrarModal();
+                    tablaEntrenos();
+                    alert("Entrenamiento agregado");
+                } else {
+                    alert("Error al agregar el entrenamiento");
+                }
+            } catch(error) {
+                console.error("Error al enviar", error);
+            }
+        });
 
         function tablaEntrenos(){
             document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
