@@ -141,7 +141,8 @@
                 </div>
             </footer>
         </div>
-    <script>
+    <script type="module">
+        import {crearModal} from "../js/ejercicios.mjs"
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get("id");
         tablaEjercicios();
@@ -282,42 +283,6 @@
         const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
         fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
     }
-    const editarEjercicio = ( id ) =>{
-        const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
-        fetch(arma_rutinaBackURL, {method: 'PUT'}).then(() => tablaEjercicios()); 
-    }
-    const crearModal = (ej) => {
-    const dialog = document.createElement("dialog");
-    dialog.classList.add("modal-editar");
-
-    const titulo = document.createElement("h2");
-    titulo.innerHTML = "Editar Ejercicio";
-
-    const parrafo = document.createElement("p");
-    parrafo.innerText = JSON.stringify(ej, null, 2); // más legible
-
-    const botonEditar = document.createElement("button");
-    botonEditar.innerText = "EDITAR";
-    botonEditar.classList.add("button", "is-primary");
-
-    const botonCerrar = document.createElement("button");
-    botonCerrar.innerText = "Cancelar";
-    botonCerrar.classList.add("button", "is-light");
-
-    botonCerrar.addEventListener("click", () => {
-        dialog.close();
-        dialog.remove(); // limpia el DOM
-    });
-
-    // Agregar contenido
-    dialog.appendChild(titulo);
-    dialog.appendChild(parrafo);
-    dialog.appendChild(botonEditar);
-    dialog.appendChild(botonCerrar);
-
-    document.body.appendChild(dialog);  // ⬅️ importante: insertarlo al DOM
-    dialog.showModal();                 // ⬅️ muestra el modal
-};
 
     </script>
     </body>

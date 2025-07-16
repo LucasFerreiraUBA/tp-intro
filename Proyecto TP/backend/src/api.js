@@ -14,8 +14,9 @@ const {
   createEjercicio,
   deleteEjercicio,
   getAllGrupo_musculares,
-  updateEjercicio
-} = require('../scripts/ejercicios');  // llama al archivo atlas para hacer las consultas a la base de datos
+  updateEjercicio,
+  updateEjercicioById,
+} = require('../scripts/ejercicios.js');  // llama al archivo atlas para hacer las consultas a la base de datos
 
 const {
   getAllComidas,
@@ -30,7 +31,7 @@ const {
   getOneEntrenamiento,
   createEntrenamiento,
   deleteEntrenamiento,
-  updateEntrenamiento
+  updateEntrenamiento,
 } = require("../scripts/entrenamiento");
 
 // Sample route
@@ -145,6 +146,43 @@ app.put('/api/ejercicios/:id', async (req, res) => {
       return res.status(404).json({ error: 'Ejercicio no encontrado para actualizar' });
     }
   res.json(ejercicio);
+});
+
+app.patch('/api/ejercicios/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const {
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    grupo_muscular,
+    rir,
+    tiempo_descanso,
+    descripcion,
+  } = req.body;
+
+  try {
+    const actualizado = await updateEjercicioById(id, {
+      ejercicio,
+      repeticiones,
+      series,
+      peso,
+      grupo_muscular,
+      rir,
+      tiempo_descanso,
+      descripcion,
+    });
+
+    if (!actualizado) {
+      return res.status(404).json({ error: 'Ejercicio no encontrado' });
+    }
+
+    res.status(200).json({ mensaje: 'Ejercicio actualizado con éxito', ejercicio: actualizado });
+  } catch (error) {
+    console.error('Error al actualizar ejercicio:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
 
 //---------------------------------------------------------------alimentacion----------------------------------------------------------------

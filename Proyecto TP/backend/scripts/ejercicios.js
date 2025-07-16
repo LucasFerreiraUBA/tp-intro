@@ -136,11 +136,54 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular
   return result.rows[0]
 }
 
+async function updateEjercicioById(
+  id,
+  ejercicio,
+  repeticiones,
+  series,
+  peso,
+  grupo_muscular,
+  rir,
+  tiempo_descanso,
+  descripcion
+) {
+  const result = await dbClient.query(`
+    UPDATE ejercicios SET
+      ejercicio = $1,
+      repeticiones = $2,
+      series = $3,
+      peso = $4,
+      grupo_muscular = $5,
+      rir = $6,
+      tiempo_descanso = $7,
+      descripcion = $8
+    WHERE id = $9
+    RETURNING *;
+  `, [
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    grupo_muscular,
+    rir,
+    tiempo_descanso,
+    descripcion,
+    id
+  ]);
+
+  if (result.rows.length === 0) {
+    return null;
+  }
+
+  return result.rows[0]; 
+}
+
 module.exports = {
   getAllEjercicios,
   getOneEjercicios,
   createEjercicio,
   deleteEjercicio,
   getAllGrupo_musculares,
-  updateEjercicio
+  updateEjercicio,
+  updateEjercicioById
 };
