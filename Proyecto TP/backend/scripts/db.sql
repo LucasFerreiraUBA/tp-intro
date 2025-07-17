@@ -95,17 +95,38 @@ INSERT INTO arma_rutina (
 INSERT INTO alimentacion (
     nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, rutina_id, descripcion
 ) VALUES
-('Pechuga con arroz', 'almuerzo', 600, 45, 50, 10, 1, 'Post-entreno después de Banco Plano'),
-('Batido de proteínas', 'merienda', 250, 30, 10, 5, 2, 'Ideal después del Press Inclinado'),
-('Tortilla de claras', 'desayuno', 300, 25, 20, 8, 4, 'Antes del Remo con barra'),
-('Salmón con ensalada', 'cena', 500, 35, 15, 20, 6, 'Recuperación después del Peso muerto'),
-('Yogur con avena', 'desayuno', 350, 15, 40, 7, 10, 'Antes de entrenar bíceps'),
-('Omelette de claras con avena', 'desayuno', 400, 30, 35, 10, 1, 'Desayuno pre entreno para fuerza en pecho'),
-('Pechuga de pollo con papas', 'almuerzo', 650, 50, 60, 15, 1, 'Recuperación post Banco Plano'),
-('Arroz integral con atún', 'almuerzo', 550, 40, 45, 8, 2, 'Alta proteína para entrenamiento de pecho'),
-('Tostadas con mantequilla de maní', 'merienda', 300, 12, 25, 18, 2, 'Energía rápida pre entreno'),
-('Sándwich de pollo y palta', 'almuerzo', 600, 35, 40, 20, 4, 'Perfecto para recuperación de espalda'),
-('Yogur griego con nueces', 'desayuno', 400, 20, 25, 18, 4, 'Desayuno balanceado antes de entrenar');
+('Pechuga con arroz', 'Almuerzo', 600, 45, 50, 10, 1, 'Post-entreno después de Banco Plano'),
+('Batido de proteínas', 'Desayuno', 250, 30, 10, 5, 2, 'Ideal después de hacer sentadilla'),
+('Tortilla de claras', 'Desayuno', 300, 25, 20, 8, 4, 'Antes del Remo con barra'),
+('Salmón con ensalada', 'Cena', 500, 35, 15, 20, 6, 'Recuperación después del Peso muerto'),
+('Yogur con avena', 'Desayuno', 350, 15, 40, 7, 10, 'Antes de entrenar bíceps'),
+('Omelette de claras con avena', 'Desayuno', 400, 30, 35, 10, 1, 'Desayuno alto en proteinas'),
+('Pechuga de pollo con papas', 'Almuerzo', 650, 50, 60, 15, 1, 'Recuperación post Banco Plano'),
+('Arroz integral con atún', 'Cena', 550, 40, 45, 8, 2, 'Alta proteína para entrenamiento de pecho'),
+('Tostadas con mantequilla de maní', 'Merienda', 300, 12, 25, 18, 2, 'Energía rápida pre entreno'),
+('Sándwich de pollo y palta', 'Almuerzo', 600, 35, 40, 20, 4, 'Perfecto para recuperación de espalda'),
+('Yogur griego con nueces', 'Desayuno', 400, 20, 25, 18, 4, 'Desayuno balanceado antes de entrenar'),
+('Ensalada de quinoa con pollo', 'Almuerzo', 550, 35, 45, 12, 3, 'Ideal para recuperación post piernas'),
+('Pan integral con palta y huevo', 'Desayuno', 400, 20, 30, 18, 6, 'Desayuno energético previo a HIIT'),
+('Tazón de frutas con yogur', 'Desayuno', 350, 10, 50, 8, 13, 'Refrescante y liviano antes de entrenar core'),
+('Tarta de espinaca y queso', 'Almuerzo', 500, 25, 35, 20, 8, 'Almuerzo balanceado post pierna'),
+('Wrap de atún con vegetales', 'Cena', 450, 30, 25, 15, 5, 'Cena liviana y proteica'),
+('Smoothie de banana y avena', 'Merienda', 300, 8, 50, 6, 14, 'Ideal para pre cardio o core'),
+('Galletas de avena y proteína', 'Merienda', 250, 15, 30, 10, 10, 'Snacks saludables para después de entrenar'),
+('Pollo salteado con vegetales', 'Almuerzo', 600, 40, 35, 14, 4, 'Ideal para después de remo o espalda'),
+('Fideos integrales con carne', 'Almuerzo', 700, 45, 60, 12, 7, 'Comida fuerte para recuperación muscular'),
+('Huevos revueltos con espinaca', 'Desayuno', 350, 20, 10, 20, 11, 'Desayuno para mantener masa muscular'),
+('Bowl de arroz, huevo y verduras', 'Cena', 550, 25, 55, 14, 13, 'Ideal para recuperación luego de core'),
+('Panqueques de avena y banana', 'Desayuno', 400, 15, 50, 10, 2, 'Desayuno antes de hacer pecho'),
+('Tostadas integrales con queso y tomate', 'Desayuno', 350, 12, 40, 12, 3, 'Previo a piernas'),
+('Batido de espinaca, banana y proteína', 'Merienda', 280, 20, 25, 5, 7, 'Refrescante después de sentadillas'),
+('Wok de pollo con arroz integral', 'Almuerzo', 600, 40, 50, 10, 5, 'Recuperación tras espalda y bíceps'),
+('Yogur con frutos rojos y chía', 'Desayuno', 300, 12, 35, 10, 12, 'Ideal para día de hombros'),
+('Barritas de cereal caseras', 'Merienda', 250, 8, 40, 7, 14, 'Snacks saludables post espalda'),
+('Ensalada de lentejas y huevo duro', 'Almuerzo', 500, 28, 40, 12, 4, 'Buena combinación vegetal y proteína'),
+('Sopa de calabaza con pollo', 'Cena', 450, 30, 20, 15, 1, 'Cena liviana luego de entreno de pecho'),
+('Arepas de avena con queso light', 'Desayuno', 400, 18, 40, 12, 6, 'Pre HIIT con energía controlada'),
+('Tostadas con ricota y miel', 'Merienda', 320, 22, 30, 10, 11, 'Merienda para recuperación de masa muscular');
 
 INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos, descripcion) VALUES
 ('Lunes', 'Hipertrofia tren superior', 'Intermedio', 70, 'Pecho, tríceps y hombros'),
@@ -126,13 +147,13 @@ INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id) VALUES
 (7, 13);
 
 INSERT INTO entrenamiento_alimentacion (entrenamiento_id, alimentacion_id) VALUES
-(1, 2), (1, 4),
-(2, 6), (2, 1),
-(3, 1), (3, 5),
-(4, 2), (4, 3),
-(5, 3), (5, 6),
-(6, 1), (6, 5),
-(7, 4);
+(1, 21), (1, 1), (1, 18), (1, 8),
+(2, 9), (2, 20), (2, 11), (2, 16),
+(3, 2), (3, 29), (3, 25), (3, 22),
+(4, 3), (4, 10), (4, 28), (4, 16),
+(5, 23), (5, 1), (5, 18), (5, 4),
+(6, 31), (6, 29), (6, 2), (6, 22),
+(7, 6), (7, 20), (7, 32), (7, 16);
 
 ALTER TABLE arma_rutina ADD COLUMN series INTEGER;
 

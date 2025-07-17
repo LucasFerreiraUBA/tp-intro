@@ -5,7 +5,8 @@ export const crearModal = (ej) => {
     const form = document.createElement("form");
 
     const titulo = document.createElement("h2");
-    titulo.innerText = "Editar Ejercicio";
+    titulo.classList.add("title", "is-4");
+    titulo.innerText = "Editar ejercicio";
     form.appendChild(titulo);
 
     // Función auxiliar para crear campos
@@ -68,7 +69,7 @@ export const crearModal = (ej) => {
     const btnGuardar = document.createElement("button");
     btnGuardar.type = "submit";
     btnGuardar.className = "button is-success";
-    btnGuardar.innerText = "Guardar cambios";
+    btnGuardar.innerText = "Guardar";
 
     const btnCancelar = document.createElement("button");
     btnCancelar.type = "button";
