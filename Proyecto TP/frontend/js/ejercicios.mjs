@@ -1,4 +1,4 @@
-export const crearModal = (ej) => {
+export const crearModal = (ej,id_grupo_muscular,tablaEjercicios) => {
     const dialog = document.createElement("dialog");
     dialog.classList.add("modal-editar");
 
@@ -90,7 +90,7 @@ export const crearModal = (ej) => {
         e.preventDefault();
         const datosActualizados = {
             ejercicio: form.ejercicio.value,
-            grupo_muscular: form.grupo_muscular.value,
+            grupo_muscular_id: parseInt(id_grupo_muscular),
             series: parseInt(form.series.value),
             repeticiones: parseInt(form.repeticiones.value),
             peso: parseFloat(form.peso.value),

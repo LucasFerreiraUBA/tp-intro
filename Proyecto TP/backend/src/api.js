@@ -156,23 +156,26 @@ app.patch('/api/ejercicios/:id', async (req, res) => {
     repeticiones,
     series,
     peso,
-    grupo_muscular,
+    grupo_muscular_id,
     rir,
     tiempo_descanso,
     descripcion,
   } = req.body;
-
+  if (grupo_muscular_id === undefined || grupo_muscular_id === null) {
+    return res.status(400).json({ error: 'grupo_muscular_id es obligatorio' });
+  }
+  
   try {
-    const actualizado = await updateEjercicioById(id, {
+    const actualizado = await updateEjercicioById(id, 
       ejercicio,
       repeticiones,
       series,
       peso,
-      grupo_muscular,
+      grupo_muscular_id,
       rir,
       tiempo_descanso,
       descripcion,
-    });
+    );
 
     if (!actualizado) {
       return res.status(404).json({ error: 'Ejercicio no encontrado' });
@@ -277,7 +280,7 @@ app.get("/api/entrenamientos", async (req, res) => {
 
 // Obtener un entrenamiento completo por id
 app.get("/api/entrenamientos/:id", async (req, res) => {
-  const entrenamiento = await getOneEntrenamiento(req.params.id);
+  const entrenamiento = await getOneEntrenamiento(parseInt(req.params.id));
   if (!entrenamiento) {
     return res.status(404).json({ error: "Entrenamiento no encontrado" });
   }

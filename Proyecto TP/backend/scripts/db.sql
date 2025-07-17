@@ -8,18 +8,18 @@ DROP TABLE IF EXISTS grupo_muscular;
 
 CREATE TABLE grupo_muscular (
     id SERIAL PRIMARY KEY,
-    nombre VARCHAR(30) NOT NULL
+    nombre VARCHAR(525) NOT NULL
 );
 
 CREATE TABLE arma_rutina (
     id SERIAL PRIMARY KEY,
-    ejercicio VARCHAR(30) NOT NULL,
+    ejercicio VARCHAR(501) NOT NULL,
     repeticiones INT NOT NULL,
     peso FLOAT,
     grupo_muscular_id INT NOT NULL REFERENCES grupo_muscular(id) ON DELETE CASCADE,
     rir INT,
     tiempo_descanso FLOAT,
-    descripcion VARCHAR(100)
+    descripcion VARCHAR(500)
 );
 
 CREATE TABLE alimentacion (

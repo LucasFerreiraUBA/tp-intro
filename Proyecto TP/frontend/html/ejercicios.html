@@ -166,7 +166,7 @@
 
             const datos = {
                 entrenamiento_id: parseInt(id), // id del entrenamiento
-                grupo_muscular: formEj.grupo_muscular.value,
+                grupo_muscular: parseInt(id),
                 ejercicio: formEj.ejercicio.value,
                 series: parseInt(formEj.series.value),
                 repeticiones: parseInt(formEj.repeticiones.value),
@@ -177,6 +177,7 @@
             };
 
             try {
+                console.log()
                 const respuesta = await fetch("http://localhost:3000/api/ejercicios", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -208,7 +209,6 @@
                 const tbody = document.querySelector("table.table tbody");
 
                 data.ejercicios.forEach((ej) => {
-                    console.log(ej)
                 const newRow = document.createElement("tr");
                 newRow.setAttribute("data-id",ej.id)
 
@@ -250,7 +250,7 @@
                 EditarLink.innerHTML = "Editar";
                 EditarLink.onclick = () => {
 
-                    crearModal(ej)
+                    crearModal(ej,id,tablaEjercicios)
                 }
                 // EditarLink.href = "ejercicios.html?id=" + ej.id; //
                 NewEditar.appendChild(EditarLink);

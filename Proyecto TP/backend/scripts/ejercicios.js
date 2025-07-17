@@ -142,18 +142,19 @@ async function updateEjercicioById(
   repeticiones,
   series,
   peso,
-  grupo_muscular,
+  grupo_muscular_id,
   rir,
   tiempo_descanso,
   descripcion
 ) {
+
   const result = await dbClient.query(`
-    UPDATE ejercicios SET
+    UPDATE arma_rutina SET
       ejercicio = $1,
       repeticiones = $2,
       series = $3,
       peso = $4,
-      grupo_muscular = $5,
+      grupo_muscular_id = $5,
       rir = $6,
       tiempo_descanso = $7,
       descripcion = $8
@@ -164,7 +165,7 @@ async function updateEjercicioById(
     repeticiones,
     series,
     peso,
-    grupo_muscular,
+    grupo_muscular_id,
     rir,
     tiempo_descanso,
     descripcion,
