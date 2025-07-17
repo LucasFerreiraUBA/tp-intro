@@ -10,7 +10,24 @@ const dbClient = new Pool({
 
 // obtener todos los entrenamientos con ejercicios y comidas
 async function getAllEntrenamientos() {
-  const result = await dbClient.query("SELECT * FROM entrenamiento");
+  const result = await dbClient.query(
+    `SELECT 
+      e.id,
+      e.dia_semana,
+      e.objetivo,
+      e.nivel_usuario,
+      e.duracion_minutos,
+      e.descripcion,
+      SUM(a.calorias) AS calorias,
+      SUM(a.proteinas) AS proteinas,
+      SUM(a.carbohidratos) AS carbohidratos, 
+      SUM(a.grasas) AS grasas
+    FROM entrenamiento e
+    LEFT JOIN entrenamiento_alimentacion ea ON e.id = ea.entrenamiento_id
+    LEFT JOIN alimentacion a ON ea.alimentacion_id = a.id
+    GROUP BY e.id
+    ORDER BY e.id`
+  );
   return result.rows;
 }
 
