@@ -54,6 +54,7 @@
                 </table>
                 </section>
             </main>
+            <!--- MODAL PARA AGREGAR ENTRENAMIENTO -->
             <div class="modal" id="modal-agregar">
                 <div class="modal-background"></div>
                 <div class="modal-card">
@@ -132,7 +133,7 @@
         document.getElementById('cerrar-modal').addEventListener('click', cerrarModal);
         document.getElementById('btn-cancelar').addEventListener('click', cerrarModal);
         document.querySelector('#modal-agregar .modal-background').addEventListener('click', cerrarModal);
-        //enviar formulario
+        //enviar nuevo entrenamiento
         document.getElementById('btn-guardar').addEventListener('click', async () => {
             const form = document.getElementById('form-entrenamiento');
             const datos = {
@@ -209,7 +210,7 @@
                     BorrarLink.onclick = function(){
                         if(confirm("Estas seguro de que deseas eliminar este entrenamiento?")){
                             deleteEntrenamiento(Entrenamiento.id);
-                            alert("Entrenamiento eliminado");
+                            alert("Entrenamiento eliminado correctamente");
                         } 
                     };
                     NewBorrar.appendChild(BorrarLink);

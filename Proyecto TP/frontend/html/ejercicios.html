@@ -59,7 +59,8 @@
                     </table>
                 </section>
             </main>
-            <dialog id="modal-agregar-ejercicio" class="modal-editar">
+            <!--- MODAL PARA AGREGAR EJERCICIO -->
+            <dialog id="modal-agregar-ejercicio" class="modal-editar"> 
                 <form method="dialog" id="form-agregar-ejercicio">
                     <h2 class="title is-4">Agregar ejercicio</h2>
 
@@ -150,17 +151,17 @@
         const modal = document.getElementById("modal-agregar-ejercicio");
         const formEj = document.getElementById("form-agregar-ejercicio");
 
-        // Abrir modal
+        //abrir modal
         document.getElementById("btn-abrir-modal").addEventListener("click", () => {
             modal.showModal();
         });
 
-        // Cerrar modal
+        //cerrar modal
         document.getElementById("cancelar-modal").addEventListener("click", () => {
             modal.close();
         });
 
-        // Enviar nuevo ejercicio
+        //enviar nuevo ejercicio
         formEj.addEventListener("submit", async (e) => {
             e.preventDefault();
 
@@ -265,7 +266,7 @@
                 BorrarLink.onclick = function(){
                     if(confirm("Estas seguro de que deseas eliminar este ejercicio?")){
                         deleteEjercicio(ej.id);
-                        alert("Ejercicio eliminado");
+                        alert("Ejercicio eliminado correctamente");
                     }
                 };
                 NewBorrar.appendChild(BorrarLink);
