@@ -13,13 +13,13 @@ CREATE TABLE grupo_muscular (
 
 CREATE TABLE arma_rutina (
     id SERIAL PRIMARY KEY,
-    ejercicio VARCHAR(20) NOT NULL,
+    ejercicio VARCHAR(500) NOT NULL,
     repeticiones INT NOT NULL,
     peso FLOAT,
     grupo_muscular_id INT NOT NULL REFERENCES grupo_muscular(id) ON DELETE CASCADE,
     rir INT,
     tiempo_descanso FLOAT,
-    descripcion VARCHAR(100)
+    descripcion VARCHAR(501)
 );
 
 CREATE TABLE alimentacion (
@@ -37,7 +37,7 @@ CREATE TABLE alimentacion (
 CREATE TABLE entrenamiento (
     id SERIAL PRIMARY KEY,
     dia_semana VARCHAR(15) NOT NULL,
-    objetivo VARCHAR(25) NOT NULL,
+    objetivo VARCHAR(51) NOT NULL,
     nivel_usuario VARCHAR(20),
     duracion_minutos INT,
     descripcion VARCHAR(100)
