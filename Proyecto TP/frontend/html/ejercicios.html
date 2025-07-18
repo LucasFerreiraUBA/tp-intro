@@ -6,7 +6,6 @@
         <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
         <!-- CSS -->
         <link rel="stylesheet" href="../css/style.css">
-        <link rel="stylesheet" href="./ejercicios.css">
         <title>Arma rutina</title>
     </head>
     <body>
@@ -65,9 +64,28 @@
                     <h2 class="title is-4">Agregar ejercicio</h2>
 
                     <div class="field">
-                        <label class="label">Grupo muscular</label>
+                        <label class="label">Grupo Muscular</label>
                         <div class="control">
-                            <input class="input" type="text" name="grupo_muscular" required>
+                            <div class="select is-fullwidth">
+                                <select name="grupo_muscular" id="grupo_muscular" required>
+                                    <option value="" disabled selected>Seleccioná un Grupo Muscular</option>
+                                    <option value="Abdominales">Abdominales</option>
+                                    <option value="Aductores">Aductores</option>
+                                    <option value="Antebrazos">Antebrazos</option>
+                                    <option value="Bíceps">Bíceps</option>
+                                    <option value="Cuádriceps">Cuádriceps</option>
+                                    <option value="Deltoides">Deltoides</option>
+                                    <option value="Espalda">Espalda</option>
+                                    <option value="Gemelos">Gemelos</option>
+                                    <option value="Glúteos">Glúteos</option>
+                                    <option value="Hombros">Hombros</option>
+                                    <option value="Isquiotibiales">Isquiotibiales</option>
+                                    <option value="Pecho">Pecho</option>
+                                    <option value="Piernas">Piernas</option>
+                                    <option value="Trapecio">Trapecio</option>
+                                    <option value="Tríceps">Tríceps</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -166,8 +184,8 @@
             e.preventDefault();
 
             const datos = {
-                entrenamiento_id: parseInt(id), // id del entrenamiento
-                grupo_muscular: parseInt(id),
+                entrenamiento_id: id, // id del entrenamiento
+                grupo_muscular: formEj.grupo_muscular.value,
                 ejercicio: formEj.ejercicio.value,
                 series: parseInt(formEj.series.value),
                 repeticiones: parseInt(formEj.repeticiones.value),

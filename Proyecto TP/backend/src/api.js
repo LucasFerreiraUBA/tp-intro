@@ -108,7 +108,7 @@ app.post('/api/ejercicios', async (req, res) => {
   );
 
   if (!ejercicios) {
-    return res.status(500).json({ error: 'Error al crear el ejercicio' });
+    return res.status(500).json({ error: 'Error en crear el ejercicio'});
   }
   res.json(ejercicios);
 });

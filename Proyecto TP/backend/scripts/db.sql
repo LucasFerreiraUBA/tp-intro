@@ -45,8 +45,8 @@ CREATE TABLE entrenamiento (
 
 CREATE TABLE entrenamiento_ejercicio (
     id SERIAL PRIMARY KEY,
-    entrenamiento_id INT REFERENCES entrenamiento(id) ON DELETE CASCADE,
-    rutina_id INT REFERENCES arma_rutina(id) ON DELETE CASCADE
+    entrenamiento_id INT NOT NULL REFERENCES entrenamiento(id) ON DELETE CASCADE,
+    rutina_id INT NOT NULL REFERENCES arma_rutina(id) ON DELETE CASCADE
 );
 
 CREATE TABLE entrenamiento_alimentacion (

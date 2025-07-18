@@ -93,7 +93,7 @@ async function createEjercicio(
     const arma_rutina_id = result.rows[0].id;
     
     await dbClient.query(
-      `INSERT INTO entrenamiento_ejercicio (entrenamiento_id, arma_rutina_id)
+      `INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id)
       VALUES ($1, $2)`,
       [entrenamiento_id, arma_rutina_id]
       );
