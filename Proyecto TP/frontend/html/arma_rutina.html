@@ -136,9 +136,22 @@
         //enviar nuevo entrenamiento
         document.getElementById('btn-guardar').addEventListener('click', async () => {
             const form = document.getElementById('form-entrenamiento');
+            
+            const dia = form.dia_semana.value.trim(); // Eliminamos espacios en blanco
+            const objetivo = form.objetivo.value.trim();
+
+            // Validaciones
+            if (dia === "") {
+                alert("El campo 'Día de la semana' es obligatorio.");
+                return; // No continúa si está vacío
+            } else if (objetivo === "") {
+                alert("El campo 'Objetivo' es obligatorio.");
+                return; 
+            }
+
             const datos = {
-                dia_semana: form.dia_semana.value,
-                objetivo: form.objetivo.value,
+                dia_semana: dia,
+                objetivo: objetivo,
                 nivel_usuario: form.nivel_usuario.value,
                 duracion_minutos: parseInt(form.duracion_minutos.value),
                 descripcion: form.descripcion.value
@@ -172,7 +185,9 @@
                 return response.json();
             }).then((data) => { // una vez que consulta vuelve con la data
                 const table = document.querySelector("tbody");
-                data.forEach(Entrenamiento => {
+                const entrenamientosRecientes = data.reverse();
+
+                entrenamientosRecientes.forEach(Entrenamiento => {
                     const newRow = document.createElement("tr");
 
                     const DiaSemana = document.createElement("td"); // Dia de la Semana
@@ -184,7 +199,7 @@
                     newRow.appendChild(Objetivo);
 
                     const NivelUsuario = document.createElement("td"); // Nivel Usuario
-                    NivelUsuario.innerHTML = Entrenamiento.nivel_usuario ?? "-";
+                    NivelUsuario.innerHTML = Entrenamiento.nivel_usuario && Entrenamiento.nivel_usuario.trim() !== "" ? Entrenamiento.nivel_usuario : "-"; 
                     newRow.appendChild(NivelUsuario);
 
                     const Duracion = document.createElement("td"); // Duracion
@@ -192,7 +207,11 @@
                     newRow.appendChild(Duracion);
 
                     const Descripcion = document.createElement("td"); // Descripcion
-                    Descripcion.innerHTML = Entrenamiento.descripcion ?? "-";
+                    Descripcion.innerHTML = Entrenamiento.descripcion && Entrenamiento.descripcion.trim() !== ""
+                        ? (Entrenamiento.descripcion.length > 40 
+                            ? Entrenamiento.descripcion.slice(0, 40) + "..." 
+                            : Entrenamiento.descripcion)
+                        : "-"; // si son mas de 40 caracteres, corta y agrega "..."
                     newRow.appendChild(Descripcion);
 
                     const NewEditar = document.createElement("td"); // Editar
@@ -228,24 +247,3 @@
     </script>
     </body>
 </html>
-
-
-                <!-- const NewBorrar = document.createElement("td"); // Borrar
-                const BorrarLink = document.createElement("a");
-                BorrarLink.className = "button";
-                BorrarLink.innerHTML = "Borrar";
-                BorrarLink.href = "#";
-                BorrarLink.onclick = function(e) {
-                    e.preventDefault();
-                    deleteEntrenamiento(Entrenamiento.id);
-                };
-                NewBorrar.appendChild(BorrarLink);
-                newRow.appendChild(NewBorrar);
-
-                table.appendChild(newRow);
-            });
-            function deleteEntrenamiento(id){
-                const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
-                fetch(arma_rutinaBackURL, {method: "DELETE"})
-                    .then(() => location.reload());
-            } -->

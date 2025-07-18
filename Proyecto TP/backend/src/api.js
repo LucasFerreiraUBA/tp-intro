@@ -299,7 +299,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     comidas
   } = req.body;
 
-  if (!dia_semana || !objetivo || !nivel_usuario || !duracion_minutos || !descripcion) {
+  if (!dia_semana || !objetivo) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
   //Crea el entrenamiento
