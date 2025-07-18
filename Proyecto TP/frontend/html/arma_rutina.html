@@ -79,9 +79,16 @@
                             </div>
 
                             <div class="field">
-                                <label class="label"> Nivel Usuario</label>
+                                <label class="label">Nivel de usuario</label>
                                 <div class="control">
-                                    <input class="input" type="text" name="nivel_usuario" required>
+                                    <div class="select is-fullwidth">
+                                        <select name="nivel_usuario" id="nivel_usuario" required>
+                                            <option value="" disabled selected>Seleccioná un nivel</option>
+                                            <option value="Principiante">Principiante</option>
+                                            <option value="Intermedio">Intermedio</option>
+                                            <option value="Avanzado">Avanzado</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
@@ -139,6 +146,8 @@
             
             const dia = form.dia_semana.value.trim(); // Eliminamos espacios en blanco
             const objetivo = form.objetivo.value.trim();
+            const descripcion = form.descripcion.value;
+
 
             // Validaciones
             if (dia === "") {
@@ -147,6 +156,12 @@
             } else if (objetivo === "") {
                 alert("El campo 'Objetivo' es obligatorio.");
                 return; 
+            } else if (objetivo.length > 25) {
+                alert("El objetivo es muy largo");
+                return; // No continúa si la descripción es demasiado larga
+            } else if (descripcion.length > 100) {
+                alert("La descripción es muy larga");
+                return; // No continúa si la descripción es demasiado larga
             }
 
             const datos = {
@@ -154,7 +169,7 @@
                 objetivo: objetivo,
                 nivel_usuario: form.nivel_usuario.value,
                 duracion_minutos: parseInt(form.duracion_minutos.value),
-                descripcion: form.descripcion.value
+                descripcion: descripcion
             };
 
             try {

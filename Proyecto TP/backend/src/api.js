@@ -44,7 +44,7 @@ app.get('/api/grupo_muscular', async (req, res) => {
   res.json(grupo_musculares);
 });
 
-//---------------------------------------------- arma_rutina ---------------------------------------------------------------------------
+//---------------------------------------------- ejercicios ---------------------------------------------------------------------------
 
 //arma_rutina
   // END point
@@ -72,6 +72,7 @@ app.get('/api/ejercicios/:id', async (req, res) => { // get one mediante el id
   res.json(ejercicios);
 });
 
+// Crear un nuevo ejercicio
 app.post('/api/ejercicios', async (req, res) => { 
   const {
     ejercicio,
@@ -302,6 +303,14 @@ app.post("/api/entrenamientos", async (req, res) => {
   if (!dia_semana || !objetivo) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
+
+  if (objetivo && objetivo.length > 25) {
+    return res.status(400).json({ error: "La descripción no puede exceder los 100 caracteres" }); 
+  }   
+
+  if (descripcion && descripcion.length > 100) {
+    return res.status(400).json({ error: "La descripción no puede exceder los 100 caracteres" }); 
+  }         
   //Crea el entrenamiento
   const entrenamiento = await createEntrenamiento({
     dia_semana,

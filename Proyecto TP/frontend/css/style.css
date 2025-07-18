@@ -501,8 +501,6 @@ main {
 }
 
 /* ================== Entrenamiento y Ejercicios ============================ */
-
-
 .section-table{
     display: flex;
     justify-content: center;
@@ -558,6 +556,7 @@ main {
     transform: scale(1.2);
     transform-origin: center;
 }
+
 .entrenamiento-title div button:hover{
     background-color: #00ff55;
     color: black;
