@@ -49,6 +49,7 @@ async function getOneEntrenamiento(id) {
       ar.series,
       ar.repeticiones,
       ar.peso,
+      ar.unidad_peso_ejercicio,
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,

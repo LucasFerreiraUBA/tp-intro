@@ -110,10 +110,20 @@
                          </div>
                     </div>
 
-                    <div class="field">
-                        <label class="label">Peso</label>
-                        <div class="control">
-                            <input class="input" type="number" name="peso" step="any" required>
+                    <div class="field"> 
+                        <label class="label">Peso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="peso" id="peso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_peso" required>
+                                        <option value="kg">Kg</option>
+                                        <option value="lb">Lb</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -201,6 +211,7 @@
                 series: parseInt(formEj.series.value),
                 repeticiones: parseInt(formEj.repeticiones.value),
                 peso: parseFloat(formEj.peso.value),
+                unidad_peso_ejercicio: formEj.unidad_peso.value,
                 rir: parseInt(formEj.rir.value),
                 tiempo_descanso: parseFloat(formEj.tiempo_descanso.value),
                 unidad_descanso_ejercicio: formEj.unidad_descanso.value,
@@ -259,9 +270,15 @@
                 repeticiones.innerHTML = ej.repeticiones ?? "-";
                 newRow.appendChild(repeticiones);
 
-                const peso = document.createElement("td");
-                peso.innerHTML = ej.peso ?? "-";
-                newRow.appendChild(peso);
+                const Peso = document.createElement("td");
+                const peso = ej.peso;
+                const unidad_peso = ej.unidad_peso_ejercicio ?? ""; // Agrega unidad de peso si existe
+                if (peso !== undefined && peso !== null && peso !== "") {
+                    Peso.innerHTML = `${peso} ${unidad_peso}`.trim();
+                } else {
+                    Peso.innerHTML = "-";
+                }
+                newRow.appendChild(Peso);
 
                 const rir = document.createElement("td");
                 rir.innerHTML = ej.rir ?? "-";

@@ -17,6 +17,7 @@ async function getAllEjercicios() {
       ar.ejercicio,
       ar.repeticiones,
       ar.peso,
+      ar.unidad_peso_ejercicio,
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
@@ -42,6 +43,7 @@ async function getOneEjercicios(id) {
       ar.ejercicio,
       ar.repeticiones,
       ar.peso,
+      ar.unidad_peso_ejercicio,
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
@@ -64,6 +66,7 @@ async function createEjercicio(
   repeticiones,
   series,
   peso,
+  unidad_peso_ejercicio,
   grupo_muscular_nombre,
   rir,
   tiempo_descanso,
@@ -86,11 +89,11 @@ async function createEjercicio(
 
     const result = await dbClient.query(
       `INSERT INTO arma_rutina 
-        (ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) 
+        (ejercicio, repeticiones, series, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) 
       VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
       RETURNING id`,
-      [ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion]
+      [ejercicio, repeticiones, series, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion]
     );
 
     const arma_rutina_id = result.rows[0].id;
@@ -115,6 +118,7 @@ async function createEjercicio(
   //   "repeticiones": 8,
   //   "series": 4,
   //   "peso": 60,
+  //   "unidad_peso_ejercicio": "Lb",
   //   "grupo_muscular": "Pecho", 
   //   "rir": 1,
   //   "tiempo_descanso": 90,
@@ -135,19 +139,20 @@ async function deleteEjercicio(id){
   return id;
 }
 
-async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) {
+async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) {
   const result = await dbClient.query(`
     UPDATE arma_rutina SET
       ejercicio = $1,
       repeticiones = $2,
       peso = $3,
-      grupo_muscular_id = $4,
-      rir = $5,
-      tiempo_descanso = $6,
-      unidad_descanso_ejercicio = $7,
-      descripcion = $8
-    WHERE id = $9 RETURNING *`, 
-  [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion, id]);
+      unidad_peso_ejercicio = $4,
+      grupo_muscular_id = $5,
+      rir = $6,
+      tiempo_descanso = $7,
+      unidad_descanso_ejercicio = $8,
+      descripcion = $9
+    WHERE id = $10 RETURNING *`, 
+  [ejercicio, repeticiones, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion, id]);
 
   if (result.rows.length === 0) {
     return null
@@ -162,6 +167,7 @@ async function updateEjercicioById(
   repeticiones,
   series,
   peso,
+  unidad_peso_ejercicio,
   grupo_muscular_id,
   rir,
   tiempo_descanso,
@@ -175,18 +181,20 @@ async function updateEjercicioById(
       repeticiones = $2,
       series = $3,
       peso = $4,
-      grupo_muscular_id = $5,
-      rir = $6,
-      tiempo_descanso = $7,
-      unidad_descanso_ejercicio = $8,
-      descripcion = $9
-    WHERE id = $10
+      unidad_peso_ejercicio = $5,
+      grupo_muscular_id = $6,
+      rir = $7,
+      tiempo_descanso = $8,
+      unidad_descanso_ejercicio = $9,
+      descripcion = $10
+    WHERE id = $11
     RETURNING *;
   `, [
     ejercicio,
     repeticiones,
     series,
     peso,
+    unidad_peso_ejercicio,
     grupo_muscular_id,
     rir,
     tiempo_descanso,
