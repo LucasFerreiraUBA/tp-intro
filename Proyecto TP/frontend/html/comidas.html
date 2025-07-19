@@ -255,6 +255,12 @@
                 BorrarLink.className = "button";
                 BorrarLink.innerHTML = "Borrar";
                 BorrarLink.href = "#";
+                BorrarLink.onclick = function(){
+                    if(confirm("Estas seguro de que deseas eliminar esta comida?")){
+                        deleteComida(id, com.id);
+                        alert("Comida eliminada correctamente");
+                    }
+                };
                 
                 NewBorrar.appendChild(BorrarLink);
                 newRow.appendChild(NewBorrar);
@@ -266,5 +272,10 @@
                 console.error("Error al cargar las comidas:", error);
             });
         }    
+
+        function deleteComida(entrenamiento_id, alimentacion_id) {
+            const arma_rutinaBackURL = `http://localhost:3000/api/entrenamientos/${entrenamiento_id}/alimentacion/${alimentacion_id}`;
+            fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaComidas()); // vuelve a cargar la tabla
+        }
     
         </script>

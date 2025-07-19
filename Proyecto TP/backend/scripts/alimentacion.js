@@ -72,14 +72,17 @@ async function createComida(nombre_comida, tipo_comida, calorias, proteinas, car
     }
 }
 
-async function deleteComida(id) {
-    const result = await dbClient.query("DELETE FROM alimentacion WHERE id = $1", [id]);
-    
-    if(result.rowCount === 0) {
-        return ("Comida no encontrada");
-    }
+async function deleteComida(entrenamientoId, alimentacionId) {
+  const result = await dbClient.query(
+    "DELETE FROM entrenamiento_alimentacion WHERE entrenamiento_id = $1 AND alimentacion_id = $2",
+    [entrenamientoId, alimentacionId]
+  );
 
-    return id;
+  if (result.rowCount === 0) {
+    return null;
+  }
+
+  return true;
 }
 
 async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) {

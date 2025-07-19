@@ -266,12 +266,16 @@ app.put('/api/alimentacion/:id', async (req, res) => {
 });
 
 //Eliminar comida
-app.delete('/api/alimentacion/:id', async (req, res) => {
-    const comida = await deleteComida(req.params.id);
-    if (!comida) {
-      return res.status(404).json({ error: 'Comida no encontrada' });
-    }
-    res.json({ status: 'OK', id: comida });
+app.delete('/api/entrenamientos/:entrenamientoId/alimentacion/:alimentacionId', async (req, res) => {
+  const { entrenamientoId, alimentacionId } = req.params;
+
+  const borrar = await deleteComida(entrenamientoId, alimentacionId);
+
+  if (!borrar) {
+    return res.status(404).json({ error: 'Comida no encontrada' });
+  }
+
+  res.json({ status: 'OK', message: 'Comida eliminada correctamente' });
 });
 
 //----------------------------------------------------------Entrenamiento--------------------------------------------------------------------
