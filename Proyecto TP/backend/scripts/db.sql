@@ -40,6 +40,7 @@ CREATE TABLE entrenamiento (
     objetivo VARCHAR(25) NOT NULL,
     nivel_usuario VARCHAR(20),
     duracion_minutos INT,
+    unidad_descanso VARCHAR(20) DEFAULT 'Min',
     descripcion VARCHAR(100)
 );
 

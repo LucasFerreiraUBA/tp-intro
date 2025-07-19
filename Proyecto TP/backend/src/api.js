@@ -295,6 +295,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso = 'Min', // Valor por defecto
     descripcion,
     ejercicios,
     comidas
@@ -317,6 +318,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso,
     descripcion,
     ejercicios: ejercicios || [],
     comidas: comidas || []
@@ -337,6 +339,7 @@ app.put("/api/entrenamientos/:id", async (req, res) => {
     req.body.objetivo,
     req.body.nivel_usuario,
     req.body.duracion_minutos,
+    req.body.unidad_descanso,
     req.body.descripcion,
     req.body.ejercicios,
     req.body.comidas

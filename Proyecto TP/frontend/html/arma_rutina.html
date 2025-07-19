@@ -44,7 +44,7 @@
                             <th>Dia de la Semana </th>
                             <th>Objetivo</th>
                             <th>Nivel Usuario</th>
-                            <th>Duracion (minutos)</th>
+                            <th>Duracion</th>
                             <th>Descripcion</th>
                             <th>Editar</th>
                             <th>Borrar</th>
@@ -68,7 +68,7 @@
                                 <label class="label">Dia de la Semana</label>
                                 <div class="control">
                                     <div class="select is-fullwidth">
-                                        <select name="nivel_usuario" id="nivel_usuario" required>
+                                        <select name="dia_semana" id="dia_semana" required>
                                             <option value="" disabled selected>Seleccioná un nivel</option>
                                             <option value="Lunes">Lunes</option>
                                             <option value="Martes">Martes</option>
@@ -103,10 +103,20 @@
                                 </div>
                             </div>
 
-                            <div class="field">
-                                <label class="label"> Duracion (minutos)</label>
-                                <div class="control">
-                                    <input class="input" type="number" name="duracion_minutos" required>
+                            <div class="field"> 
+                                <label class="label">Duracion</label> 
+                                <div class="field has-addons"> 
+                                    <div class="control is-expanded"> 
+                                        <input class="input" type="number" name="duracion_minutos" id="duracion_minutos" step="any">
+                                    </div> 
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="unidad">
+                                                <option value="min">Min</option>
+                                                <option value="Hs">Hs</option>
+                                            </select>
+                                    </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -180,6 +190,7 @@
                 objetivo: objetivo,
                 nivel_usuario: form.nivel_usuario.value,
                 duracion_minutos: parseInt(form.duracion_minutos.value),
+                unidad_descanso: form.unidad.value,
                 descripcion: descripcion
             };
 
@@ -227,8 +238,14 @@
                     NivelUsuario.innerHTML = Entrenamiento.nivel_usuario && Entrenamiento.nivel_usuario.trim() !== "" ? Entrenamiento.nivel_usuario : "-"; 
                     newRow.appendChild(NivelUsuario);
 
-                    const Duracion = document.createElement("td"); // Duracion
-                    Duracion.innerHTML = Entrenamiento.duracion_minutos ?? "-";
+                    const Duracion = document.createElement("td");
+                    const duracion = Entrenamiento.duracion_minutos;
+                    const unidad = Entrenamiento.unidad_descanso ?? "";
+                    if (duracion !== undefined && duracion !== null && duracion !== "") {
+                        Duracion.innerHTML = `${duracion} ${unidad}`.trim();
+                    } else {
+                        Duracion.innerHTML = "-";
+                    }
                     newRow.appendChild(Duracion);
 
                     const Descripcion = document.createElement("td"); // Descripcion
