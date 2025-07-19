@@ -41,7 +41,7 @@ CREATE TABLE entrenamiento (
     dia_semana VARCHAR(15) NOT NULL,
     objetivo VARCHAR(25) NOT NULL,
     nivel_usuario VARCHAR(20),
-    duracion_minutos INT,
+    duracion_minutos FLOAT,
     unidad_descanso VARCHAR(3) DEFAULT 'Min',
     descripcion VARCHAR(100)
 );

@@ -45,8 +45,8 @@
                             <th>Objetivo</th>
                             <th>Nivel Usuario</th>
                             <th>Duracion</th>
-                            <th>Unidad</th>
                             <th>Descripcion</th>
+                            <th>Ver</th>
                             <th>Editar</th>
                             <th>Borrar</th>
                         </tr>
@@ -214,6 +214,34 @@
             }
         });
 
+        async function abrirModalPorId(id) {
+            try {
+                const respuesta = await fetch(`http://localhost:3000/api/entrenamientos/${id}`);
+                
+                if (!respuesta.ok) {
+                    alert("No se pudo obtener el entrenamiento.");
+                    return;
+                }
+
+                const entrenamiento = await respuesta.json();
+
+                // carga
+                const form = document.getElementById('form-entrenamiento');
+                form.dia_semana.value = entrenamiento.dia_semana;
+                form.objetivo.value = entrenamiento.objetivo;
+                form.nivel_usuario.value = entrenamiento.nivel_usuario;
+                form.duracion_minutos.value = entrenamiento.duracion_minutos;
+                form.unidad.value = entrenamiento.unidad_descanso;
+                form.descripcion.value = entrenamiento.descripcion;
+
+                // mostrar
+                document.getElementById('modal-agregar').classList.add('is-active');
+            } catch (error) {
+                console.error("Error al cargar entrenamiento", error);
+            }
+        }
+
+
         function tablaEntrenos(){
             document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
 
@@ -249,10 +277,6 @@
                     }
                     newRow.appendChild(Duracion);
 
-                    const Unidad = document.createElement("td"); // Unidad
-                    Unidad.innerHTML = Entrenamiento.unidad_descanso; // si no hay unidad, por defecto es Min
-                    newRow.appendChild(Unidad);
-
                     const Descripcion = document.createElement("td"); // Descripcion
                     Descripcion.innerHTML = Entrenamiento.descripcion && Entrenamiento.descripcion.trim() !== ""
                         ? (Entrenamiento.descripcion.length > 40 
@@ -260,6 +284,14 @@
                             : Entrenamiento.descripcion)
                         : "-"; // si son mas de 40 caracteres, corta y agrega "..."
                     newRow.appendChild(Descripcion);
+
+                    const NewVer = document.createElement("td"); // Editar
+                    const VerModal = document.createElement("a");
+                    VerModal.className = "button";
+                    VerModal.innerHTML = "Ver";
+                    VerModal.onclick = () => abrirModalPorId(Entrenamiento.id);
+                    NewVer.appendChild(VerModal);
+                    newRow.appendChild(NewVer);  
 
                     const NewEditar = document.createElement("td"); // Editar
                     const EditarLink = document.createElement("a");
