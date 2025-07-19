@@ -114,7 +114,7 @@
                                         <div class="select">
                                             <select name="unidad">
                                                 <option value="min">Min</option>
-                                                <option value="Hs">Hs</option>
+                                                <option value="hs">Hs</option>
                                             </select>
                                     </div>
                                     </div>
@@ -231,7 +231,7 @@
                 form.objetivo.value = entrenamiento.objetivo;
                 form.nivel_usuario.value = entrenamiento.nivel_usuario;
                 form.duracion_minutos.value = entrenamiento.duracion_minutos;
-                form.unidad.value = entrenamiento.unidad_descanso;
+                form.unidad.value = entrenamiento.unidad_descanso.toLowerCase();
                 form.descripcion.value = entrenamiento.descripcion;
 
                 // mostrar
