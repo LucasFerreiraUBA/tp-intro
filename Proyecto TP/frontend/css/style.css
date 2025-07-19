@@ -501,6 +501,12 @@ main {
 }
 
 /* ================== Entrenamiento y Ejercicios ============================ */
+
+/* MODALS */
+.modal-card{
+    margin-top: 8vh;
+}
+
 .section-table{
     display: flex;
     justify-content: center;
