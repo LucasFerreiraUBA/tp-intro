@@ -36,7 +36,7 @@
                         </div>
                         <div>
                             <button class="button" id="button-volver"><a href="alimentacion.html">Volver</a></button>
-                            <button class="button">Agregar</button>
+                            <button class="button" id="btn-abrir-modal">Agregar</button>
                         </div>
                     </div>
                     <table class="table">
@@ -53,10 +53,81 @@
                                 <th>Borrar</th>
                             </tr>
                         </thead>
-                        <tbody class="body-table"></tbody>
+                        <tbody class="comida-table"></tbody>
                     </table>
                 </section>
             </main>
+            <dialog id="modal-agregar-comida" class="modal-editar"> 
+                <form id="form-agregar-comida">
+                    <h2 class="title is-4">Agregar comida</h2>
+
+                    <div class="field">
+                        <label class="label">Comida</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nombre_comida" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="tipo_comida" id="tipo_comida">
+                                    <option value="" disabled selected>Seleccioná un Tipo de comida</option>
+                                    <option value="Desayuno">Desayuno</option>
+                                    <option value="Almuerzo">Almuerzo</option>
+                                    <option value="Merienda">Merienda</option>
+                                    <option value="Cena">Cena</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Calorias</label>
+                        <div class="control">
+                            <input class="input" type="number" name="calorias" required>
+                         </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Proteinas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="proteinas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Carbohidratos</label>
+                        <div class="control">
+                            <input class="input" type="number" name="carbohidratos" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Grasas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="grasas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-success">Guardar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
             <footer class="footer-seccion">
                 <div class="footer-container">
                     <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
@@ -72,6 +143,58 @@
         <script>
             const urlParams = new URLSearchParams(window.location.search);
             const id = urlParams.get("id");
+            tablaComidas();
+
+            const modal = document.getElementById("modal-agregar-comida");
+            const formCom = document.getElementById("form-agregar-comida");
+
+            // abrir modal
+            document.getElementById("btn-abrir-modal").addEventListener("click", () => {
+                modal.showModal();
+            });
+
+            // cerrar modal
+            document.getElementById("cancelar-modal").addEventListener("click", () => {
+                modal.close();
+            });
+
+            // enviar nueva comida
+            formCom.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const datos = {
+                    entrenamiento_id: id, // id del entrenamiento
+                    nombre_comida: formCom.nombre_comida.value,
+                    tipo_comida: formCom.tipo_comida.value,
+                    calorias: parseInt(formCom.calorias.value),
+                    proteinas: parseInt(formCom.proteinas.value),
+                    carbohidratos: parseInt(formCom.carbohidratos.value),
+                    grasas: parseInt(formCom.grasas.value),
+                    descripcion: formCom.descripcion.value 
+                };
+
+                try {
+                    const respuesta = await fetch("http://localhost:3000/api/alimentacion", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(datos)
+                    });
+
+                    if (respuesta.ok) {
+                        modal.close();
+                        formCom.reset();
+                        tablaComidas(); // recarga la tabla
+                        alert("Comida agregada correctamente");
+                    } else {
+                         alert("Error al agregar la comida");
+                    }
+                } catch (error){
+                    console.error("Error:", error);
+                }
+            });
+
+            function tablaComidas(){
+            document.getElementsByClassName("comida-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
 
             const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
 
@@ -110,6 +233,10 @@
                 grasas.innerHTML = com.grasas ?? "-";
                 newRow.appendChild(grasas);
 
+               // const ejercicio = document.createElement("td");
+                //ejercicio.innerHTML = com.ejercicio_relacionado ?? "-";        HAY QUE VER SI LO USAMOS
+                //newRow.appendChild(ejercicio); 
+
                 const descripcion = document.createElement("td");
                 descripcion.innerHTML = com.descripcion ?? "-";
                 newRow.appendChild(descripcion);
@@ -136,7 +263,8 @@
                 });
             })
             .catch((error) => {
-                console.error("Error al cargar los ejercicios:", error);
+                console.error("Error al cargar las comidas:", error);
             });
+        }    
     
         </script>

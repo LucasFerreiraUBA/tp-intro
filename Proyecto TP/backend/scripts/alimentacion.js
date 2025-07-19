@@ -51,12 +51,25 @@ async function getOneComida(id) {
     return result.rows[0];    
 }
 
-async function createComida(nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) {
+async function createComida(nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion, entrenamiento_id) {
+    try {
     const result = await dbClient.query(`
-        INSERT INTO alimentacion (nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion]);
+        INSERT INTO alimentacion (nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion]);
+
+    const alimentacion_id = result.rows[0].id;
+
+    await dbClient.query(
+      `INSERT INTO entrenamiento_alimentacion (entrenamiento_id, alimentacion_id)
+      VALUES ($1, $2)`,
+      [entrenamiento_id, alimentacion_id]
+      );
 
     return result.rows[0];
+    } catch (error) {
+        console.error("Error al crear la comida", error);
+        return null;
+    }
 }
 
 async function deleteComida(id) {

@@ -215,12 +215,13 @@ app.post('/api/alimentacion', async (req, res) => {
     proteinas,
     carbohidratos,
     grasas,
-    ejercicio_relacionado, 
-    descripcion
+    descripcion,
+    entrenamiento_id
   } = req.body;
 
   
-  if (!nombre_comida || !tipo_comida || !calorias || !proteinas || !carbohidratos || !grasas) {
+  if (!req.body.nombre_comida || !req.body.tipo_comida || !req.body.calorias || !req.body.proteinas ||
+     !req.body.carbohidratos || !req.body.grasas || !req.body.entrenamiento_id) {
     return res.status(400).json({ error: 'Faltan datos obligatorios' });
   }
 
@@ -232,8 +233,8 @@ app.post('/api/alimentacion', async (req, res) => {
     proteinas,
     carbohidratos,
     grasas,
-    ejercicio_relacionado, 
-    descripcion
+    descripcion,
+    entrenamiento_id
   );
 
   if (!comida) {
