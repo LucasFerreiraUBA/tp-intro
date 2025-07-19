@@ -106,14 +106,17 @@ async function createEjercicio(
   }
 }
 
-async function deleteEjercicio(id){
-  const result = await dbClient.query("DELETE FROM arma_rutina WHERE id = $1", [id]); 
-  
+async function deleteEjercicio(entrenamientoId, rutinaId) {
+  const result = await dbClient.query(
+    "DELETE FROM entrenamiento_ejercicio WHERE entrenamiento_id = $1 AND rutina_id = $2",
+    [entrenamientoId, rutinaId]
+  );
+
   if (result.rowCount === 0) {
-    return null;  // Cambié para que retorne null si no existe
+    return null;
   }
 
-  return id;
+  return true;
 }
 
 async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) {

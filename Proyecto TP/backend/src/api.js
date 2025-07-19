@@ -120,14 +120,16 @@ app.post('/api/ejercicios', async (req, res) => {
 curl --request DELET http://localhost:3000/api/personajes/id
 */
 
-app.delete('/api/ejercicios/:id', async (req, res) => { 
-  const ejercicios = await deleteEjercicio(req.params.id); 
+app.delete('/api/entrenamientos/:entrenamientoId/ejercicios/:rutinaId', async (req, res) => {
+  const { entrenamientoId, rutinaId } = req.params;
 
-  if (!ejercicios) {
+  const borrar = await deleteEjercicio(entrenamientoId, rutinaId);
+
+  if (!borrar) {
     return res.status(404).json({ error: 'Ejercicio no encontrado' });
   }
 
-  res.json({ status: 'OK', id: ejercicios });
+  res.json({ status: 'OK', message: 'Ejercicio eliminado correctamente' });
 });
 
 // update

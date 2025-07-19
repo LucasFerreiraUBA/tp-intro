@@ -282,7 +282,7 @@
                 BorrarLink.href = "#";
                 BorrarLink.onclick = function(){
                     if(confirm("Estas seguro de que deseas eliminar este ejercicio?")){
-                        deleteEjercicio(ej.id);
+                        deleteEjercicio(id, ej.id);
                         alert("Ejercicio eliminado correctamente");
                     }
                 };
@@ -297,10 +297,10 @@
             });
     }
 
-    function deleteEjercicio(id){
-        const arma_rutinaBackURL = "http://localhost:3000/api/ejercicios/" + id;
+    function deleteEjercicio(entrenamiento_id, rutina_id){
+        const arma_rutinaBackURL = `http://localhost:3000/api/entrenamientos/${entrenamiento_id}/ejercicios/${rutina_id}`;
         fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
-    }
+}
 
     </script>
     </body>
