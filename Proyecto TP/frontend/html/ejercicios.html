@@ -46,9 +46,9 @@
                                 <th>Ejercicio</th>
                                 <th>Series</th>
                                 <th>Repeticiones</th>
-                                <th>Peso (kg)</th>
+                                <th>Peso</th>
                                 <th>RIR</th>
-                                <th>Tiempo de Descanso (minutos)</th>
+                                <th>Tiempo de Descanso</th>
                                 <th>Descripcion</th>
                                 <th>Editar</th>
                                 <th>Borrar</th>
@@ -111,7 +111,7 @@
                     </div>
 
                     <div class="field">
-                        <label class="label">Peso (kg)</label>
+                        <label class="label">Peso</label>
                         <div class="control">
                             <input class="input" type="number" name="peso" step="any" required>
                         </div>
@@ -124,12 +124,23 @@
                         </div>
                     </div>
 
-                    <div class="field">
-                        <label class="label">Tiempo de descanso (minutos)</label>
-                        <div class="control">
-                            <input class="input" type="number" name="tiempo_descanso" step="any" required>
+                    <div class="field"> 
+                        <label class="label">Duracion</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="tiempo_descanso" id="tiempo_descanso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_descanso" required>
+                                        <option value="min">Min</option>
+                                        <option value="seg">Seg</option>
+                                    </select>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
 
                     <div class="field">
                         <label class="label">Descripción</label>
@@ -192,6 +203,7 @@
                 peso: parseFloat(formEj.peso.value),
                 rir: parseInt(formEj.rir.value),
                 tiempo_descanso: parseFloat(formEj.tiempo_descanso.value),
+                unidad_descanso_ejercicio: formEj.unidad_descanso.value,
                 descripcion: formEj.descripcion.value
             };
 
@@ -214,7 +226,7 @@
         } catch (error) {
             console.error("Error:", error);
         }
-    });
+        });
 
         function tablaEjercicios(){
             document.getElementsByClassName("ejercicio-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
@@ -256,7 +268,13 @@
                 newRow.appendChild(rir);
 
                 const tiempoDescanso = document.createElement("td");
-                tiempoDescanso.innerHTML = ej.tiempo_descanso ?? "-";
+                const tiempo = ej.tiempo_descanso;
+                const unidad_descanso = ej.unidad_descanso_ejercicio ?? ""; 
+                if (tiempo !== undefined && tiempo !== null && tiempo !== "") {
+                    tiempoDescanso.innerHTML = `${tiempo} ${unidad_descanso}`.trim();
+                } else {
+                    tiempoDescanso.innerHTML = "-";
+                }
                 newRow.appendChild(tiempoDescanso);
 
                 const descripcion = document.createElement("td");

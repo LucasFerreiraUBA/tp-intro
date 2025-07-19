@@ -45,6 +45,7 @@
                             <th>Objetivo</th>
                             <th>Nivel Usuario</th>
                             <th>Duracion</th>
+                            <th>Unidad</th>
                             <th>Descripcion</th>
                             <th>Editar</th>
                             <th>Borrar</th>
@@ -247,6 +248,10 @@
                         Duracion.innerHTML = "-";
                     }
                     newRow.appendChild(Duracion);
+
+                    const Unidad = document.createElement("td"); // Unidad
+                    Unidad.innerHTML = Entrenamiento.unidad_descanso; // si no hay unidad, por defecto es Min
+                    newRow.appendChild(Unidad);
 
                     const Descripcion = document.createElement("td"); // Descripcion
                     Descripcion.innerHTML = Entrenamiento.descripcion && Entrenamiento.descripcion.trim() !== ""

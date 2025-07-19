@@ -20,6 +20,7 @@ async function getAllEjercicios() {
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
+      ar.unidad_descanso_ejercicio,
       ar.descripcion
     FROM 
       arma_rutina ar
@@ -44,6 +45,7 @@ async function getOneEjercicios(id) {
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
+      ar.unidad_descanso_ejercicio,
       ar.descripcion
     FROM 
       arma_rutina ar
@@ -65,6 +67,7 @@ async function createEjercicio(
   grupo_muscular_nombre,
   rir,
   tiempo_descanso,
+  unidad_descanso_ejercicio,
   descripcion,
   entrenamiento_id
 ) {
@@ -83,11 +86,11 @@ async function createEjercicio(
 
     const result = await dbClient.query(
       `INSERT INTO arma_rutina 
-        (ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) 
+        (ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) 
       VALUES 
-        ($1, $2, $3, $4, $5, $6, $7, $8) 
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9) 
       RETURNING id`,
-      [ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion]
+      [ejercicio, repeticiones, series, peso, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion]
     );
 
     const arma_rutina_id = result.rows[0].id;
@@ -104,6 +107,22 @@ async function createEjercicio(
     console.error("Error al crear el ejercicio", error);
     return null;
   }
+
+  // curl -X POST http://localhost:3000/api/ejercicios \
+  // -H "Content-Type: application/json" \
+  // -d '{
+  //   "ejercicio": "Press banca",
+  //   "repeticiones": 8,
+  //   "series": 4,
+  //   "peso": 60,
+  //   "grupo_muscular": "Pecho", 
+  //   "rir": 1,
+  //   "tiempo_descanso": 90,
+  //   "unidad_descanso_ejercicio": "Min",
+  //   "descripcion": "Ejercicio compuesto para pectoral y triceps",
+  //   "entrenamiento_id": 5
+  // }'
+
 }
 
 async function deleteEjercicio(id){
@@ -125,9 +144,10 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular
       grupo_muscular_id = $4,
       rir = $5,
       tiempo_descanso = $6,
-      descripcion = $7
-    WHERE id = $8 RETURNING *`, 
-  [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion, id]);
+      unidad_descanso_ejercicio = $7,
+      descripcion = $8
+    WHERE id = $9 RETURNING *`, 
+  [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion, id]);
 
   if (result.rows.length === 0) {
     return null
@@ -145,6 +165,7 @@ async function updateEjercicioById(
   grupo_muscular_id,
   rir,
   tiempo_descanso,
+  unidad_descanso_ejercicio,
   descripcion
 ) {
 
@@ -157,8 +178,9 @@ async function updateEjercicioById(
       grupo_muscular_id = $5,
       rir = $6,
       tiempo_descanso = $7,
-      descripcion = $8
-    WHERE id = $9
+      unidad_descanso_ejercicio = $8,
+      descripcion = $9
+    WHERE id = $10
     RETURNING *;
   `, [
     ejercicio,
@@ -168,6 +190,7 @@ async function updateEjercicioById(
     grupo_muscular_id,
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
     id
   ]);

@@ -18,7 +18,8 @@ CREATE TABLE arma_rutina (
     peso FLOAT,
     grupo_muscular_id INT NOT NULL REFERENCES grupo_muscular(id) ON DELETE CASCADE,
     rir INT,
-    tiempo_descanso FLOAT,
+    tiempo_descanso INT,
+    unidad_descanso_ejercicio VARCHAR(20) DEFAULT 'Min',
     descripcion VARCHAR(100)
 );
 

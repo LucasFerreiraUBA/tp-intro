@@ -82,6 +82,7 @@ app.post('/api/ejercicios', async (req, res) => {
     grupo_muscular,  
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
     entrenamiento_id
   } = req.body;
@@ -103,6 +104,7 @@ app.post('/api/ejercicios', async (req, res) => {
     grupo_muscular, 
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
     entrenamiento_id
   );
@@ -140,6 +142,7 @@ app.put('/api/ejercicios/:id', async (req, res) => {
     req.body.grupo_muscular,
     req.body.rir,
     req.body.tiempo_descanso,
+    req.body.unidad_descanso_ejercicio,
     req.body.descripcion
   );
 
@@ -160,6 +163,7 @@ app.patch('/api/ejercicios/:id', async (req, res) => {
     grupo_muscular_id,
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
   } = req.body;
   if (grupo_muscular_id === undefined || grupo_muscular_id === null) {
@@ -175,6 +179,7 @@ app.patch('/api/ejercicios/:id', async (req, res) => {
       grupo_muscular_id,
       rir,
       tiempo_descanso,
+      unidad_descanso_ejercicio,
       descripcion,
     );
 

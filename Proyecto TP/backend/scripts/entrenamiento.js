@@ -52,6 +52,7 @@ async function getOneEntrenamiento(id) {
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
+      ar.unidad_descanso_ejercicio,
       ar.descripcion
     FROM entrenamiento_ejercicio ee
     JOIN arma_rutina ar ON ar.id = ee.rutina_id
