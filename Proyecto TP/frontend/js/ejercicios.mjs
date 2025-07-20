@@ -1,128 +1,82 @@
-export const crearModal = (ej,id_grupo_muscular,tablaEjercicios) => {
-    const dialog = document.createElement("dialog");
-    dialog.classList.add("modal-editar");
+import {RUTAS} from "../constantes/rutas.mjs"
+import { PatchOneById } from "../utils/APIFetch.mjs"
 
-    const form = document.createElement("form");
 
-    const titulo = document.createElement("h2");
-    titulo.classList.add("title", "is-4");
-    titulo.innerText = "Editar ejercicio";
-    form.appendChild(titulo);
+const modalEditar = document.getElementById("modal-editar-ejercicio");
+const formEditar = document.getElementById("form-editar-ejercicio");
 
-    // Función auxiliar para crear campos
-    const crearCampo = (labelText, name, value, type = "text") => {
-        const field = document.createElement("div");
-        field.className = "field";
+document.getElementById("cancelar-modal-editar").addEventListener("click", () => {
+    modalEditar.close();
+});
 
-        const label = document.createElement("label");
-        label.className = "label";
-        label.innerText = labelText;
+formEditar.addEventListener("submit", async (e) =>{
+    e.preventDefault();
+    const formData = new FormData(formEditar);
+    const descripcion = formEditar.descripcion.value.trim();
+    const ejercicio = formEditar.ejercicio.value.trim();
+    const series = formEditar.series.value.trim();
+    const repeticiones = formEditar.repeticiones.value.trim();
 
-        const control = document.createElement("div");
-        control.className = "control";
-
-        const input = document.createElement("input");
-        input.className = "input";
-        input.name = name;
-        input.value = value ?? "";
-        input.type = type;
-
-        control.appendChild(input);
-        field.appendChild(label);
-        field.appendChild(control);
-        form.appendChild(field);
+    if (descripcion.length > 100) {
+        alert("La descripción no puede superar los 100 caracteres.");
+        return; 
+    } else if (ejercicio.length > 50) {
+        alert("El nombre del ejercicio es demasiado largo.");
+        return; 
+    } else if (series < 0  || repeticiones < 0) {
+        alert("Las series y repeticiones deben ser números positivos.");
+        return; 
+    } else if (isNaN(series) || isNaN(repeticiones)) {
+        alert("Las series y repeticiones deben ser números válidos.");
+        return; 
+    }
+    const musculos = await GetMusculos(RUTAS.MUSCULOS)
+    const musculo = musculos.find( m => m.nombre == formEditar.grupo_muscular.value)
+    const datos = {
+        id: parseInt(formEditar.id.value),
+        grupo_muscular_id: parseInt(musculo.id),
+        ejercicio: formEditar.ejercicio.value,
+        series: parseInt(formEditar.series.value),
+        repeticiones: parseInt(formEditar.repeticiones.value),
+        peso: parseFloat(formEditar.peso.value),
+        unidad_peso_ejercicio: formEditar.unidad_peso.value,
+        rir: parseInt(formEditar.rir.value),
+        tiempo_descanso: parseFloat(formEditar.tiempo_descanso.value),
+        unidad_descanso_ejercicio: formEditar.unidad_descanso.value,
+        descripcion: formEditar.descripcion.value
     };
+    await editarEjercicio(datos)
+})
 
-    crearCampo("Grupo muscular", "grupo_muscular", ej.grupo_muscular);
-    crearCampo("Ejercicio", "ejercicio", ej.ejercicio);
-    crearCampo("Series", "series", ej.series, "number");
-    crearCampo("Repeticiones", "repeticiones", ej.repeticiones, "number");
-    crearCampo("Peso (kg)", "peso", ej.peso, "number");
-    crearCampo("RIR", "rir", ej.rir, "number");
-    crearCampo("Tiempo de descanso (min)", "tiempo_descanso", ej.tiempo_descanso, "number");
+export const AbrirModalEditar = ej => {
+    modalEditar.showModal();
 
-    // Textarea para descripción
-    const fieldDesc = document.createElement("div");
-    fieldDesc.className = "field";
+    formEditar.id.value = ej.id;
+    formEditar.grupo_muscular.value = ej.grupo_muscular;
+    formEditar.ejercicio.value = ej.ejercicio;
+    formEditar.series.value = ej.series;
+    formEditar.repeticiones.value = ej.repeticiones;
+    formEditar.peso.value = ej.peso;
+    formEditar.unidad_peso.value = ej.unidad_peso_ejercicio;
+    formEditar.rir.value = ej.rir ?? 1;
+    formEditar.tiempo_descanso.value = ej.tiempo_descanso;
+    formEditar.unidad_descanso.value = ej.unidad_descanso_ejercicio;
+    formEditar.descripcion.value = ej.descripcion ?? "";
+}
+const editarEjercicio = async (datos) => {
+    const ejercicio_URL = `${RUTAS.EJERCICIOS}/${datos.id}`
+    const respuesta = await PatchOneById(ejercicio_URL, datos)
+    if (respuesta.ok) {
+        modalEditar.close()
+        alert("Ejercicio Modificado correctamente")
+        location.reload()
+    } else {
+        alert("Ocurrió un error al modificar el ejercicio");
+    }
+}
 
-    const labelDesc = document.createElement("label");
-    labelDesc.className = "label";
-    labelDesc.innerText = "Descripción";
+const GetMusculos = async (ruta) =>{
+    const respuesta = await fetch(ruta).then( res => res.json())
+    return respuesta
 
-    const controlDesc = document.createElement("div");
-    controlDesc.className = "control";
-
-    const textarea = document.createElement("textarea");
-    textarea.className = "textarea";
-    textarea.name = "descripcion";
-    textarea.value = ej.descripcion ?? "";
-
-    controlDesc.appendChild(textarea);
-    fieldDesc.appendChild(labelDesc);
-    fieldDesc.appendChild(controlDesc);
-    form.appendChild(fieldDesc);
-
-    // Botones
-    const botones = document.createElement("div");
-    botones.className = "field is-grouped";
-
-    const btnGuardar = document.createElement("button");
-    btnGuardar.type = "submit";
-    btnGuardar.className = "button is-success";
-    btnGuardar.innerText = "Guardar";
-
-    const btnCancelar = document.createElement("button");
-    btnCancelar.type = "button";
-    btnCancelar.className = "button is-light";
-    btnCancelar.innerText = "Cancelar";
-
-    btnCancelar.addEventListener("click", () => {
-        dialog.close();
-        dialog.remove();
-    });
-
-    botones.appendChild(btnGuardar);
-    botones.appendChild(btnCancelar);
-    form.appendChild(botones);
-
-    // Evento PATCH
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const datosActualizados = {
-            ejercicio: form.ejercicio.value,
-            grupo_muscular_id: parseInt(id_grupo_muscular),
-            series: parseInt(form.series.value),
-            repeticiones: parseInt(form.repeticiones.value),
-            peso: parseFloat(form.peso.value),
-            rir: parseInt(form.rir.value),
-            tiempo_descanso: parseFloat(form.tiempo_descanso.value),
-            descripcion: form.descripcion.value
-        };
-
-        try {
-            const resp = await fetch(`http://localhost:3000/api/ejercicios/${ej.id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(datosActualizados)
-            });
-
-            if (resp.ok) {
-                dialog.close();
-                dialog.remove();
-                tablaEjercicios();
-                alert("Ejercicio actualizado con éxito");
-            } else {
-                alert("Error al actualizar el ejercicio");
-            }
-        } catch (err) {
-            console.error("Error PATCH:", err);
-            alert("Error al conectar con el servidor");
-        }
-    });
-
-    dialog.appendChild(form);
-    document.body.appendChild(dialog);
-    dialog.showModal();
-};
+}
