@@ -139,10 +139,34 @@ async function deleteEntrenamiento(id) {
   return id;
 }
 
+const updateEntrenamientoById = async ( id, data ) =>{
+  const {
+    dia_semana,
+    objetivo,
+    nivel_usuario,
+    duracion_minutos,
+    unidad_descanso,
+    descripcion,
+  } = data;
+  const result = await dbClient.query(`
+    UPDATE entrenamiento SET
+      dia_semana = $1,
+      objetivo = $2,
+      nivel_usuario = $3,
+      duracion_minutos = $4,
+      unidad_descanso = $5,
+      descripcion = $6
+    WHERE id = $7
+    RETURNING *
+  `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion, id]);
+
+  return result.rows[0];
+}
 module.exports = {
   getAllEntrenamientos,
   getOneEntrenamiento,
   createEntrenamiento,
   updateEntrenamiento,
-  deleteEntrenamiento
+  deleteEntrenamiento,
+  updateEntrenamientoById
 };
