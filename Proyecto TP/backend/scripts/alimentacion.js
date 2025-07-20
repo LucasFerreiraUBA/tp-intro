@@ -85,7 +85,7 @@ async function deleteComida(entrenamientoId, alimentacionId) {
   return true;
 }
 
-async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) {
+async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion) {
     const result = await dbClient.query(`
         UPDATE alimentacion SET
             nombre_comida = $1,
