@@ -94,10 +94,9 @@ async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas,
             proteinas = $4,
             carbohidratos = $5,
             grasas = $6,
-            ejercicio_relacionado = $7,
-            descripcion = $8
-        WHERE id = $9 RETURNING *`, 
-    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion, id]);
+            descripcion = $7
+        WHERE id = $8 RETURNING *`, 
+    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion, id]);
 
     return result.rows[0];
 }

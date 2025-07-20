@@ -256,7 +256,6 @@ app.put('/api/alimentacion/:id', async (req, res) => {
         req.body.proteinas,
         req.body.carbohidratos,
         req.body.grasas,
-        req.body.ejercicio_relacionado,
         req.body.descripcion
     );
     if (!comida) {

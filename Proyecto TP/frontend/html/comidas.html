@@ -57,6 +57,7 @@
                     </table>
                 </section>
             </main>
+            <!-- MODAL AGREGAR COMIDA -->
             <dialog id="modal-agregar-comida" class="modal-editar"> 
                 <form id="form-agregar-comida">
                     <h2 class="title is-4">Agregar comida</h2>
@@ -128,6 +129,86 @@
                     </div>
                 </form>
             </dialog>
+
+
+
+
+            <!-- MODAL EDITAR COMIDA -->
+            <dialog id="modal-editar-comida" class="modal-editar"> 
+                <form id="form-editar-comida">
+                    <h2 class="title is-4">Editar comida</h2>
+
+                    <div class="field">
+                        <label class="label">Comida</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nombre_comida" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="tipo_comida" id="tipo_comida">
+                                    <option value="" disabled selected>Seleccioná un Tipo de comida</option>
+                                    <option value="Desayuno">Desayuno</option>
+                                    <option value="Almuerzo">Almuerzo</option>
+                                    <option value="Merienda">Merienda</option>
+                                    <option value="Cena">Cena</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Calorias</label>
+                        <div class="control">
+                            <input class="input" type="number" name="calorias" required>
+                         </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Proteinas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="proteinas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Carbohidratos</label>
+                        <div class="control">
+                            <input class="input" type="number" name="carbohidratos" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Grasas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="grasas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-success">Guardar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal-editar" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
+            <!--  -->
+
+
+
             <footer class="footer-seccion">
                 <div class="footer-container">
                     <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
@@ -147,6 +228,10 @@
 
             const modal = document.getElementById("modal-agregar-comida");
             const formCom = document.getElementById("form-agregar-comida");
+            
+            const modal_editar = document.getElementById("modal-editar-comida");
+            const formCom_editar = document.getElementById("form-editar-comida");
+
 
             // abrir modal
             document.getElementById("btn-abrir-modal").addEventListener("click", () => {
@@ -158,6 +243,11 @@
                 modal.close();
             });
 
+            // cerrar modal-editar
+            document.getElementById("cancelar-modal-editar").addEventListener("click", () => {
+                modal_editar.close();
+            });
+            
             // enviar nueva comida
             formCom.addEventListener("submit", async (e) => {
                 e.preventDefault();
@@ -192,6 +282,68 @@
                     console.error("Error:", error);
                 }
             });
+
+            const actualizarComida = async (idComida, datos) => {
+                try {
+                    const respuesta = await fetch(`http://localhost:3000/api/alimentacion/${idComida}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(datos)
+                    });
+
+                    if (!respuesta.ok) {
+                        const errorTxt = await respuesta.text();
+                        throw new Error(`Error del servidor: ${respuesta.status} - ${errorTxt}`);
+                    }
+
+                    return respuesta;
+                } catch (err) {
+                    console.error("Error en PUT:", err);
+                    throw err;
+                }
+            };
+
+            formCom_editar.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const idComida = formCom_editar.dataset.comidaId;
+
+                const datosEditados = {
+                    nombre_comida: formCom_editar.nombre_comida.value,
+                    tipo_comida: formCom_editar.tipo_comida.value,
+                    calorias: parseInt(formCom_editar.calorias.value),
+                    proteinas: parseInt(formCom_editar.proteinas.value),
+                    carbohidratos: parseInt(formCom_editar.carbohidratos.value),
+                    grasas: parseInt(formCom_editar.grasas.value),
+                    descripcion: formCom_editar.descripcion.value
+                };
+
+                try {
+                    const respuesta = await actualizarComida(idComida, datosEditados);
+                    if (respuesta.ok) {
+                        modal_editar.close();
+                        formCom_editar.reset();
+                        tablaComidas();
+                        alert("Comida editada correctamente");
+                    } else {
+                        alert("Error al editar la comida");
+                    }
+                } catch (error) {
+                    console.error("Error al editar:", error);
+                    alert("Error");
+                }
+            });
+
+            function cargaFromComida(com){
+                formCom_editar.nombre_comida.value = com.nombre_comida ?? "";
+                formCom_editar.tipo_comida.value = com.tipo_comida ?? "";
+                formCom_editar.calorias.value = com.calorias ?? 0;
+                formCom_editar.proteinas.value = com.proteinas ?? 0;
+                formCom_editar.carbohidratos.value = com.carbohidratos ?? 0;
+                formCom_editar.grasas.value = com.grasas ?? 0;
+                formCom_editar.descripcion.value = com.descripcion ?? "";
+                formCom_editar.dataset.comidaId = com.id;
+            }
 
             function tablaComidas(){
             document.getElementsByClassName("comida-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
@@ -241,13 +393,20 @@
                 descripcion.innerHTML = com.descripcion ?? "-";
                 newRow.appendChild(descripcion);
 
-                const NewEditar = document.createElement("td"); // Editar
+                const NewEditar = document.createElement("td");
                 const EditarLink = document.createElement("a");
                 EditarLink.className = "button";
-                EditarLink.innerHTML = "Editar";
-    
+                EditarLink.textContent = "Editar";
+                EditarLink.href = "#";
+
+                EditarLink.addEventListener("click", () => {
+                    modal_editar.showModal();
+                    cargaFromComida(com);
+                });
+
                 NewEditar.appendChild(EditarLink);
                 newRow.appendChild(NewEditar);
+
         
                 const NewBorrar = document.createElement("td"); // Borrar
                 const BorrarLink = document.createElement("a");
