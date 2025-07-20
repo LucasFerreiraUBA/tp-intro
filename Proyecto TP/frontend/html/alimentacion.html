@@ -43,7 +43,7 @@
                                 <th>Proteinas totales</th>
                                 <th>Carbohidratos totales</th>
                                 <th>Grasas totales</th>
-                                <th>Editar</th>
+                                <th>Ver</th>
                             </tr>
                         </thead>
                         <tbody class="body-table"></tbody>
@@ -92,13 +92,13 @@
                     grasasTotales.innerHTML = Alimento.grasas ?? "-";
                     newRow.appendChild(grasasTotales);
 
-                    const NewEditar = document.createElement("td"); // Editar
-                    const EditarLink = document.createElement("a");
-                    EditarLink.className = "button";
-                    EditarLink.innerHTML = "Editar";
-                    EditarLink.href = "comidas.html?id=" + Alimento.id; // id= querry param
-                    NewEditar.appendChild(EditarLink);
-                    newRow.appendChild(NewEditar);
+                    const NewVer = document.createElement("td"); // Ver
+                    const VerModal = document.createElement("a");
+                    VerModal.className = "button";
+                    VerModal.innerHTML = "Ver";
+                    VerModal.href = "comidas.html?id=" + Alimento.id; // id= querry param
+                    NewVer.appendChild(VerModal);
+                    newRow.appendChild(NewVer);
             
                     table.appendChild(newRow);
                 });

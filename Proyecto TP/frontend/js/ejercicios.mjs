@@ -64,19 +64,19 @@ export const AbrirModalEditar = ej => {
     formEditar.descripcion.value = ej.descripcion ?? "";
 }
 const editarEjercicio = async (datos) => {
-    const ejercicio_URL = `${RUTAS.EJERCICIOS}/${datos.id}`
-    const respuesta = await PatchOneById(ejercicio_URL, datos)
+    const ejercicio_URL = `${RUTAS.EJERCICIOS}/${datos.id}`;
+    const respuesta = await PatchOneById(ejercicio_URL, datos);
     if (respuesta.ok) {
-        modalEditar.close()
-        alert("Ejercicio Modificado correctamente")
-        location.reload()
+        modalEditar.close();
+        alert("Ejercicio modificado correctamente");
+        location.reload();
     } else {
         alert("Ocurrió un error al modificar el ejercicio");
     }
 }
 
 const GetMusculos = async (ruta) =>{
-    const respuesta = await fetch(ruta).then( res => res.json())
-    return respuesta
+    const respuesta = await fetch(ruta).then( res => res.json());
+    return respuesta;
 
 }

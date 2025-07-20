@@ -114,8 +114,8 @@
                                     <div class="control">
                                         <div class="select">
                                             <select name="unidad">
-                                                <option value="min">Min</option>
-                                                <option value="hs">Hs</option>
+                                                <option value="Min">Min</option>
+                                                <option value="Hs">Hs</option>
                                             </select>
                                         </div>
                                     </div>
@@ -136,6 +136,86 @@
                     </footer>
                 </div>
             </div>
+            <!-----MODAL PARA EDITAR ENTRENAMIENTO-->
+            <div class="modal" id="modal-editar">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Editar entrenamiento</p>
+                        <button class="delete" aria-label="close" id="cerrar-modal"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="form-edit-entrenamiento">
+                            <div class="field">
+                                <label class="label">Dia de la Semana</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select name="dia_semana" id="dia_semana" required>
+                                            <option value="" disabled selected>Seleccioná un dia</option>
+                                            <option value="Lunes">Lunes</option>
+                                            <option value="Martes">Martes</option>
+                                            <option value="Miercoles">Miercoles</option>
+                                            <option value="Jueves">Jueves</option>
+                                            <option value="Viernes">Viernes</option>
+                                            <option value="Sabado">Sabado</option>
+                                            <option value="Domingo">Domingo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Objetivo</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="objetivo" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Nivel de usuario</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select name="nivel_usuario" id="nivel_usuario" required>
+                                            <option value="" disabled selected>Seleccioná un nivel</option>
+                                            <option value="Principiante">Principiante</option>
+                                            <option value="Intermedio">Intermedio</option>
+                                            <option value="Avanzado">Avanzado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field"> 
+                                <label class="label">Duracion</label> 
+                                <div class="field has-addons"> 
+                                    <div class="control is-expanded"> 
+                                        <input class="input" type="number" name="duracion_minutos" id="duracion_minutos" step="any">
+                                    </div> 
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="unidad">
+                                                <option value="Min">Min</option>
+                                                <option value="Hs">Hs</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Descripcion</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="descripcion"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" id="btn-guardar">Modificar</button>
+                        <button class="button" id="btn-cancelar">Cancelar</button>
+                    </footer>
+                </div>
+            </div>
             <footer class="footer-seccion">
                 <div class="footer-container">
                     <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
@@ -151,6 +231,7 @@
     <script>
         tablaEntrenos();
 
+        //AGREGAR ENTRENAMIENTO
         //mostrar modal
         document.querySelector('#btn-abrir-modal').addEventListener('click', () => {
             document.getElementById('modal-agregar').classList.add('is-active');
@@ -214,7 +295,7 @@
                 console.error("Error al enviar", error);
             }
         });
-
+        // EDITAR ENTRENAMIENTO
         async function abrirModalPorId(id) {
             try {
                 const respuesta = await fetch(`http://localhost:3000/api/entrenamientos/${id}`);
@@ -227,7 +308,7 @@
                 const entrenamiento = await respuesta.json();
 
                 // carga
-                const form = document.getElementById('form-entrenamiento');
+                const form = document.getElementById('form-edit-entrenamiento');
                 form.dia_semana.value = entrenamiento.dia_semana;
                 form.objetivo.value = entrenamiento.objetivo;
                 form.nivel_usuario.value = entrenamiento.nivel_usuario;
@@ -236,7 +317,7 @@
                 form.descripcion.value = entrenamiento.descripcion;
 
                 // mostrar
-                document.getElementById('modal-agregar').classList.add('is-active');
+                document.getElementById('modal-editar').classList.add('is-active');
             } catch (error) {
                 console.error("Error al cargar entrenamiento", error);
             }
@@ -286,11 +367,11 @@
                         : "-"; // si son mas de 40 caracteres, corta y agrega "..."
                     newRow.appendChild(Descripcion);
 
-                    const NewVer = document.createElement("td"); // Editar
+                    const NewVer = document.createElement("td"); // Ver
                     const VerModal = document.createElement("a");
                     VerModal.className = "button";
                     VerModal.innerHTML = "Ver";
-                    VerModal.onclick = () => abrirModalPorId(Entrenamiento.id);
+                    VerModal.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
                     NewVer.appendChild(VerModal);
                     newRow.appendChild(NewVer);  
 
@@ -298,7 +379,7 @@
                     const EditarLink = document.createElement("a");
                     EditarLink.className = "button";
                     EditarLink.innerHTML = "Editar";
-                    EditarLink.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
+                    EditarLink.onclick = () => abrirModalPorId(Entrenamiento.id);
                     NewEditar.appendChild(EditarLink);
                     newRow.appendChild(NewEditar);
             

@@ -119,8 +119,8 @@
                             <div class="control">
                                 <div class="select">
                                     <select name="unidad_peso" required>
-                                        <option value="kg">Kg</option>
-                                        <option value="lb">Lb</option>
+                                        <option value="Kg">Kg</option>
+                                        <option value="Lb">Lb</option>
                                     </select>
                                 </div>
                             </div>
@@ -135,7 +135,7 @@
                     </div>
 
                     <div class="field"> 
-                        <label class="label">Duracion</label> 
+                        <label class="label">Tiempo de descanso</label> 
                         <div class="field has-addons"> 
                             <div class="control is-expanded"> 
                                 <input class="input" type="number" name="tiempo_descanso" id="tiempo_descanso" step="any">
@@ -143,8 +143,8 @@
                             <div class="control">
                                 <div class="select">
                                     <select name="unidad_descanso" required>
-                                        <option value="min">Min</option>
-                                        <option value="seg">Seg</option>
+                                        <option value="Min">Min</option>
+                                        <option value="Seg">Seg</option>
                                     </select>
                                 </div>
                             </div>
@@ -169,117 +169,117 @@
                 </form>
             </dialog>
             <!-- MODAL PARA EDITAR EJERCICIO -->
-<dialog id="modal-editar-ejercicio" class="modal-editar"> 
-    <form method="dialog" id="form-editar-ejercicio">
-        <h2 class="title is-4">Editar ejercicio</h2>
+            <dialog id="modal-editar-ejercicio" class="modal-editar"> 
+                <form method="dialog" id="form-editar-ejercicio">
+                    <h2 class="title is-4">Editar ejercicio</h2>
 
-        <input type="hidden" name="id">
+                    <input type="hidden" name="id">
 
-        <!-- Reutilizamos los mismos campos del modal de agregar -->
-        <div class="field">
-            <label class="label">Grupo Muscular</label>
-            <div class="control">
-                <div class="select is-fullwidth">
-                    <select name="grupo_muscular" required>
-                        <option value="Abdominales">Abdominales</option>
-                        <option value="Aductores">Aductores</option>
-                        <option value="Antebrazos">Antebrazos</option>
-                        <option value="Bíceps">Bíceps</option>
-                        <option value="Cuádriceps">Cuádriceps</option>
-                        <option value="Deltoides">Deltoides</option>
-                        <option value="Espalda">Espalda</option>
-                        <option value="Gemelos">Gemelos</option>
-                        <option value="Glúteos">Glúteos</option>
-                        <option value="Hombros">Hombros</option>
-                        <option value="Isquiotibiales">Isquiotibiales</option>
-                        <option value="Pecho">Pecho</option>
-                        <option value="Piernas">Piernas</option>
-                        <option value="Trapecio">Trapecio</option>
-                        <option value="Tríceps">Tríceps</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Ejercicio</label>
-            <div class="control">
-                <input class="input" type="text" name="ejercicio" required>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Series</label>
-            <div class="control">
-                <input class="input" type="number" name="series" required>
-            </div>
-        </div>
-
-        <div class="field">
-            <label class="label">Repeticiones</label>
-            <div class="control">
-                <input class="input" type="number" name="repeticiones" required>
-            </div>
-        </div>
-
-        <div class="field"> 
-            <label class="label">Peso</label> 
-            <div class="field has-addons"> 
-                <div class="control is-expanded"> 
-                    <input class="input" type="number" name="peso" step="any">
-                </div> 
-                <div class="control">
-                    <div class="select">
-                        <select name="unidad_peso" required>
-                            <option value="kg" selected>Kg</option>
-                            <option value="lb">Lb</option>
-                        </select>
+                    <!-- Reutilizamos los mismos campos del modal de agregar -->
+                    <div class="field">
+                        <label class="label">Grupo Muscular</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="grupo_muscular" required>
+                                    <option value="Abdominales">Abdominales</option>
+                                    <option value="Aductores">Aductores</option>
+                                    <option value="Antebrazos">Antebrazos</option>
+                                    <option value="Bíceps">Bíceps</option>
+                                    <option value="Cuádriceps">Cuádriceps</option>
+                                    <option value="Deltoides">Deltoides</option>
+                                    <option value="Espalda">Espalda</option>
+                                    <option value="Gemelos">Gemelos</option>
+                                    <option value="Glúteos">Glúteos</option>
+                                    <option value="Hombros">Hombros</option>
+                                    <option value="Isquiotibiales">Isquiotibiales</option>
+                                    <option value="Pecho">Pecho</option>
+                                    <option value="Piernas">Piernas</option>
+                                    <option value="Trapecio">Trapecio</option>
+                                    <option value="Tríceps">Tríceps</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="field">
-            <label class="label">RIR</label>
-            <div class="control">
-                <input class="input" type="number" name="rir" required>
-            </div>
-        </div>
-
-        <div class="field"> 
-            <label class="label">Duracion</label> 
-            <div class="field has-addons"> 
-                <div class="control is-expanded"> 
-                    <input class="input" type="number" name="tiempo_descanso" step="any">
-                </div> 
-                <div class="control">
-                    <div class="select">
-                        <select name="unidad_descanso" required>
-                            <option value="min" selected>Min</option>
-                            <option value="seg">Seg</option>
-                        </select>
+                    <div class="field">
+                        <label class="label">Ejercicio</label>
+                        <div class="control">
+                            <input class="input" type="text" name="ejercicio" required>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
-        <div class="field">
-            <label class="label">Descripción</label>
-            <div class="control">
-                <textarea class="textarea" name="descripcion"></textarea>
-            </div>
-        </div>
+                    <div class="field">
+                        <label class="label">Series</label>
+                        <div class="control">
+                            <input class="input" type="number" name="series" required>
+                        </div>
+                    </div>
 
-        <div class="field is-grouped">
-            <div class="control">
-                <button type="submit" class="button is-info">Modificar</button>
-            </div>
-            <div class="control">
-                <button type="button" id="cancelar-modal-editar" class="button">Cancelar</button>
-            </div>
-        </div>
-    </form>
-</dialog>
+                    <div class="field">
+                        <label class="label">Repeticiones</label>
+                        <div class="control">
+                            <input class="input" type="number" name="repeticiones" required>
+                        </div>
+                    </div>
+
+                    <div class="field"> 
+                        <label class="label">Peso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="peso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_peso" required>
+                                        <option value="Kg">Kg</option>
+                                        <option value="Lb">Lb</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">RIR</label>
+                        <div class="control">
+                            <input class="input" type="number" name="rir" required>
+                        </div>
+                    </div>
+
+                    <div class="field"> 
+                        <label class="label">Tiempo de descanso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="tiempo_descanso" id="tiempo_descanso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_descanso" required>
+                                        <option value="Min">Min</option>
+                                        <option value="Seg">Seg</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-info">Modificar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal-editar" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
 
             <footer class="footer-seccion">
                 <div class="footer-container">
