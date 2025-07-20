@@ -142,7 +142,7 @@
                 <div class="modal-card">
                     <header class="modal-card-head">
                         <p class="modal-card-title">Editar entrenamiento</p>
-                        <button class="delete" aria-label="close" id="cerrar-modal"></button>
+                        <button class="delete" aria-label="close" id="cerrar-modal-editar"></button>
                     </header>
                     <section class="modal-card-body">
                         <form id="form-edit-entrenamiento">
@@ -212,7 +212,7 @@
                     </section>
                     <footer class="modal-card-foot">
                         <button class="button is-success" id="btn-guardar">Modificar</button>
-                        <button class="button" id="btn-cancelar">Cancelar</button>
+                        <button class="button" id="btn-cancelar-editar">Cancelar</button>
                     </footer>
                 </div>
             </div>
@@ -316,14 +316,25 @@
                 form.unidad.value = entrenamiento.unidad_descanso.toLowerCase();
                 form.descripcion.value = entrenamiento.descripcion;
 
-                // mostrar
+                // mostrar modal de editar 
                 document.getElementById('modal-editar').classList.add('is-active');
             } catch (error) {
                 console.error("Error al cargar entrenamiento", error);
             }
         }
+        // cerrar modal de editar 
+        const modalEditar = document.getElementById("modal-editar");
 
-
+        document.getElementById("btn-cancelar-editar").addEventListener("click", () => {
+            modalEditar.classList.remove("is-active");
+        });
+        document.getElementById("cerrar-modal-editar").addEventListener("click", () => {
+            modalEditar.classList.remove("is-active");
+        });
+        document.querySelector("#modal-editar .modal-background").addEventListener("click", () => {
+            modalEditar.classList.remove("is-active");
+        });
+        
         function tablaEntrenos(){
             document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
 
