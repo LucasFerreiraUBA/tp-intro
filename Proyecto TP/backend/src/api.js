@@ -79,9 +79,11 @@ app.post('/api/ejercicios', async (req, res) => {
     repeticiones,
     series,
     peso,
+    unidad_peso_ejercicio,
     grupo_muscular,  
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
     entrenamiento_id
   } = req.body;
@@ -100,9 +102,11 @@ app.post('/api/ejercicios', async (req, res) => {
     repeticiones,
     series,
     peso,
+    unidad_peso_ejercicio,
     grupo_muscular, 
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
     entrenamiento_id
   );
@@ -139,9 +143,11 @@ app.put('/api/ejercicios/:id', async (req, res) => {
     req.body.ejercicio,
     req.body.repeticiones, 
     req.body.peso,
+    req.body.unidad_peso_ejercicio,
     req.body.grupo_muscular,
     req.body.rir,
     req.body.tiempo_descanso,
+    req.body.unidad_descanso_ejercicio,
     req.body.descripcion
   );
 
@@ -159,9 +165,11 @@ app.patch('/api/ejercicios/:id', async (req, res) => {
     repeticiones,
     series,
     peso,
+    unidad_peso_ejercicio,
     grupo_muscular_id,
     rir,
     tiempo_descanso,
+    unidad_descanso_ejercicio,
     descripcion,
   } = req.body;
   if (grupo_muscular_id === undefined || grupo_muscular_id === null) {
@@ -174,9 +182,11 @@ app.patch('/api/ejercicios/:id', async (req, res) => {
       repeticiones,
       series,
       peso,
+      unidad_peso_ejercicio,
       grupo_muscular_id,
       rir,
       tiempo_descanso,
+      unidad_descanso_ejercicio,
       descripcion,
     );
 
@@ -301,6 +311,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso = 'Min', // Valor por defecto
     descripcion,
     ejercicios,
     comidas
@@ -323,6 +334,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso,
     descripcion,
     ejercicios: ejercicios || [],
     comidas: comidas || []
@@ -343,6 +355,7 @@ app.put("/api/entrenamientos/:id", async (req, res) => {
     req.body.objetivo,
     req.body.nivel_usuario,
     req.body.duracion_minutos,
+    req.body.unidad_descanso,
     req.body.descripcion,
     req.body.ejercicios,
     req.body.comidas

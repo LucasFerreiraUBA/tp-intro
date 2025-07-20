@@ -16,9 +16,11 @@ CREATE TABLE arma_rutina (
     ejercicio VARCHAR(50) NOT NULL,
     repeticiones INT NOT NULL,
     peso FLOAT,
+    unidad_peso_ejercicio VARCHAR(3) DEFAULT 'Kg',
     grupo_muscular_id INT NOT NULL REFERENCES grupo_muscular(id) ON DELETE CASCADE,
     rir INT,
-    tiempo_descanso FLOAT,
+    tiempo_descanso INT,
+    unidad_descanso_ejercicio VARCHAR(3) DEFAULT 'Min',
     descripcion VARCHAR(100)
 );
 
@@ -39,7 +41,8 @@ CREATE TABLE entrenamiento (
     dia_semana VARCHAR(15) NOT NULL,
     objetivo VARCHAR(25) NOT NULL,
     nivel_usuario VARCHAR(20),
-    duracion_minutos INT,
+    duracion_minutos FLOAT,
+    unidad_descanso VARCHAR(3) DEFAULT 'Min',
     descripcion VARCHAR(100)
 );
 

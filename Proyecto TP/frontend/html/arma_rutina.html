@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
          <!-- CSS -->
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="../css/style.css?v=1.2"> 
+        <!-- ?v=1.2 agregado porque no me funcionaba el css en localhost:8080-->
         <title>Arma rutina</title>
     </head>
     <body>
@@ -44,8 +45,9 @@
                             <th>Dia de la Semana </th>
                             <th>Objetivo</th>
                             <th>Nivel Usuario</th>
-                            <th>Duracion (minutos)</th>
+                            <th>Duracion</th>
                             <th>Descripcion</th>
+                            <th>Ver</th>
                             <th>Editar</th>
                             <th>Borrar</th>
                         </tr>
@@ -103,10 +105,20 @@
                                 </div>
                             </div>
 
-                            <div class="field">
-                                <label class="label"> Duracion (minutos)</label>
-                                <div class="control">
-                                    <input class="input" type="number" name="duracion_minutos" required>
+                            <div class="field"> 
+                                <label class="label">Duracion</label> 
+                                <div class="field has-addons"> 
+                                    <div class="control is-expanded"> 
+                                        <input class="input" type="number" name="duracion_minutos" id="duracion_minutos" step="any">
+                                    </div> 
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="unidad">
+                                                <option value="Min">Min</option>
+                                                <option value="Hs">Hs</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -121,6 +133,86 @@
                     <footer class="modal-card-foot">
                         <button class="button is-success" id="btn-guardar">Guardar</button>
                         <button class="button" id="btn-cancelar">Cancelar</button>
+                    </footer>
+                </div>
+            </div>
+            <!-----MODAL PARA EDITAR ENTRENAMIENTO-->
+            <div class="modal" id="modal-editar">
+                <div class="modal-background"></div>
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <p class="modal-card-title">Editar entrenamiento</p>
+                        <button class="delete" aria-label="close" id="cerrar-modal-editar"></button>
+                    </header>
+                    <section class="modal-card-body">
+                        <form id="form-edit-entrenamiento">
+                            <div class="field">
+                                <label class="label">Dia de la Semana</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select name="dia_semana" id="dia_semana" required>
+                                            <option value="" disabled selected>Seleccioná un dia</option>
+                                            <option value="Lunes">Lunes</option>
+                                            <option value="Martes">Martes</option>
+                                            <option value="Miercoles">Miercoles</option>
+                                            <option value="Jueves">Jueves</option>
+                                            <option value="Viernes">Viernes</option>
+                                            <option value="Sabado">Sabado</option>
+                                            <option value="Domingo">Domingo</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Objetivo</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="objetivo" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Nivel de usuario</label>
+                                <div class="control">
+                                    <div class="select is-fullwidth">
+                                        <select name="nivel_usuario" id="nivel_usuario" required>
+                                            <option value="" disabled selected>Seleccioná un nivel</option>
+                                            <option value="Principiante">Principiante</option>
+                                            <option value="Intermedio">Intermedio</option>
+                                            <option value="Avanzado">Avanzado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field"> 
+                                <label class="label">Duracion</label> 
+                                <div class="field has-addons"> 
+                                    <div class="control is-expanded"> 
+                                        <input class="input" type="number" name="duracion_minutos" id="duracion_minutos" step="any">
+                                    </div> 
+                                    <div class="control">
+                                        <div class="select">
+                                            <select name="unidad">
+                                                <option value="Min">Min</option>
+                                                <option value="Hs">Hs</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label"> Descripcion</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="descripcion"></textarea>
+                                </div>
+                            </div>
+                        </form>
+                    </section>
+                    <footer class="modal-card-foot">
+                        <button class="button is-success" id="btn-guardar">Modificar</button>
+                        <button class="button" id="btn-cancelar-editar">Cancelar</button>
                     </footer>
                 </div>
             </div>
@@ -139,6 +231,7 @@
     <script>
         tablaEntrenos();
 
+        //AGREGAR ENTRENAMIENTO
         //mostrar modal
         document.querySelector('#btn-abrir-modal').addEventListener('click', () => {
             document.getElementById('modal-agregar').classList.add('is-active');
@@ -172,7 +265,7 @@
                 return; // No continúa si la descripción es demasiado larga
             } else if (descripcion.length > 100) {
                 alert("La descripción es muy larga");
-                return; // No continúa si la descripción es demasiado larga
+                return; // No cont  inúa si la descripción es demasiado larga
             }
 
             const datos = {
@@ -180,6 +273,7 @@
                 objetivo: objetivo,
                 nivel_usuario: form.nivel_usuario.value,
                 duracion_minutos: parseInt(form.duracion_minutos.value),
+                unidad_descanso: form.unidad.value,
                 descripcion: descripcion
             };
 
@@ -201,7 +295,46 @@
                 console.error("Error al enviar", error);
             }
         });
+        // EDITAR ENTRENAMIENTO
+        async function abrirModalPorId(id) {
+            try {
+                const respuesta = await fetch(`http://localhost:3000/api/entrenamientos/${id}`);
+                
+                if (!respuesta.ok) {
+                    alert("No se pudo obtener el entrenamiento.");
+                    return;
+                }
 
+                const entrenamiento = await respuesta.json();
+
+                // carga
+                const form = document.getElementById('form-edit-entrenamiento');
+                form.dia_semana.value = entrenamiento.dia_semana;
+                form.objetivo.value = entrenamiento.objetivo;
+                form.nivel_usuario.value = entrenamiento.nivel_usuario;
+                form.duracion_minutos.value = entrenamiento.duracion_minutos;
+                form.unidad.value = entrenamiento.unidad_descanso.toLowerCase();
+                form.descripcion.value = entrenamiento.descripcion;
+
+                // mostrar modal de editar 
+                document.getElementById('modal-editar').classList.add('is-active');
+            } catch (error) {
+                console.error("Error al cargar entrenamiento", error);
+            }
+        }
+        // cerrar modal de editar 
+        const modalEditar = document.getElementById("modal-editar");
+
+        document.getElementById("btn-cancelar-editar").addEventListener("click", () => {
+            modalEditar.classList.remove("is-active");
+        });
+        document.getElementById("cerrar-modal-editar").addEventListener("click", () => {
+            modalEditar.classList.remove("is-active");
+        });
+        document.querySelector("#modal-editar .modal-background").addEventListener("click", () => {
+            modalEditar.classList.remove("is-active");
+        });
+        
         function tablaEntrenos(){
             document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
 
@@ -227,8 +360,14 @@
                     NivelUsuario.innerHTML = Entrenamiento.nivel_usuario && Entrenamiento.nivel_usuario.trim() !== "" ? Entrenamiento.nivel_usuario : "-"; 
                     newRow.appendChild(NivelUsuario);
 
-                    const Duracion = document.createElement("td"); // Duracion
-                    Duracion.innerHTML = Entrenamiento.duracion_minutos ?? "-";
+                    const Duracion = document.createElement("td");
+                    const duracion = Entrenamiento.duracion_minutos;
+                    const unidad = Entrenamiento.unidad_descanso ?? "";
+                    if (duracion !== undefined && duracion !== null && duracion !== "") {
+                        Duracion.innerHTML = `${duracion} ${unidad}`.trim();
+                    } else {
+                        Duracion.innerHTML = "-";
+                    }
                     newRow.appendChild(Duracion);
 
                     const Descripcion = document.createElement("td"); // Descripcion
@@ -239,11 +378,19 @@
                         : "-"; // si son mas de 40 caracteres, corta y agrega "..."
                     newRow.appendChild(Descripcion);
 
+                    const NewVer = document.createElement("td"); // Ver
+                    const VerModal = document.createElement("a");
+                    VerModal.className = "button";
+                    VerModal.innerHTML = "Ver";
+                    VerModal.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
+                    NewVer.appendChild(VerModal);
+                    newRow.appendChild(NewVer);  
+
                     const NewEditar = document.createElement("td"); // Editar
                     const EditarLink = document.createElement("a");
                     EditarLink.className = "button";
                     EditarLink.innerHTML = "Editar";
-                    EditarLink.href = "ejercicios.html?id=" + Entrenamiento.id; // id= querry param
+                    EditarLink.onclick = () => abrirModalPorId(Entrenamiento.id);
                     NewEditar.appendChild(EditarLink);
                     newRow.appendChild(NewEditar);
             

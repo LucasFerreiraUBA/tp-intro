@@ -17,6 +17,7 @@ async function getAllEntrenamientos() {
       e.objetivo,
       e.nivel_usuario,
       e.duracion_minutos,
+      e.unidad_descanso,
       e.descripcion,
       SUM(a.calorias) AS calorias,
       SUM(a.proteinas) AS proteinas,
@@ -48,9 +49,11 @@ async function getOneEntrenamiento(id) {
       ar.series,
       ar.repeticiones,
       ar.peso,
+      ar.unidad_peso_ejercicio,
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
+      ar.unidad_descanso_ejercicio,
       ar.descripcion
     FROM entrenamiento_ejercicio ee
     JOIN arma_rutina ar ON ar.id = ee.rutina_id
@@ -89,16 +92,17 @@ async function createEntrenamiento(data) {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso = 'Min', // Valor por defecto
     descripcion,
     ejercicios,
     comidas,
   } = data;
 
   const entrenamiento = await dbClient.query(`
-    INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos, descripcion)
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO entrenamiento (dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *
-  `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, descripcion]);
+  `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion]);
 
   const entrenamientoId = entrenamiento.rows[0].id;
 
@@ -126,6 +130,7 @@ async function updateEntrenamiento(id, data) {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso,
     descripcion,
   } = data;
 
@@ -135,10 +140,11 @@ async function updateEntrenamiento(id, data) {
       objetivo = $2,
       nivel_usuario = $3,
       duracion_minutos = $4,
-      descripcion = $5
-    WHERE id = $6
+      unidad_descanso = $5,
+      descripcion = $6
+    WHERE id = $7
     RETURNING *
-  `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, descripcion, id]);
+  `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion, id]);
 
   return result.rows[0];
 }
