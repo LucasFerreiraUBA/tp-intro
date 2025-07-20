@@ -35,13 +35,6 @@ async function getAllEntrenamientos() {
 // obtener un entrenamiento por id, incluyendo ejercicios y comidas
 async function getOneEntrenamiento(id) {
   const entrenamiento = await dbClient.query("SELECT * FROM entrenamiento WHERE id = $1", [id]);
-  
-  // const ejercicios = await dbClient.query(`
-  //   SELECT ar.*
-  //   FROM entrenamiento_ejercicio ee
-  //   JOIN arma_rutina ar ON ar.id = ee.rutina_id
-  //   WHERE ee.entrenamiento_id = $1
-  // `, [id]);
   const ejercicios = await dbClient.query(`
     SELECT 
       ar.id,
@@ -60,28 +53,9 @@ async function getOneEntrenamiento(id) {
     JOIN grupo_muscular gm ON ar.grupo_muscular_id = gm.id
     WHERE ee.entrenamiento_id = $1
   `, [id]);
-
-  const comidas = await dbClient.query(`
-    SELECT
-    a.id,
-    a.nombre_comida,
-    a.tipo_comida,
-    a.calorias,
-    a.proteinas,
-    a.carbohidratos,
-    a.grasas,
-    ar.ejercicio AS ejercicio_relacionado,
-    a.descripcion
-    FROM entrenamiento_alimentacion ea
-    JOIN alimentacion a ON a.id = ea.alimentacion_id
-    LEFT JOIN arma_rutina ar ON a.rutina_id = ar.id
-    WHERE ea.entrenamiento_id = $1
-  `, [id]);
-
   return {
     ...entrenamiento.rows[0],
     ejercicios: ejercicios.rows,
-    comidas: comidas.rows,
   };
 }
 
@@ -165,10 +139,34 @@ async function deleteEntrenamiento(id) {
   return id;
 }
 
+const updateEntrenamientoById = async ( id, data ) =>{
+  const {
+    dia_semana,
+    objetivo,
+    nivel_usuario,
+    duracion_minutos,
+    unidad_descanso,
+    descripcion,
+  } = data;
+  const result = await dbClient.query(`
+    UPDATE entrenamiento SET
+      dia_semana = $1,
+      objetivo = $2,
+      nivel_usuario = $3,
+      duracion_minutos = $4,
+      unidad_descanso = $5,
+      descripcion = $6
+    WHERE id = $7
+    RETURNING *
+  `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion, id]);
+
+  return result.rows[0];
+}
 module.exports = {
   getAllEntrenamientos,
   getOneEntrenamiento,
   createEntrenamiento,
   updateEntrenamiento,
-  deleteEntrenamiento
+  deleteEntrenamiento,
+  updateEntrenamientoById
 };

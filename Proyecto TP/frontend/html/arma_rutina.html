@@ -113,7 +113,7 @@
                                     </div> 
                                     <div class="control">
                                         <div class="select">
-                                            <select name="unidad">
+                                            <select name="unidad" id="unidad">
                                                 <option value="Min">Min</option>
                                                 <option value="Hs">Hs</option>
                                             </select>
@@ -211,7 +211,7 @@
                         </form>
                     </section>
                     <footer class="modal-card-foot">
-                        <button class="button is-success" id="btn-guardar">Modificar</button>
+                        <button class="button is-success" id="btn-editar">Modificar</button>
                         <button class="button" id="btn-cancelar-editar">Cancelar</button>
                     </footer>
                 </div>
@@ -228,7 +228,9 @@
                 </div>
             </footer>
         </div>
-    <script>
+    <script type="module">
+        import { PatchOneById } from "../utils/APIFetch.mjs";
+        import {RUTAS} from "../constantes/rutas.mjs"
         tablaEntrenos();
 
         //AGREGAR ENTRENAMIENTO
@@ -238,8 +240,13 @@
         });
         //ocultar modal
         function cerrarModal(){
-            document.getElementById('modal-agregar').classList.remove('is-active');
+            const modal = document.getElementById('modal-agregar').classList.remove('is-active');
             document.getElementById('form-entrenamiento').reset();
+            modal.close()
+        }
+        function cerrarModalEditar(){
+        const modal = document.getElementById('modal-editar').classList.remove('is-active');
+        document.getElementById('form-edit-entrenamiento').reset();
         }
         document.getElementById('cerrar-modal').addEventListener('click', cerrarModal);
         document.getElementById('btn-cancelar').addEventListener('click', cerrarModal);
@@ -306,18 +313,33 @@
                 }
 
                 const entrenamiento = await respuesta.json();
-
                 // carga
-                const form = document.getElementById('form-edit-entrenamiento');
-                form.dia_semana.value = entrenamiento.dia_semana;
-                form.objetivo.value = entrenamiento.objetivo;
-                form.nivel_usuario.value = entrenamiento.nivel_usuario;
-                form.duracion_minutos.value = entrenamiento.duracion_minutos;
-                form.unidad.value = entrenamiento.unidad_descanso.toLowerCase();
-                form.descripcion.value = entrenamiento.descripcion;
-
+                const formEdit = document.getElementById('form-edit-entrenamiento');
+                formEdit.dia_semana.value = entrenamiento.dia_semana;
+                formEdit.objetivo.value = entrenamiento.objetivo ?? "";
+                formEdit.nivel_usuario.value = entrenamiento.nivel_usuario ?? "";
+                formEdit.duracion_minutos.value = entrenamiento.duracion_minutos ?? 0;
+                formEdit.unidad.value = entrenamiento.unidad_descanso.toLowerCase() ?? "";
+                formEdit.descripcion.value = entrenamiento.descripcion ?? "";
+                const botonEditar = document.getElementById("btn-editar")
                 // mostrar modal de editar 
                 document.getElementById('modal-editar').classList.add('is-active');
+                botonEditar.addEventListener("click", async () => {
+                    const rutaEjercicio = `${RUTAS.ENTRENAMIENTOS}/${entrenamiento.id}`
+                    const data = {
+                        dia_semana : formEdit.dia_semana.value,
+                        objetivo : formEdit.objetivo.value ?? "",
+                        nivel_usuario: formEdit.nivel_usuario.value ?? "",
+                        duracion_minutos : parseInt(formEdit.duracion_minutos.value) ?? 0,
+                        unidad_descanso : formEdit.unidad.value ?? "",
+                        descripcion: formEdit.descripcion.value ?? ""
+                    };
+                    const res = await PatchOneById(rutaEjercicio,data)
+                    if (res.ok){
+                        tablaEntrenos()
+                        cerrarModalEditar()
+                    }
+                    })
             } catch (error) {
                 console.error("Error al cargar entrenamiento", error);
             }

@@ -32,6 +32,7 @@ const {
   createEntrenamiento,
   deleteEntrenamiento,
   updateEntrenamiento,
+  updateEntrenamientoById,
 } = require("../scripts/entrenamiento");
 
 // Sample route
@@ -368,6 +369,23 @@ app.put("/api/entrenamientos/:id", async (req, res) => {
   res.json(entrenamiento);
 });
 
+app.patch("/api/entrenamientos/:id", async (req, res) =>{
+const entrenamiento = await updateEntrenamientoById( req.params.id,
+  data = { 
+  dia_semana :req.body.dia_semana,
+  objetivo : req.body.objetivo,
+  nivel_usuario: req.body.nivel_usuario,
+  duracion_minutos : req.body.duracion_minutos,
+  unidad_descanso : req.body.unidad_descanso,
+  descripcion : req.body.descripcion
+}
+);
+  if (!entrenamiento) {
+    return res.status(404).json({ error: "Entrenamiento no encontrado para actualizar" });
+  }
+
+  res.json(entrenamiento);
+})
 // Eliminar entrenamiento
 app.delete("/api/entrenamientos/:id", async (req, res) => {
   const entrenamiento = await deleteEntrenamiento(req.params.id);
