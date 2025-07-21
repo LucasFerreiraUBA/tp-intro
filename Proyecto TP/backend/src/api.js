@@ -318,7 +318,7 @@ app.post("/api/entrenamientos", async (req, res) => {
     comidas
   } = req.body;
 
-  if (!dia_semana || !objetivo) {
+  if (!dia_semana || !objetivo || !nivel_usuario) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
 

@@ -197,7 +197,7 @@
 
                     <div class="field is-grouped">
                         <div class="control">
-                            <button type="submit" class="button is-success">Guardar</button>
+                            <button type="submit" class="button is-success">Modificar</button>
                         </div>
                         <div class="control">
                             <button type="button" id="cancelar-modal-editar" class="button">Cancelar</button>
@@ -252,15 +252,37 @@
             formCom.addEventListener("submit", async (e) => {
                 e.preventDefault();
 
+                const descripcion = formCom.descripcion.value.trim();
+                const comida = formCom.nombre_comida.value.trim();
+                const calorias = formCom.calorias.value.trim();
+                const proteinas = formCom.proteinas.value.trim();
+                const carbohidratos = formCom.carbohidratos.value.trim();
+                const grasas = formCom.grasas.value.trim();
+                // Validaciones
+
+                if (descripcion.length > 100) {
+                    alert("La descripción no puede superar los 100 caracteres.");
+                    return; 
+                } else if (comida.length > 50) {
+                    alert("El nombre de la comida es demasiado largo.");
+                    return; 
+                } else if (calorias < 0  || proteinas < 0 || carbohidratos < 0 || grasas < 0) {
+                    alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números positivos.");
+                    return; 
+                } else if (isNaN(calorias) || isNaN(proteinas) || isNaN(carbohidratos) || isNaN(grasas)) {
+                    alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
+                    return; 
+                } 
+
                 const datos = {
                     entrenamiento_id: id, // id del entrenamiento
-                    nombre_comida: formCom.nombre_comida.value,
+                    nombre_comida: comida,
                     tipo_comida: formCom.tipo_comida.value,
-                    calorias: parseInt(formCom.calorias.value),
-                    proteinas: parseInt(formCom.proteinas.value),
-                    carbohidratos: parseInt(formCom.carbohidratos.value),
-                    grasas: parseInt(formCom.grasas.value),
-                    descripcion: formCom.descripcion.value 
+                    calorias: parseInt(calorias),
+                    proteinas: parseInt(proteinas),
+                    carbohidratos: parseInt(carbohidratos),
+                    grasas: parseInt(grasas),
+                    descripcion: descripcion
                 };
 
                 try {
@@ -308,14 +330,36 @@
 
                 const idComida = formCom_editar.dataset.comidaId;
 
+                const descripcionEdit = formCom_editar.descripcion.value.trim();
+                const comidaEdit = formCom_editar.nombre_comida.value.trim();
+                const caloriasEdit = formCom_editar.calorias.value.trim();
+                const proteinasEdit = formCom_editar.proteinas.value.trim();
+                const carbohidratosEdit = formCom_editar.carbohidratos.value.trim();
+                const grasasEdit = formCom_editar.grasas.value.trim();
+
+                // Validaciones
+                if (descripcionEdit.length > 100) {
+                    alert("La descripción no puede superar los 100 caracteres.");
+                    return; 
+                } else if (comidaEdit.length > 50) {
+                    alert("El nombre de la comida es demasiado largo.");
+                    return; 
+                } else if (caloriasEdit < 0  || proteinasEdit < 0 || carbohidratosEdit < 0 || grasasEdit < 0) {
+                    alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números positivos.");
+                    return; 
+                } else if (isNaN(caloriasEdit) || isNaN(proteinasEdit) || isNaN(carbohidratosEdit) || isNaN(grasasEdit)) {
+                    alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
+                    return; 
+                } 
+
                 const datosEditados = {
-                    nombre_comida: formCom_editar.nombre_comida.value,
+                    nombre_comida: comidaEdit,
                     tipo_comida: formCom_editar.tipo_comida.value,
-                    calorias: parseInt(formCom_editar.calorias.value),
-                    proteinas: parseInt(formCom_editar.proteinas.value),
-                    carbohidratos: parseInt(formCom_editar.carbohidratos.value),
-                    grasas: parseInt(formCom_editar.grasas.value),
-                    descripcion: formCom_editar.descripcion.value,
+                    calorias: parseInt(caloriasEdit),
+                    proteinas: parseInt(proteinasEdit),
+                    carbohidratos: parseInt(carbohidratosEdit),
+                    grasas: parseInt(grasasEdit),
+                    descripcion: descripcionEdit,
                 };
 
                 try {
