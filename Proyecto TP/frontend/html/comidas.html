@@ -308,9 +308,6 @@
 
                 const idComida = formCom_editar.dataset.comidaId;
 
-                console.log("Valor de descripción antes de PUT:", formCom_editar.descripcion.value);
-
-
                 const datosEditados = {
                     nombre_comida: formCom_editar.nombre_comida.value,
                     tipo_comida: formCom_editar.tipo_comida.value,
@@ -328,7 +325,6 @@
                         formCom_editar.reset();
                         tablaComidas();
                         alert("Comida editada correctamente");
-                        console.log("Descripcion", datosEditados.descripcion);                 
                     } else {
                         alert("Error al editar la comida");
                     }
