@@ -502,6 +502,10 @@ main {
 
 /* ================== Entrenamiento y Ejercicios ============================ */
 
+/* MODALS */
+.modal-card{
+    margin-top: 8vh;
+}
 
 .section-table{
     display: flex;
@@ -558,6 +562,7 @@ main {
     transform: scale(1.2);
     transform-origin: center;
 }
+
 .entrenamiento-title div button:hover{
     background-color: #00ff55;
     color: black;
@@ -577,6 +582,22 @@ main {
     font-size: inherit;
     font-weight: inherit;
     font-family: inherit;
+}
+
+dialog.modal-editar {
+    padding: 2rem;
+    border: .2rem solid white;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 500px;
+    width: 80%;
+    text-align: center;
+    background-color: black;
+    color: white;
+}
+  
+dialog::backdrop {
+    background: rgba(0, 0, 0, 0.5); /* fondo oscuro */
 }
 
 /* ================== Sección Alimentación ============================ */
@@ -663,6 +684,19 @@ main {
     -1px -1px 5px #00ff55;
 }
 
+.alimentacion-boton a {
+    color: inherit;             /* Hereda el color del botón */
+    text-decoration: none;     /* Quita el subrayado */
+    display: flex;             /* Centra el texto dentro del botón */
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-family: inherit;
+    font-weight: inherit;
+    font-size: inherit;
+}
+
 .alimentacion-boton::before {
     content: '';
     width: 0;
@@ -691,7 +725,7 @@ main {
     background: #0e0e0e; /* Cambiar fondo del header */
     display: flex; /*Ordenando y alineando los elementos dentro del footer*/
     align-items: center; 
-    justify-content: center; 
+    justify-content: flex-start; 
     border-top: 1px solid #98fd92; /* Borde verde brillante arriba del footer */
     width: 100%;
     min-height: 80px;
@@ -700,7 +734,7 @@ main {
 
 .footer-seccion ul {
     list-style: none;
-    padding: 0;
+    padding: 0 0 0 40px;
     margin: 0;
 }
 
@@ -729,6 +763,44 @@ main {
     align-items: center;
     text-align: start;
     list-style-type: none;
+}
+
+/* ------------------------ AGREGADO HOY 20-07 --------------------- */
+
+/* Para el modal de agregar */
+#modal-agregar .modal-card-foot {
+    display: flex; /* Activando flexbox */
+    gap: 15px; /* Ajustando el valor para dar espacios entre botones */
+    justify-content: flex-end; /* Alinea los botones a la derecha, si lo quieren a la izquierda, se hace con flex-start */
+}
+
+/* Para el modal de editar */
+
+#modal-editar .modal-card-foot {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+}
+
+#carouselExampleIndicators {
+    box-shadow: 0 0px 8px #00ff55;
+    max-height: 1000px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#carouselExampleIndicators .carousel-inner {
+    position: relative; /* Para que las imagenes se posicionen bien en el carrusel */
+    width: 100%;
+    overflow: hidden;
+}
+
+#carouselExampleIndicators .carousel-item img {
+    height: 100%; /* Las imagenes ocupan el 100% de altura */
+    object-fit: contain; /* Recorta la imagen para que cubra todo el espacio */
+    width: 100%; /* Las imagenes ocupan todo el ancho */
 }
 
 

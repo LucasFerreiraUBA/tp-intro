@@ -17,9 +17,11 @@ async function getAllEjercicios() {
       ar.ejercicio,
       ar.repeticiones,
       ar.peso,
+      ar.unidad_peso_ejercicio,
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
+      ar.unidad_descanso_ejercicio,
       ar.descripcion
     FROM 
       arma_rutina ar
@@ -41,9 +43,11 @@ async function getOneEjercicios(id) {
       ar.ejercicio,
       ar.repeticiones,
       ar.peso,
+      ar.unidad_peso_ejercicio,
       gm.nombre AS grupo_muscular,
       ar.rir,
       ar.tiempo_descanso,
+      ar.unidad_descanso_ejercicio,
       ar.descripcion
     FROM 
       arma_rutina ar
@@ -60,46 +64,133 @@ async function getOneEjercicios(id) {
 async function createEjercicio(
   ejercicio,
   repeticiones,
+  series,
   peso,
-  grupo_muscular_id,
+  unidad_peso_ejercicio,
+  grupo_muscular_nombre,
   rir,
   tiempo_descanso,
+  unidad_descanso_ejercicio,
   descripcion,
+  entrenamiento_id
 ) {
-  const result = await dbClient.query(
-    `INSERT INTO arma_rutina 
-      (ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) 
-    VALUES 
-      ($1, $2, $3, $4, $5, $6, $7) 
-    RETURNING *`,
-    [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion]
-  );
-  
-  return result.rows[0];
-}
+  try {
+    //busca el id del grupo muscular por su nombre
+    const grupoResult = await dbClient.query(
+      'SELECT id FROM grupo_muscular WHERE nombre = $1',
+      [grupo_muscular_nombre]
+    );
 
-async function deleteEjercicio(id){
-  const result = await dbClient.query("DELETE FROM arma_rutina WHERE id = $1", [id]); 
-  
-  if (result.rowCount === 0) {
-    return null;  // Cambié para que retorne null si no existe
+    if (descripcion.length > 100) {
+      console.error("La descripción es demasiado larga");
+      return null; 
+    } else if (ejercicio.length > 50) {
+      console.error("El nombre del ejercicio es demasiado largo");
+      return null;
+    } else if (repeticiones < 1 || series < 1) {
+      console.error("Las repeticiones y series deben ser al menos 1");
+      return null; 
+    } else if (repeticiones > 100 || series > 100) {
+      console.error("Las repeticiones y series no pueden ser mayores a 100");
+      return null;
+    } else if (peso < 0) {
+      console.error("El peso no puede ser negativo");  
+      return null; 
+    } else if (peso > 2000) {
+      console.error("El peso no puede ser mayor a 2000");
+      return null; 
+    } else if (tiempo_descanso < 0) {
+      console.error("El tiempo de descanso no puede ser negativo");
+      return null; 
+    } else if (tiempo_descanso > 1000) {
+      console.error("El tiempo de descanso es demasiado largo");
+      return null; 
+    } else if (isNaN(series) || isNaN(repeticiones)) {
+      alert("Las series y repeticiones deben ser números válidos.");
+      return; 
+    } else if (isNaN(peso)) {
+      alert("El peso debe ser un número válido.");
+      return;
+    } else if (isNaN(rir)) {
+      alert("El RIR debe ser un número válido.");
+      return; 
+    }
+
+    if (grupoResult.rowCount === 0) {
+      return null;
+    }
+
+    const grupo_muscular_id = grupoResult.rows[0].id;
+
+    const result = await dbClient.query(
+      `INSERT INTO arma_rutina 
+        (ejercicio, repeticiones, series, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) 
+      VALUES 
+        ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) 
+      RETURNING id`,
+      [ejercicio, repeticiones, series, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion]
+    );
+
+    const arma_rutina_id = result.rows[0].id;
+    
+    await dbClient.query(
+      `INSERT INTO entrenamiento_ejercicio (entrenamiento_id, rutina_id)
+      VALUES ($1, $2)`,
+      [entrenamiento_id, arma_rutina_id]
+      );
+    
+    return result.rows[0];
+    
+  } catch(error) {
+    console.error("Error al crear el ejercicio", error);
+    return null;
   }
 
-  return id;
+  // curl -X POST http://localhost:3000/api/ejercicios \
+  // -H "Content-Type: application/json" \
+  // -d '{
+  //   "ejercicio": "Press banca",
+  //   "repeticiones": 8,
+  //   "series": 4,
+  //   "peso": 60,
+  //   "unidad_peso_ejercicio": "Lb",
+  //   "grupo_muscular": "Pecho", 
+  //   "rir": 1,
+  //   "tiempo_descanso": 90,
+  //   "unidad_descanso_ejercicio": "Min",
+  //   "descripcion": "Ejercicio compuesto para pectoral y triceps",
+  //   "entrenamiento_id": 5
+  // }'
+
 }
 
-async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion) {
+async function deleteEjercicio(entrenamientoId, rutinaId) {
+  const result = await dbClient.query(
+    "DELETE FROM entrenamiento_ejercicio WHERE entrenamiento_id = $1 AND rutina_id = $2",
+    [entrenamientoId, rutinaId]
+  );
+
+  if (result.rowCount === 0) {
+    return null;
+  }
+
+  return true;
+}
+
+async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) {
   const result = await dbClient.query(`
     UPDATE arma_rutina SET
       ejercicio = $1,
       repeticiones = $2,
       peso = $3,
-      grupo_muscular_id = $4,
-      rir = $5,
-      tiempo_descanso = $6,
-      descripcion = $7
-    WHERE id = $8 RETURNING *`, 
-  [ejercicio, repeticiones, peso, grupo_muscular_id, rir, tiempo_descanso, descripcion, id]);
+      unidad_peso_ejercicio = $4,
+      grupo_muscular_id = $5,
+      rir = $6,
+      tiempo_descanso = $7,
+      unidad_descanso_ejercicio = $8,
+      descripcion = $9
+    WHERE id = $10 RETURNING *`, 
+  [ejercicio, repeticiones, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion, id]);
 
   if (result.rows.length === 0) {
     return null
@@ -108,11 +199,61 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, grupo_muscular
   return result.rows[0]
 }
 
+async function updateEjercicioById(
+  id,
+  ejercicio,
+  repeticiones,
+  series,
+  peso,
+  unidad_peso_ejercicio,
+  grupo_muscular_id,
+  rir,
+  tiempo_descanso,
+  unidad_descanso_ejercicio,
+  descripcion
+) {
+
+  const result = await dbClient.query(`
+    UPDATE arma_rutina SET
+      ejercicio = $1,
+      repeticiones = $2,
+      series = $3,
+      peso = $4,
+      unidad_peso_ejercicio = $5,
+      grupo_muscular_id = $6,
+      rir = $7,
+      tiempo_descanso = $8,
+      unidad_descanso_ejercicio = $9,
+      descripcion = $10
+    WHERE id = $11
+    RETURNING *;
+  `, [
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    unidad_peso_ejercicio,
+    grupo_muscular_id,
+    rir,
+    tiempo_descanso,
+    unidad_descanso_ejercicio,
+    descripcion,
+    id
+  ]);
+
+  if (result.rows.length === 0) {
+    return null;
+  }
+
+  return result.rows[0]; 
+}
+
 module.exports = {
   getAllEjercicios,
   getOneEjercicios,
   createEjercicio,
   deleteEjercicio,
   getAllGrupo_musculares,
-  updateEjercicio
+  updateEjercicio,
+  updateEjercicioById
 };

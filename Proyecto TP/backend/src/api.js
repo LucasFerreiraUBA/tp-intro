@@ -14,8 +14,9 @@ const {
   createEjercicio,
   deleteEjercicio,
   getAllGrupo_musculares,
-  updateEjercicio
-} = require('../scripts/ejercicios');  // llama al archivo atlas para hacer las consultas a la base de datos
+  updateEjercicio,
+  updateEjercicioById,
+} = require('../scripts/ejercicios.js');  // llama al archivo atlas para hacer las consultas a la base de datos
 
 const {
   getAllComidas,
@@ -30,7 +31,8 @@ const {
   getOneEntrenamiento,
   createEntrenamiento,
   deleteEntrenamiento,
-  updateEntrenamiento
+  updateEntrenamiento,
+  updateEntrenamientoById,
 } = require("../scripts/entrenamiento");
 
 // Sample route
@@ -43,7 +45,7 @@ app.get('/api/grupo_muscular', async (req, res) => {
   res.json(grupo_musculares);
 });
 
-//---------------------------------------------- arma_rutina ---------------------------------------------------------------------------
+//---------------------------------------------- ejercicios ---------------------------------------------------------------------------
 
 //arma_rutina
   // END point
@@ -71,28 +73,47 @@ app.get('/api/ejercicios/:id', async (req, res) => { // get one mediante el id
   res.json(ejercicios);
 });
 
+// Crear un nuevo ejercicio
 app.post('/api/ejercicios', async (req, res) => { 
+  const {
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    unidad_peso_ejercicio,
+    grupo_muscular,  
+    rir,
+    tiempo_descanso,
+    unidad_descanso_ejercicio,
+    descripcion,
+    entrenamiento_id
+  } = req.body;
 
   if (
     !req.body.ejercicio || 
-    !req.body.repeticiones || 
-    !req.body.peso || 
-    !req.body.grupo_muscular) {
+    !req.body.repeticiones ||
+    !req.body.series ||  
+    !req.body.grupo_muscular ||
+    !req.body.entrenamiento_id) {
     return res.status(400).json({ error: 'Faltan datos obligatorios' }); // ckeckea que los datos obligatorios esten presentes
   }
   
   const ejercicios = await createEjercicio(
-    req.body.ejercicio,
-    req.body.repeticiones,
-    req.body.peso,
-    req.body.grupo_muscular,
-    req.body.rir,
-    req.body.tiempo_descanso,
-    req.body.descripcion  
-  ); 
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    unidad_peso_ejercicio,
+    grupo_muscular, 
+    rir,
+    tiempo_descanso,
+    unidad_descanso_ejercicio,
+    descripcion,
+    entrenamiento_id
+  );
 
   if (!ejercicios) {
-    return res.status(500).json({ error: 'Error al crear el ejercicio' });
+    return res.status(500).json({ error: 'Error en crear el ejercicio'});
   }
   res.json(ejercicios);
 });
@@ -104,14 +125,16 @@ app.post('/api/ejercicios', async (req, res) => {
 curl --request DELET http://localhost:3000/api/personajes/id
 */
 
-app.delete('/api/ejercicios/:id', async (req, res) => { 
-  const ejercicios = await deleteEjercicio(req.params.id); 
+app.delete('/api/entrenamientos/:entrenamientoId/ejercicios/:rutinaId', async (req, res) => {
+  const { entrenamientoId, rutinaId } = req.params;
 
-  if (!ejercicios) {
+  const borrar = await deleteEjercicio(entrenamientoId, rutinaId);
+
+  if (!borrar) {
     return res.status(404).json({ error: 'Ejercicio no encontrado' });
   }
 
-  res.json({ status: 'OK', id: ejercicios });
+  res.json({ status: 'OK', message: 'Ejercicio eliminado correctamente' });
 });
 
 // update
@@ -121,9 +144,11 @@ app.put('/api/ejercicios/:id', async (req, res) => {
     req.body.ejercicio,
     req.body.repeticiones, 
     req.body.peso,
+    req.body.unidad_peso_ejercicio,
     req.body.grupo_muscular,
     req.body.rir,
     req.body.tiempo_descanso,
+    req.body.unidad_descanso_ejercicio,
     req.body.descripcion
   );
 
@@ -131,6 +156,50 @@ app.put('/api/ejercicios/:id', async (req, res) => {
       return res.status(404).json({ error: 'Ejercicio no encontrado para actualizar' });
     }
   res.json(ejercicio);
+});
+
+app.patch('/api/ejercicios/:id', async (req, res) => {
+  const { id } = req.params;
+
+  const {
+    ejercicio,
+    repeticiones,
+    series,
+    peso,
+    unidad_peso_ejercicio,
+    grupo_muscular_id,
+    rir,
+    tiempo_descanso,
+    unidad_descanso_ejercicio,
+    descripcion,
+  } = req.body;
+  if (grupo_muscular_id === undefined || grupo_muscular_id === null) {
+    return res.status(400).json({ error: 'grupo_muscular_id es obligatorio' });
+  }
+  
+  try {
+    const actualizado = await updateEjercicioById(id, 
+      ejercicio,
+      repeticiones,
+      series,
+      peso,
+      unidad_peso_ejercicio,
+      grupo_muscular_id,
+      rir,
+      tiempo_descanso,
+      unidad_descanso_ejercicio,
+      descripcion,
+    );
+
+    if (!actualizado) {
+      return res.status(404).json({ error: 'Ejercicio no encontrado' });
+    }
+
+    res.status(200).json({ mensaje: 'Ejercicio actualizado con éxito', ejercicio: actualizado });
+  } catch (error) {
+    console.error('Error al actualizar ejercicio:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
 });
 
 //---------------------------------------------------------------alimentacion----------------------------------------------------------------
@@ -159,12 +228,13 @@ app.post('/api/alimentacion', async (req, res) => {
     proteinas,
     carbohidratos,
     grasas,
-    ejercicio_relacionado, 
-    descripcion
+    descripcion,
+    entrenamiento_id
   } = req.body;
 
   
-  if (!nombre_comida || !tipo_comida || !calorias || !proteinas || !carbohidratos || !grasas) {
+  if (!req.body.nombre_comida || !req.body.tipo_comida || !req.body.calorias || !req.body.proteinas ||
+     !req.body.carbohidratos || !req.body.grasas || !req.body.entrenamiento_id) {
     return res.status(400).json({ error: 'Faltan datos obligatorios' });
   }
 
@@ -176,8 +246,8 @@ app.post('/api/alimentacion', async (req, res) => {
     proteinas,
     carbohidratos,
     grasas,
-    ejercicio_relacionado, 
-    descripcion
+    descripcion,
+    entrenamiento_id
   );
 
   if (!comida) {
@@ -197,7 +267,6 @@ app.put('/api/alimentacion/:id', async (req, res) => {
         req.body.proteinas,
         req.body.carbohidratos,
         req.body.grasas,
-        req.body.ejercicio_relacionado,
         req.body.descripcion
     );
     if (!comida) {
@@ -207,12 +276,16 @@ app.put('/api/alimentacion/:id', async (req, res) => {
 });
 
 //Eliminar comida
-app.delete('/api/alimentacion/:id', async (req, res) => {
-    const comida = await deleteComida(req.params.id);
-    if (!comida) {
-      return res.status(404).json({ error: 'Comida no encontrada' });
-    }
-    res.json({ status: 'OK', id: comida });
+app.delete('/api/entrenamientos/:entrenamientoId/alimentacion/:alimentacionId', async (req, res) => {
+  const { entrenamientoId, alimentacionId } = req.params;
+
+  const borrar = await deleteComida(entrenamientoId, alimentacionId);
+
+  if (!borrar) {
+    return res.status(404).json({ error: 'Comida no encontrada' });
+  }
+
+  res.json({ status: 'OK', message: 'Comida eliminada correctamente' });
 });
 
 //----------------------------------------------------------Entrenamiento--------------------------------------------------------------------
@@ -225,7 +298,7 @@ app.get("/api/entrenamientos", async (req, res) => {
 
 // Obtener un entrenamiento completo por id
 app.get("/api/entrenamientos/:id", async (req, res) => {
-  const entrenamiento = await getOneEntrenamiento(req.params.id);
+  const entrenamiento = await getOneEntrenamiento(parseInt(req.params.id));
   if (!entrenamiento) {
     return res.status(404).json({ error: "Entrenamiento no encontrado" });
   }
@@ -239,22 +312,32 @@ app.post("/api/entrenamientos", async (req, res) => {
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso = 'Min', // Valor por defecto
     descripcion,
     ejercicios,
     comidas
   } = req.body;
 
-  if (!dia_semana || !objetivo || !nivel_usuario || !duracion_minutos || !descripcion || !ejercicios) {
+  if (!dia_semana || !objetivo) {
     return res.status(400).json({ error: "Faltan datos obligatorios" });
   }
+
+  if (objetivo && objetivo.length > 25) {
+    return res.status(400).json({ error: "La descripción no puede exceder los 100 caracteres" }); 
+  }   
+
+  if (descripcion && descripcion.length > 100) {
+    return res.status(400).json({ error: "La descripción no puede exceder los 100 caracteres" }); 
+  }         
   //Crea el entrenamiento
   const entrenamiento = await createEntrenamiento({
     dia_semana,
     objetivo,
     nivel_usuario,
     duracion_minutos,
+    unidad_descanso,
     descripcion,
-    ejercicios,
+    ejercicios: ejercicios || [],
     comidas: comidas || []
   });
 
@@ -273,6 +356,7 @@ app.put("/api/entrenamientos/:id", async (req, res) => {
     req.body.objetivo,
     req.body.nivel_usuario,
     req.body.duracion_minutos,
+    req.body.unidad_descanso,
     req.body.descripcion,
     req.body.ejercicios,
     req.body.comidas
@@ -285,6 +369,23 @@ app.put("/api/entrenamientos/:id", async (req, res) => {
   res.json(entrenamiento);
 });
 
+app.patch("/api/entrenamientos/:id", async (req, res) =>{
+const entrenamiento = await updateEntrenamientoById( req.params.id,
+  data = { 
+  dia_semana :req.body.dia_semana,
+  objetivo : req.body.objetivo,
+  nivel_usuario: req.body.nivel_usuario,
+  duracion_minutos : req.body.duracion_minutos,
+  unidad_descanso : req.body.unidad_descanso,
+  descripcion : req.body.descripcion
+}
+);
+  if (!entrenamiento) {
+    return res.status(404).json({ error: "Entrenamiento no encontrado para actualizar" });
+  }
+
+  res.json(entrenamiento);
+})
 // Eliminar entrenamiento
 app.delete("/api/entrenamientos/:id", async (req, res) => {
   const entrenamiento = await deleteEntrenamiento(req.params.id);

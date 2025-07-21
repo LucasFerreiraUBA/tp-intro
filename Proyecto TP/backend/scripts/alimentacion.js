@@ -51,25 +51,41 @@ async function getOneComida(id) {
     return result.rows[0];    
 }
 
-async function createComida(nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) {
+async function createComida(nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion, entrenamiento_id) {
+    try {
     const result = await dbClient.query(`
-        INSERT INTO alimentacion (nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *`,
-    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion]);
+        INSERT INTO alimentacion (nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
+    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion]);
+
+    const alimentacion_id = result.rows[0].id;
+
+    await dbClient.query(
+      `INSERT INTO entrenamiento_alimentacion (entrenamiento_id, alimentacion_id)
+      VALUES ($1, $2)`,
+      [entrenamiento_id, alimentacion_id]
+      );
 
     return result.rows[0];
-}
-
-async function deleteComida(id) {
-    const result = await dbClient.query("DELETE FROM alimentacion WHERE id = $1", [id]);
-    
-    if(result.rowCount === 0) {
-        return ("Comida no encontrada");
+    } catch (error) {
+        console.error("Error al crear la comida", error);
+        return null;
     }
-
-    return id;
 }
 
-async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion) {
+async function deleteComida(entrenamientoId, alimentacionId) {
+  const result = await dbClient.query(
+    "DELETE FROM entrenamiento_alimentacion WHERE entrenamiento_id = $1 AND alimentacion_id = $2",
+    [entrenamientoId, alimentacionId]
+  );
+
+  if (result.rowCount === 0) {
+    return null;
+  }
+
+  return true;
+}
+
+async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion) {
     const result = await dbClient.query(`
         UPDATE alimentacion SET
             nombre_comida = $1,
@@ -78,10 +94,9 @@ async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas,
             proteinas = $4,
             carbohidratos = $5,
             grasas = $6,
-            ejercicio_relacionado = $7,
-            descripcion = $8
-        WHERE id = $9 RETURNING *`, 
-    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, ejercicio_relacionado, descripcion, id]);
+            descripcion = $7
+        WHERE id = $8 RETURNING *`, 
+    [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion, id]);
 
     return result.rows[0];
 }

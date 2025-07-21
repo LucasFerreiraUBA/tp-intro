@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+         <!-- CSS -->
+        <link rel="stylesheet" href="../css/style.css">
+        <title>Alimentacion</title>
+    </head>
+    <body>
+        <div class="envoltorio-pagina">
+            <!-- HEADER -->
+            <header class="header" id="header">
+            <!-- Sección de navegación -->
+                <a href="index.html" class="txt-atlas" aria-label="Texto de la marca de la página llamada Atlas+">Atlas+</a>
+                <nav class="container-contenido-header" aria-label="Navegación principal">
+                    <ul class="nav_list" id="nav-list">
+                        <li class="nav-link">
+                             <a class="txt-home" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="txt-home" href="quienes_somos.html">Quienes Somos</a>
+                        </li>
+                        <li>
+                            <a class="nav-rutinas-btn" href="rutinas_alimentacion.html">Armá tu rutina</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section class="section-table">
+                    <div class="entrenamiento-title">
+                        <div>
+                            <h1 id="titulo-alimentacion"></h1>
+                        </div>
+                        <div>
+                            <button class="button" id="button-volver"><a href="alimentacion.html">Volver</a></button>
+                            <button class="button" id="btn-abrir-modal">Agregar</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Comida</th>
+                                <th>Tipo</th>
+                                <th>Calorias</th>
+                                <th>Proteinas</th>
+                                <th>Carbohidratos</th>
+                                <th>Grasas</th>
+                                <th>Descripcion</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="comida-table"></tbody>
+                    </table>
+                </section>
+            </main>
+            <!-- MODAL AGREGAR COMIDA -->
+            <dialog id="modal-agregar-comida" class="modal-editar"> 
+                <form id="form-agregar-comida">
+                    <h2 class="title is-4">Agregar comida</h2>
+
+                    <div class="field">
+                        <label class="label">Comida</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nombre_comida" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="tipo_comida" id="tipo_comida">
+                                    <option value="" disabled selected>Seleccioná un Tipo de comida</option>
+                                    <option value="Desayuno">Desayuno</option>
+                                    <option value="Almuerzo">Almuerzo</option>
+                                    <option value="Merienda">Merienda</option>
+                                    <option value="Cena">Cena</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Calorias</label>
+                        <div class="control">
+                            <input class="input" type="number" name="calorias" required>
+                         </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Proteinas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="proteinas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Carbohidratos</label>
+                        <div class="control">
+                            <input class="input" type="number" name="carbohidratos" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Grasas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="grasas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-success">Guardar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
+
+
+
+
+            <!-- MODAL EDITAR COMIDA -->
+            <dialog id="modal-editar-comida" class="modal-editar"> 
+                <form id="form-editar-comida">
+                    <h2 class="title is-4">Editar comida</h2>
+
+                    <div class="field">
+                        <label class="label">Comida</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nombre_comida" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tipo</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="tipo_comida" id="tipo_comida">
+                                    <option value="" disabled selected>Seleccioná un Tipo de comida</option>
+                                    <option value="Desayuno">Desayuno</option>
+                                    <option value="Almuerzo">Almuerzo</option>
+                                    <option value="Merienda">Merienda</option>
+                                    <option value="Cena">Cena</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Calorias</label>
+                        <div class="control">
+                            <input class="input" type="number" name="calorias" required>
+                         </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Proteinas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="proteinas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Carbohidratos</label>
+                        <div class="control">
+                            <input class="input" type="number" name="carbohidratos" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Grasas</label>
+                        <div class="control">
+                            <input class="input" type="number" name="grasas" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-success">Guardar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal-editar" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
+            <!--  -->
+
+
+
+            <footer class="footer-seccion">
+                <div class="footer-container">
+                    <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
+                    <div class="equipo-facultad">
+                        <ul>Rodrigo Riera</ul>
+                        <ul>Tomas Diaz</ul>
+                        <ul>Tiago Nehuen Sedano</ul>
+                        <ul>Lucas Ferreira</ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <script>
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get("id");
+            tablaComidas();
+
+            const modal = document.getElementById("modal-agregar-comida");
+            const formCom = document.getElementById("form-agregar-comida");
+            
+            const modal_editar = document.getElementById("modal-editar-comida");
+            const formCom_editar = document.getElementById("form-editar-comida");
+
+
+            // abrir modal
+            document.getElementById("btn-abrir-modal").addEventListener("click", () => {
+                modal.showModal();
+            });
+
+            // cerrar modal
+            document.getElementById("cancelar-modal").addEventListener("click", () => {
+                modal.close();
+            });
+
+            // cerrar modal-editar
+            document.getElementById("cancelar-modal-editar").addEventListener("click", () => {
+                modal_editar.close();
+            });
+            
+            // enviar nueva comida
+            formCom.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const datos = {
+                    entrenamiento_id: id, // id del entrenamiento
+                    nombre_comida: formCom.nombre_comida.value,
+                    tipo_comida: formCom.tipo_comida.value,
+                    calorias: parseInt(formCom.calorias.value),
+                    proteinas: parseInt(formCom.proteinas.value),
+                    carbohidratos: parseInt(formCom.carbohidratos.value),
+                    grasas: parseInt(formCom.grasas.value),
+                    descripcion: formCom.descripcion.value 
+                };
+
+                try {
+                    const respuesta = await fetch("http://localhost:3000/api/alimentacion", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(datos)
+                    });
+
+                    if (respuesta.ok) {
+                        modal.close();
+                        formCom.reset();
+                        tablaComidas(); // recarga la tabla
+                        alert("Comida agregada correctamente");
+                    } else {
+                         alert("Error al agregar la comida");
+                    }
+                } catch (error){
+                    console.error("Error:", error);
+                }
+            });
+
+            const actualizarComida = async (idComida, datos) => {
+                try {
+                    const respuesta = await fetch(`http://localhost:3000/api/alimentacion/${idComida}`, {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify(datos)
+                    });
+
+                    if (!respuesta.ok) {
+                        const errorTxt = await respuesta.text();
+                        throw new Error(`Error del servidor: ${respuesta.status} - ${errorTxt}`);
+                    }
+
+                    return respuesta;
+                } catch (err) {
+                    console.error("Error en PUT:", err);
+                    throw err;
+                }
+            };
+
+            formCom_editar.addEventListener("submit", async (e) => {
+                e.preventDefault();
+
+                const idComida = formCom_editar.dataset.comidaId;
+
+                const datosEditados = {
+                    nombre_comida: formCom_editar.nombre_comida.value,
+                    tipo_comida: formCom_editar.tipo_comida.value,
+                    calorias: parseInt(formCom_editar.calorias.value),
+                    proteinas: parseInt(formCom_editar.proteinas.value),
+                    carbohidratos: parseInt(formCom_editar.carbohidratos.value),
+                    grasas: parseInt(formCom_editar.grasas.value),
+                    descripcion: formCom_editar.descripcion.value,
+                };
+
+                try {
+                    const respuesta = await actualizarComida(idComida, datosEditados);
+                    if (respuesta.ok) {
+                        modal_editar.close();
+                        formCom_editar.reset();
+                        tablaComidas();
+                        alert("Comida editada correctamente");
+                    } else {
+                        alert("Error al editar la comida");
+                    }
+                } catch (error) {
+                    console.error("Error al editar:", error);
+                    alert("Error");
+                }
+            });
+
+            function cargaFromComida(com){
+                formCom_editar.nombre_comida.value = com.nombre_comida ?? "";
+                formCom_editar.tipo_comida.value = com.tipo_comida ?? "";
+                formCom_editar.calorias.value = com.calorias ?? 0;
+                formCom_editar.proteinas.value = com.proteinas ?? 0;
+                formCom_editar.carbohidratos.value = com.carbohidratos ?? 0;
+                formCom_editar.grasas.value = com.grasas ?? 0;
+                formCom_editar.descripcion.value = com.descripcion ?? "";
+                formCom_editar.dataset.comidaId = com.id;
+            }
+
+            function tablaComidas(){
+            document.getElementsByClassName("comida-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
+
+            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+
+            fetch(arma_rutinaBackURL)
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById("titulo-alimentacion").textContent = `${data.dia_semana}`; /*especifica el dia del entrenamiento como titulo*/
+                const tbody = document.querySelector("table.table tbody");
+
+                data.comidas.forEach((com) => {
+                    console.log(com)
+                const newRow = document.createElement("tr");
+                newRow.setAttribute("data-id",com.id)
+
+                const comida = document.createElement("td");
+                comida.innerHTML = com.nombre_comida ?? "-"; 
+                newRow.appendChild(comida);
+
+                const tipoComida = document.createElement("td");
+                tipoComida.innerHTML = com.tipo_comida ?? "-";
+                newRow.appendChild(tipoComida);
+
+                const calorias = document.createElement("td");
+                calorias.innerHTML = com.calorias ?? "-"; 
+                newRow.appendChild(calorias);
+
+                const proteinas = document.createElement("td");
+                proteinas.innerHTML = com.proteinas ?? "-";
+                newRow.appendChild(proteinas);
+
+                const carbo = document.createElement("td");
+                carbo.innerHTML = com.carbohidratos ?? "-";
+                newRow.appendChild(carbo);
+
+                const grasas = document.createElement("td");
+                grasas.innerHTML = com.grasas ?? "-";
+                newRow.appendChild(grasas);
+
+               // const ejercicio = document.createElement("td");
+                //ejercicio.innerHTML = com.ejercicio_relacionado ?? "-";        HAY QUE VER SI LO USAMOS
+                //newRow.appendChild(ejercicio); 
+
+                const descripcion = document.createElement("td");
+                descripcion.innerHTML = com.descripcion ?? "-";
+                newRow.appendChild(descripcion);
+
+                const NewEditar = document.createElement("td");
+                const EditarLink = document.createElement("a");
+                EditarLink.className = "button";
+                EditarLink.textContent = "Editar";
+                EditarLink.href = "#";
+
+                EditarLink.addEventListener("click", () => {
+                    modal_editar.showModal();
+                    cargaFromComida(com);
+                });
+
+                NewEditar.appendChild(EditarLink);
+                newRow.appendChild(NewEditar);
+
+        
+                const NewBorrar = document.createElement("td"); // Borrar
+                const BorrarLink = document.createElement("a");
+
+                BorrarLink.className = "button";
+                BorrarLink.innerHTML = "Borrar";
+                BorrarLink.href = "#";
+                BorrarLink.onclick = function(){
+                    if(confirm("Estas seguro de que deseas eliminar esta comida?")){
+                        deleteComida(id, com.id);
+                        alert("Comida eliminada correctamente");
+                    }
+                };
+                
+                NewBorrar.appendChild(BorrarLink);
+                newRow.appendChild(NewBorrar);
+
+                tbody.appendChild(newRow);
+                });
+            })
+            .catch((error) => {
+                console.error("Error al cargar las comidas:", error);
+            });
+        }    
+
+        function deleteComida(entrenamiento_id, alimentacion_id) {
+            const arma_rutinaBackURL = `http://localhost:3000/api/entrenamientos/${entrenamiento_id}/alimentacion/${alimentacion_id}`;
+            fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaComidas()); // vuelve a cargar la tabla
+        }
+    
+        </script>
