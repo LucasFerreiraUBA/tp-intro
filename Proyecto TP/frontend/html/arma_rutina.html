@@ -154,10 +154,10 @@
                                             <option value="" disabled selected>Seleccioná un dia</option>
                                             <option value="Lunes">Lunes</option>
                                             <option value="Martes">Martes</option>
-                                            <option value="Miercoles">Miercoles</option>
+                                            <option value="Miercoles">Miércoles</option>
                                             <option value="Jueves">Jueves</option>
                                             <option value="Viernes">Viernes</option>
-                                            <option value="Sabado">Sabado</option>
+                                            <option value="Sabado">Sábado</option>
                                             <option value="Domingo">Domingo</option>
                                         </select>
                                     </div>
@@ -194,8 +194,8 @@
                                     <div class="control">
                                         <div class="select">
                                             <select name="unidad">
-                                                <option value="Min">Min</option>
-                                                <option value="Hs">Hs</option>
+                                                <option value="min">Min</option>
+                                                <option value="hs">Hs</option>
                                             </select>
                                         </div>
                                     </div>
@@ -280,7 +280,7 @@
                 objetivo: objetivo,
                 nivel_usuario: form.nivel_usuario.value,
                 duracion_minutos: parseInt(form.duracion_minutos.value),
-                unidad_descanso: form.unidad.value,
+                unidad_descanso: form.unidad.value.toLowerCase(),
                 descripcion: descripcion
             };
 
@@ -303,6 +303,31 @@
             }
         });
         // EDITAR ENTRENAMIENTO
+
+        document.getElementById("btn-editar").addEventListener("click", async () => {
+            const formEdit = document.getElementById('form-edit-entrenamiento');
+            const id = formEdit.getAttribute("data-id-entrenamiento");
+            
+            const rutaEjercicio = `${RUTAS.ENTRENAMIENTOS}/${id}`;
+            const data = {
+                dia_semana : formEdit.dia_semana.value,
+                objetivo : formEdit.objetivo.value ?? "",
+                nivel_usuario: formEdit.nivel_usuario.value ?? "",
+                duracion_minutos : parseInt(formEdit.duracion_minutos.value) ?? 0,
+                unidad_descanso : formEdit.unidad.value.toLowerCase() ?? "",
+                descripcion: formEdit.descripcion.value ?? ""
+            };
+
+            const res = await PatchOneById(rutaEjercicio,data);
+
+            if (res.ok){
+                tablaEntrenos()
+                cerrarModalEditar()
+            } else
+                alert("Error al editar el entrenamiento"); 
+            
+        });
+
         async function abrirModalPorId(id) {
             try {
                 const respuesta = await fetch(`http://localhost:3000/api/entrenamientos/${id}`);
@@ -321,29 +346,17 @@
                 formEdit.duracion_minutos.value = entrenamiento.duracion_minutos ?? 0;
                 formEdit.unidad.value = entrenamiento.unidad_descanso.toLowerCase() ?? "";
                 formEdit.descripcion.value = entrenamiento.descripcion ?? "";
+                formEdit.setAttribute("data-id-entrenamiento", entrenamiento.id);
+                
                 const botonEditar = document.getElementById("btn-editar")
                 // mostrar modal de editar 
                 document.getElementById('modal-editar').classList.add('is-active');
-                botonEditar.addEventListener("click", async () => {
-                    const rutaEjercicio = `${RUTAS.ENTRENAMIENTOS}/${entrenamiento.id}`
-                    const data = {
-                        dia_semana : formEdit.dia_semana.value,
-                        objetivo : formEdit.objetivo.value ?? "",
-                        nivel_usuario: formEdit.nivel_usuario.value ?? "",
-                        duracion_minutos : parseInt(formEdit.duracion_minutos.value) ?? 0,
-                        unidad_descanso : formEdit.unidad.value ?? "",
-                        descripcion: formEdit.descripcion.value ?? ""
-                    };
-                    const res = await PatchOneById(rutaEjercicio,data)
-                    if (res.ok){
-                        tablaEntrenos()
-                        cerrarModalEditar()
-                    }
-                    })
+
             } catch (error) {
                 console.error("Error al cargar entrenamiento", error);
             }
         }
+
         // cerrar modal de editar 
         const modalEditar = document.getElementById("modal-editar");
 
