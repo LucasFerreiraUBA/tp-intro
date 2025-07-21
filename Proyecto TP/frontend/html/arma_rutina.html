@@ -240,9 +240,9 @@
         });
         //ocultar modal
         function cerrarModal(){
-            const modal = document.getElementById('modal-agregar').classList.remove('is-active');
+            const modal = document.getElementById('modal-agregar');
+            modal.classList.remove('is-active');
             document.getElementById('form-entrenamiento').reset();
-            modal.close()
         }
         function cerrarModalEditar(){
         const modal = document.getElementById('modal-editar').classList.remove('is-active');

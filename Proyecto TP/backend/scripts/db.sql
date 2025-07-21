@@ -39,8 +39,8 @@ CREATE TABLE alimentacion (
 CREATE TABLE entrenamiento (
     id SERIAL PRIMARY KEY,
     dia_semana VARCHAR(100) NOT NULL,
-    objetivo VARCHAR(100) NOT NULL,
-    nivel_usuario VARCHAR(100) NOT NULL,
+    objetivo VARCHAR(50) NOT NULL,
+    nivel_usuario VARCHAR(20) NOT NULL,
     duracion_minutos FLOAT,
     unidad_descanso VARCHAR(5) DEFAULT 'Min',
     descripcion VARCHAR(100)
