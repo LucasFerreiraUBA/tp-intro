@@ -30,3 +30,6 @@ init-all:
 	cd backend && docker compose up -d
 	sleep 5
 	make start-backend
+
+run-frontend:
+	http-server --cors
