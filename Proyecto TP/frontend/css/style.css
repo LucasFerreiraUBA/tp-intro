@@ -782,6 +782,26 @@ dialog::backdrop {
     justify-content: flex-end;
 }
 
+#carouselExampleIndicators {
+    box-shadow: 0 0px 8px #00ff55;
+    max-height: 1000px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+#carouselExampleIndicators .carousel-inner {
+    position: relative; /* Para que las imagenes se posicionen bien en el carrusel */
+    width: 100%;
+    overflow: hidden;
+}
+
+#carouselExampleIndicators .carousel-item img {
+    height: 100%; /* Las imagenes ocupan el 100% de altura */
+    object-fit: contain; /* Recorta la imagen para que cubra todo el espacio */
+    width: 100%; /* Las imagenes ocupan todo el ancho */
+}
 
 
 
