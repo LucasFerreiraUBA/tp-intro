@@ -312,35 +312,35 @@
         // EDITAR ENTRENAMIENTO
 
         document.getElementById("btn-editar").addEventListener("click", async () => {
-            const formEdit = document.getElementById('form-edit-entrenamiento');
-            const id = formEdit.getAttribute("data-id-entrenamiento");
+            const formEdit = document.getElementById('form-edit-entrenamiento')
+            const id = formEdit.getAttribute("data-id-entrenamiento")
             
-            const rutaEjercicio = `${RUTAS.ENTRENAMIENTOS}/${id}`;
+            const rutaEjercicio = `${RUTAS.ENTRENAMIENTOS}/${id}`
 
-            const diaEdit = formEdit.dia_semana.value.trim(); // Eliminamos espacios en blanco
-            const objetivoEdit = formEdit.objetivo.value.trim();
-            const descripcionEdit = formEdit.descripcion.value.trim();
-            const duracionEdit = formEdit.duracion_minutos.value.trim();
-            const nivelEdit = form.nivel_usuario.value.trim();
+            const diaEdit = formEdit.dia_semana.value.trim()
+            const objetivoEdit = formEdit.objetivo.value.trim()
+            const descripcionEdit = formEdit.descripcion.value.trim()
+            const duracionEdit = formEdit.duracion_minutos.value.trim()
+            const nivelEdit = formEdit.nivel_usuario.value.trim()
 
             // Validaciones
             if (diaEdit === "") {
-                alert("El campo 'Día de la semana' es obligatorio.");
+                alert("El campo 'Día de la semana' es obligatorio.")
                 return; // No continúa si está vacío
             } else if (objetivoEdit === "") {
-                alert("El campo 'Objetivo' es obligatorio.");
+                alert("El campo 'Objetivo' es obligatorio.")
                 return; 
             } else if (objetivoEdit.length > 25) {
-                alert("El objetivo es muy largo.");
+                alert("El objetivo es muy largo.")
                 return; // No continúa si la descripción es demasiado larga
             } else if (descripcionEdit.length > 100) {
-                alert("La descripción es muy larga.");
+                alert("La descripción es muy larga.")
                 return; // No cont  inúa si la descripción es demasiado larga
             } else if (duracionEdit <= 0) {
-                alert("La duracion debe ser un numero positivo.");
+                alert("La duracion debe ser un numero positivo.")
                 return;
             } else if (nivelEdit === "") {
-                alert("El campo 'Nivel de usuario' es obligatorio.");
+                alert("El campo 'Nivel de usuario' es obligatorio.")
                 return;
             }
 
@@ -351,16 +351,16 @@
                 duracion_minutos : parseInt(duracionEdit),
                 unidad_descanso : formEdit.unidad.value.toLowerCase() ?? "",
                 descripcion: descripcionEdit
-            };
+            }
 
-            const res = await PatchOneById(rutaEjercicio,data);
+            const res = await PatchOneById(rutaEjercicio,data)
 
             if (res.ok){
                 tablaEntrenos();
                 cerrarModalEditar();
-                alert("Entrenamiento editado correctamente");
+                alert("Entrenamiento editado correctamente")
             } else
-                alert("Error al editar el entrenamiento"); 
+                alert("Error al editar el entrenamiento")
             
         });
 
