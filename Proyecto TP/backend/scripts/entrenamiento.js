@@ -2,6 +2,7 @@ const { Pool } = require("pg");
 require('dotenv').config();
 
 const dbClient = new Pool({
+  connectionString: process.env.DATABASE_URL,
   user: process.env.DB_USER,
   port: process.env.DB_PORT,
   host: process.env.DB_HOST,
