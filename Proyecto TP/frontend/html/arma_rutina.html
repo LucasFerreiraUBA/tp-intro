@@ -240,9 +240,9 @@
         });
         //ocultar modal
         function cerrarModal(){
-            const modal = document.getElementById('modal-agregar').classList.remove('is-active');
+            const modal = document.getElementById('modal-agregar');
+            modal.classList.remove('is-active');
             document.getElementById('form-entrenamiento').reset();
-            modal.close()
         }
         function cerrarModalEditar(){
         const modal = document.getElementById('modal-editar').classList.remove('is-active');
@@ -257,8 +257,9 @@
             
             const dia = form.dia_semana.value.trim(); // Eliminamos espacios en blanco
             const objetivo = form.objetivo.value.trim();
-            const descripcion = form.descripcion.value;
-
+            const descripcion = form.descripcion.value.trim();
+            const duracion = form.duracion_minutos.value.trim();
+            const nivel = form.nivel_usuario.value.trim();
 
             // Validaciones
             if (dia === "") {
@@ -268,18 +269,24 @@
                 alert("El campo 'Objetivo' es obligatorio.");
                 return; 
             } else if (objetivo.length > 25) {
-                alert("El objetivo es muy largo");
+                alert("El objetivo es muy largo.");
                 return; // No continúa si la descripción es demasiado larga
             } else if (descripcion.length > 100) {
-                alert("La descripción es muy larga");
+                alert("La descripción es muy larga.");
                 return; // No cont  inúa si la descripción es demasiado larga
+            } else if (duracion <= 0) {
+                alert("La duracion debe ser un numero positivo.");
+                return;
+            } else if (nivel === "") {
+                alert("El campo 'Nivel de usuario' es obligatorio.");
+                return;
             }
 
             const datos = {
                 dia_semana: dia,
                 objetivo: objetivo,
-                nivel_usuario: form.nivel_usuario.value,
-                duracion_minutos: parseInt(form.duracion_minutos.value),
+                nivel_usuario: nivel,
+                duracion_minutos: parseInt(duracion),
                 unidad_descanso: form.unidad.value.toLowerCase(),
                 descripcion: descripcion
             };
@@ -309,20 +316,49 @@
             const id = formEdit.getAttribute("data-id-entrenamiento");
             
             const rutaEjercicio = `${RUTAS.ENTRENAMIENTOS}/${id}`;
+
+            const diaEdit = formEdit.dia_semana.value.trim(); // Eliminamos espacios en blanco
+            const objetivoEdit = formEdit.objetivo.value.trim();
+            const descripcionEdit = formEdit.descripcion.value.trim();
+            const duracionEdit = formEdit.duracion_minutos.value.trim();
+            const nivelEdit = form.nivel_usuario.value.trim();
+
+            // Validaciones
+            if (diaEdit === "") {
+                alert("El campo 'Día de la semana' es obligatorio.");
+                return; // No continúa si está vacío
+            } else if (objetivoEdit === "") {
+                alert("El campo 'Objetivo' es obligatorio.");
+                return; 
+            } else if (objetivoEdit.length > 25) {
+                alert("El objetivo es muy largo.");
+                return; // No continúa si la descripción es demasiado larga
+            } else if (descripcionEdit.length > 100) {
+                alert("La descripción es muy larga.");
+                return; // No cont  inúa si la descripción es demasiado larga
+            } else if (duracionEdit <= 0) {
+                alert("La duracion debe ser un numero positivo.");
+                return;
+            } else if (nivelEdit === "") {
+                alert("El campo 'Nivel de usuario' es obligatorio.");
+                return;
+            }
+
             const data = {
-                dia_semana : formEdit.dia_semana.value,
-                objetivo : formEdit.objetivo.value ?? "",
-                nivel_usuario: formEdit.nivel_usuario.value ?? "",
-                duracion_minutos : parseInt(formEdit.duracion_minutos.value) ?? 0,
+                dia_semana : diaEdit,
+                objetivo : objetivoEdit,
+                nivel_usuario: nivelEdit,
+                duracion_minutos : parseInt(duracionEdit),
                 unidad_descanso : formEdit.unidad.value.toLowerCase() ?? "",
-                descripcion: formEdit.descripcion.value ?? ""
+                descripcion: descripcionEdit
             };
 
             const res = await PatchOneById(rutaEjercicio,data);
 
             if (res.ok){
-                tablaEntrenos()
-                cerrarModalEditar()
+                tablaEntrenos();
+                cerrarModalEditar();
+                alert("Entrenamiento editado correctamente");
             } else
                 alert("Error al editar el entrenamiento"); 
             

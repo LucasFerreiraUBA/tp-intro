@@ -320,33 +320,34 @@
             const ejercicio = formEj.ejercicio.value.trim();
             const series = formEj.series.value.trim();
             const repeticiones = formEj.repeticiones.value.trim();
-
+            
+            // Validaciones
             if (descripcion.length > 100) {
                 alert("La descripción no puede superar los 100 caracteres.");
                 return; 
             } else if (ejercicio.length > 50) {
                 alert("El nombre del ejercicio es demasiado largo.");
                 return; 
-            } else if (series < 0  || repeticiones < 0) {
+            } else if (series <= 0  || repeticiones <= 0) {
                 alert("Las series y repeticiones deben ser números positivos.");
                 return; 
             } else if (isNaN(series) || isNaN(repeticiones)) {
                 alert("Las series y repeticiones deben ser números válidos.");
                 return; 
-            }
+            } 
 
             const datos = {
                 entrenamiento_id: id, // id del entrenamiento
                 grupo_muscular: formEj.grupo_muscular.value,
-                ejercicio: formEj.ejercicio.value,
-                series: parseInt(formEj.series.value),
-                repeticiones: parseInt(formEj.repeticiones.value),
+                ejercicio: ejercicio,
+                series: parseInt(series),
+                repeticiones: parseInt(repeticiones),
                 peso: parseFloat(formEj.peso.value),
                 unidad_peso_ejercicio: formEj.unidad_peso.value,
                 rir: parseInt(formEj.rir.value),
                 tiempo_descanso: parseFloat(formEj.tiempo_descanso.value),
                 unidad_descanso_ejercicio: formEj.unidad_descanso.value,
-                descripcion: formEj.descripcion.value
+                descripcion: descripcion
             };
 
             try {

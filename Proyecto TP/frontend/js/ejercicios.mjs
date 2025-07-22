@@ -12,38 +12,40 @@ document.getElementById("cancelar-modal-editar").addEventListener("click", () =>
 formEditar.addEventListener("submit", async (e) =>{
     e.preventDefault();
     const formData = new FormData(formEditar);
-    const descripcion = formEditar.descripcion.value.trim();
-    const ejercicio = formEditar.ejercicio.value.trim();
-    const series = formEditar.series.value.trim();
-    const repeticiones = formEditar.repeticiones.value.trim();
-
-    if (descripcion.length > 100) {
+    const descripcionEdit = formEditar.descripcion.value.trim();
+    const ejercicioEdit = formEditar.ejercicio.value.trim();
+    const seriesEdit = formEditar.series.value.trim();
+    const repeticionesEdit = formEditar.repeticiones.value.trim();
+    
+    // Validaciones
+    if (descripcionEdit.length > 100) {
         alert("La descripción no puede superar los 100 caracteres.");
         return; 
-    } else if (ejercicio.length > 50) {
+    } else if (ejercicioEdit.length > 50) {
         alert("El nombre del ejercicio es demasiado largo.");
         return; 
-    } else if (series < 0  || repeticiones < 0) {
+    } else if (seriesEdit <= 0  || repeticionesEdit <= 0) {
         alert("Las series y repeticiones deben ser números positivos.");
         return; 
-    } else if (isNaN(series) || isNaN(repeticiones)) {
+    } else if (isNaN(seriesEdit) || isNaN(repeticionesEdit)) {
         alert("Las series y repeticiones deben ser números válidos.");
         return; 
-    }
+    } 
+
     const musculos = await GetMusculos(RUTAS.MUSCULOS)
     const musculo = musculos.find( m => m.nombre == formEditar.grupo_muscular.value)
     const datos = {
         id: parseInt(formEditar.id.value),
         grupo_muscular_id: parseInt(musculo.id),
-        ejercicio: formEditar.ejercicio.value,
-        series: parseInt(formEditar.series.value),
-        repeticiones: parseInt(formEditar.repeticiones.value),
+        ejercicio: ejercicioEdit,
+        series: parseInt(seriesEdit),
+        repeticiones: parseInt(repeticionesEdit),
         peso: parseFloat(formEditar.peso.value),
         unidad_peso_ejercicio: formEditar.unidad_peso.value,
         rir: parseInt(formEditar.rir.value),
         tiempo_descanso: parseFloat(formEditar.tiempo_descanso.value),
         unidad_descanso_ejercicio: formEditar.unidad_descanso.value,
-        descripcion: formEditar.descripcion.value
+        descripcion: descripcionEdit
     };
     await editarEjercicio(datos)
 })
