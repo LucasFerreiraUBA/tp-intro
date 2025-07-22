@@ -565,7 +565,7 @@ app.post("/api/entrenamientos", async (req, res) => {
 });
 
 // Actualizar entrenamiento
-app.put("/api/entrenamientos/:id", async (req, res) => {
+app.patch("/api/entrenamientos/:id", async (req, res) => {
   try {
     const {
       dia_semana,
@@ -573,43 +573,42 @@ app.put("/api/entrenamientos/:id", async (req, res) => {
       nivel_usuario,
       duracion_minutos,
       unidad_descanso,
-      descripcion,
-      ejercicios,
-      comidas,
+      descripcion
     } = req.body;
 
-    const entrenamientoActualizado = await updateEntrenamiento(
+    const entrenamientoActualizado = await updateEntrenamientoById(
       req.params.id,
-      dia_semana,
-      objetivo,
-      nivel_usuario,
-      duracion_minutos,
-      unidad_descanso,
-      descripcion,
-      ejercicios,
-      comidas
+      {
+        dia_semana,
+        objetivo,
+        nivel_usuario,
+        duracion_minutos,
+        unidad_descanso,
+        descripcion
+      }
     );
 
     if (!entrenamientoActualizado) {
       return res.status(404).json({
         status: 404,
-        error: "Entrenamiento no encontrado para actualizar",
+        error: "Entrenamiento no encontrado para actualizar"
       });
     }
 
     return res.status(200).json({
       status: 200,
-      data: entrenamientoActualizado,
+      data: entrenamientoActualizado
     });
+
   } catch (error) {
-    const mensaje =
-      error instanceof Error ? error.message : "Error interno del servidor";
+    const mensaje = error instanceof Error ? error.message : "Error interno del servidor";
     return res.status(500).json({
       status: 500,
-      error: mensaje,
+      error: mensaje
     });
   }
 });
+
 
 // Eliminar entrenamiento
 app.delete("/api/entrenamientos/:id", async (req, res) => {

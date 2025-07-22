@@ -229,6 +229,7 @@
             </footer>
         </div>
     <script type="module">
+
         import { PatchOneById } from "../utils/APIFetch.mjs";
         import {RUTAS} from "../constantes/rutas.mjs"
         tablaEntrenos();
@@ -245,8 +246,8 @@
             document.getElementById('form-entrenamiento').reset();
         }
         function cerrarModalEditar(){
-        const modal = document.getElementById('modal-editar').classList.remove('is-active');
-        document.getElementById('form-edit-entrenamiento').reset();
+            document.getElementById('modal-editar').classList.remove('is-active');
+            document.getElementById('form-edit-entrenamiento').reset();
         }
         document.getElementById('cerrar-modal').addEventListener('click', cerrarModal);
         document.getElementById('btn-cancelar').addEventListener('click', cerrarModal);
@@ -321,7 +322,7 @@
             const objetivoEdit = formEdit.objetivo.value.trim();
             const descripcionEdit = formEdit.descripcion.value.trim();
             const duracionEdit = formEdit.duracion_minutos.value.trim();
-            const nivelEdit = form.nivel_usuario.value.trim();
+            const nivelEdit = formEdit.nivel_usuario.value.trim();
 
             // Validaciones
             if (diaEdit === "") {
@@ -373,14 +374,15 @@
                     return;
                 }
 
-                const entrenamiento = await respuesta.json();
+                const json = await respuesta.json();
+                const entrenamiento = await json.data;
                 // carga
                 const formEdit = document.getElementById('form-edit-entrenamiento');
                 formEdit.dia_semana.value = entrenamiento.dia_semana;
                 formEdit.objetivo.value = entrenamiento.objetivo ?? "";
                 formEdit.nivel_usuario.value = entrenamiento.nivel_usuario ?? "";
                 formEdit.duracion_minutos.value = entrenamiento.duracion_minutos ?? 0;
-                formEdit.unidad.value = entrenamiento.unidad_descanso.toLowerCase() ?? "";
+                formEdit.unidad.value = entrenamiento.unidad_descanso?.toLowerCase() ?? "";
                 formEdit.descripcion.value = entrenamiento.descripcion ?? "";
                 formEdit.setAttribute("data-id-entrenamiento", entrenamiento.id);
                 
