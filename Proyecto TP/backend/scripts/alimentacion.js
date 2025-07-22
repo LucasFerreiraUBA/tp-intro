@@ -1,11 +1,13 @@
 const { Pool } = require("pg");
 
+require('dotenv').config();
+
 const dbClient = new Pool({
-    user: "postgres",
-    port: 5432,
-    host: "localhost",
-    database: "atlas",
-    password: "postgres",
+  user: process.env.DB_USER,
+  port: process.env.DB_PORT,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
+  password: process.env.DB_PASSWORD,
 });
 
 async function getAllComidas() {
