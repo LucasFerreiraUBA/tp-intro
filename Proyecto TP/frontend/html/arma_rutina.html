@@ -416,7 +416,7 @@
             }).then((data) => { // una vez que consulta vuelve con la data
                 const table = document.querySelector("tbody");
                 
-                data.forEach(Entrenamiento => {
+                data.data.forEach(Entrenamiento => {
                     const newRow = document.createElement("tr");
 
                     const DiaSemana = document.createElement("td"); // Dia de la Semana
