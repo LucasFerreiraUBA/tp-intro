@@ -60,6 +60,24 @@ async function createComida(nombre_comida, tipo_comida, calorias, proteinas, car
         INSERT INTO alimentacion (nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING id`,
     [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion]);
 
+    const TipoComidaValido = ['Desayuno', 'Almuerzo', 'Merienda', 'Cena'];
+
+    if (descripcion.length > 100) {
+        console.error("La descripción es demasiado larga");
+        return null; 
+    } else if (nombre_comida.length > 50) {
+        console.error("El nombre de la comida es demasiado largo");
+        return null;
+    }   else if (calorias < 0 || proteinas < 0 || grasas < 0 || carbohidratos < 0) {
+        console.error("Las calorias, proteinas, grasas y los carbohidratos no pueden ser numeros negativos");  
+        return null; 
+    }   else if (isNaN(calorias) || isNaN(proteinas) || isNaN(grasas) || isNaN(carbohidratos)) {
+        alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
+        return; 
+     } else if (tipo_comida && !TipoComidaValido.includes(tipo_comida)) {
+         throw new Error(`El tipo de comida debe ser: ${TipoComidaValido.join(', ')}`);
+    }
+
     const alimentacion_id = result.rows[0].id;
 
     await dbClient.query(
@@ -100,6 +118,24 @@ async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas,
             descripcion = $7
         WHERE id = $8 RETURNING *`, 
     [nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion, id]);
+
+    const TipoComidaValido = ['Desayuno', 'Almuerzo', 'Merienda', 'Cena'];
+
+    if (descripcion.length > 100) {
+        console.error("La descripción es demasiado larga");
+        return null; 
+    } else if (nombre_comida.length > 50) {
+        console.error("El nombre de la comida es demasiado largo");
+        return null;
+    }   else if (calorias < 0 || proteinas < 0 || grasas < 0 || carbohidratos < 0) {
+        console.error("Las calorias, proteinas, grasas y los carbohidratos no pueden ser numeros negativos");  
+        return null; 
+    }   else if (isNaN(calorias) || isNaN(proteinas) || isNaN(grasas) || isNaN(carbohidratos)) {
+        alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
+        return; 
+    } else if (tipo_comida && !TipoComidaValido.includes(tipo_comida)) {
+        throw new Error(`El tipo de comida debe ser: ${TipoComidaValido.join(', ')}`);
+    }
 
     return result.rows[0];
 }
