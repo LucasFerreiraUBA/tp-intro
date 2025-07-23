@@ -96,7 +96,7 @@ async function createEntrenamiento(data) {
    } = data;
 
     const DiasValidos = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-    const UnidadesDescansoValidas = ['seg', 'min', 'hs'];
+    const UnidadesDescansoValidas = ['min', 'hs'];
     const nivelesValidos = ['Principiante', 'Intermedio', 'Avanzado'];
 
     if (!dia_semana || !objetivo || !nivel_usuario) {
@@ -169,7 +169,7 @@ async function updateEntrenamiento(id, data) {
   } = data;
 
   const DiasValidos = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-  const UnidadesDescansoValidas = ['seg', 'min', 'hs'];
+  const UnidadesDescansoValidas = ['min', 'hs'];
   const nivelesValidos = ['Principiante', 'Intermedio', 'Avanzado'];
 
   if (!dia_semana || !objetivo || !nivel_usuario) {
@@ -233,7 +233,7 @@ const updateEntrenamientoById = async ( id, data ) =>{
   } = data;
 
   const DiasValidos = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-  const UnidadesDescansoValidas = ['seg', 'min', 'hs'];
+  const UnidadesDescansoValidas = ['min', 'hs'];
   const nivelesValidos = ['Principiante', 'Intermedio', 'Avanzado'];
 
   if (!dia_semana || !objetivo || !nivel_usuario) {

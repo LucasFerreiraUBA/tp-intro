@@ -73,7 +73,7 @@
                         <label class="label">Tipo</label>
                         <div class="control">
                             <div class="select is-fullwidth">
-                                <select name="tipo_comida" id="tipo_comida">
+                                <select name="tipo_comida" id="tipo_comida" required>
                                     <option value="" disabled selected>Seleccioná un Tipo de comida</option>
                                     <option value="Desayuno">Desayuno</option>
                                     <option value="Almuerzo">Almuerzo</option>
@@ -149,7 +149,7 @@
                         <label class="label">Tipo</label>
                         <div class="control">
                             <div class="select is-fullwidth">
-                                <select name="tipo_comida" id="tipo_comida">
+                                <select name="tipo_comida" id="tipo_comida" required>
                                     <option value="" disabled selected>Seleccioná un Tipo de comida</option>
                                     <option value="Desayuno">Desayuno</option>
                                     <option value="Almuerzo">Almuerzo</option>
@@ -270,9 +270,6 @@
                 } else if (calorias < 0  || proteinas < 0 || carbohidratos < 0 || grasas < 0) {
                     alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números positivos.");
                     return; 
-                } else if (isNaN(calorias) || isNaN(proteinas) || isNaN(carbohidratos) || isNaN(grasas)) {
-                    alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
-                    return; 
                 } 
 
                 const datos = {
@@ -347,9 +344,6 @@
                     return; 
                 } else if (caloriasEdit < 0  || proteinasEdit < 0 || carbohidratosEdit < 0 || grasasEdit < 0) {
                     alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números positivos.");
-                    return; 
-                } else if (isNaN(caloriasEdit) || isNaN(proteinasEdit) || isNaN(carbohidratosEdit) || isNaN(grasasEdit)) {
-                    alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
                     return; 
                 } 
 
@@ -434,8 +428,12 @@
                 //ejercicio.innerHTML = com.ejercicio_relacionado ?? "-";        HAY QUE VER SI LO USAMOS
                 //newRow.appendChild(ejercicio); 
 
-                const descripcion = document.createElement("td");
-                descripcion.innerHTML = com.descripcion ?? "-";
+                const descripcion = document.createElement("td"); // descripcion
+                descripcion.innerHTML = com.descripcion && com.descripcion.trim() !== ""
+                    ? (com.descripcion.length > 40 
+                        ? com.descripcion.slice(0, 40) + "..." 
+                        : com.descripcion)
+                    : "-"; // si son mas de 40 caracteres, corta y agrega "..."
                 newRow.appendChild(descripcion);
 
                 const NewEditar = document.createElement("td");
