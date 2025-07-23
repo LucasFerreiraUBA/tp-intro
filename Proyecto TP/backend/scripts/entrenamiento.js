@@ -83,7 +83,6 @@ async function getOneEntrenamiento(id) {
 // crear un nuevo entrenamiento relacionandolo con los ejercicios y comidas
 async function createEntrenamiento(data) {
  try {
-   
    const {
      dia_semana,
      objetivo,
@@ -159,7 +158,8 @@ async function createEntrenamiento(data) {
 
 // actualizar un entrenamiento
 async function updateEntrenamiento(id, data) {
-  const {
+  try{
+      const {
     dia_semana,
     objetivo,
     nivel_usuario,
@@ -203,7 +203,13 @@ async function updateEntrenamiento(id, data) {
     RETURNING *
   `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion, id]);
 
-  return result.rows[0];
+     return { status: 201, data: result.rows[0] };
+  } catch (error) {
+   if (error instanceof Error) {
+     return { status: 400, error: error.message };
+   }
+   return { status: 500, error: 'Error interno del servidor' };
+ }
 }
 
 // eliminar un entrenamiento y sus relaciones
@@ -216,14 +222,15 @@ async function deleteEntrenamiento(id) {
   const result = await dbClient.query("DELETE FROM entrenamiento WHERE id = $1", [id]);
 
   if (result.rowCount === 0) {
-    return "Entrenamiento no encontrado";
+    return null;
   }
 
   return id;
 }
 
 const updateEntrenamientoById = async ( id, data ) =>{
-  const {
+  try{
+      const {
     dia_semana,
     objetivo,
     nivel_usuario,
@@ -267,7 +274,13 @@ const updateEntrenamientoById = async ( id, data ) =>{
     RETURNING *
   `, [dia_semana, objetivo, nivel_usuario, duracion_minutos, unidad_descanso, descripcion, id]);
 
-  return result.rows[0];
+    return { status: 201, data: result.rows[0] };
+  } catch (error) {
+   if (error instanceof Error) {
+     return { status: 400, error: error.message };
+   }
+   return { status: 500, error: 'Error interno del servidor' };
+ }
 }
 module.exports = {
   getAllEntrenamientos,

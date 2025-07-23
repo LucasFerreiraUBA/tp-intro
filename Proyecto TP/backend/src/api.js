@@ -1,13 +1,3 @@
-// if (entrenamiento.status === 201) {
-    //return res.status(201).json({
-    //     status: 201, 
-    //     data: entrenamiento.data });
-    // } else {
-    //     return res.status(entrenamiento.status).json({ error: entrenamiento.error });
-    // } 
-
-
-
 const express = require("express");
 var cors = require("cors"); // Importamos cors para permitir peticiones desde el frontend
 
@@ -103,7 +93,6 @@ app.get("/api/ejercicios/:id", async (req, res) => {
         error: "Ejercicio no encontrado",
       });
     }
-
     return res.status(200).json({
       status: 200,
       data: ejercicio,
@@ -167,10 +156,17 @@ app.post("/api/ejercicios", async (req, res) => {
       });
     }
 
-    return res.status(201).json({
-      status: 201,
-      data: nuevoEjercicio,
-    });
+    // return res.status(201).json({
+    //   status: 201,
+    //   data: nuevoEjercicio,
+    // });
+    if (nuevoEjercicio.status === 201) {
+      return res.status(201).json({
+        status: 201, 
+        data: nuevoEjercicio});
+    } else {
+        return res.status(nuevoEjercicio.status).json({ error: nuevoEjercicio.error });
+    } 
   } catch (error) {
     const mensaje =
       error instanceof Error ? error.message : "Error interno del servidor";
@@ -188,17 +184,17 @@ app.delete(
       const { entrenamientoId, rutinaId } = req.params;
       const eliminado = await deleteEjercicio(entrenamientoId, rutinaId);
 
-      if (!eliminado) {
-        return res.status(404).json({
-          status: 404,
+      if (eliminado){
+        return res.status(200).json({ 
+          status:200,
+          message: "Ejercicio Eliminado",
+        })
+      } else{
+        return res.status(400).json({
+          status: 400,
           error: "Ejercicio no encontrado",
-        });
+        })
       }
-
-      return res.status(200).json({
-        status: 200,
-        message: `Ejercicio eliminado: ${rutinaId}`,
-      });
     } catch (error) {
       const mensaje =
         error instanceof Error ? error.message : "Error interno del servidor";
@@ -600,10 +596,18 @@ app.patch("/api/entrenamientos/:id", async (req, res) => {
       });
     }
 
-    return res.status(200).json({
-      status: 200,
-      data: entrenamientoActualizado
-    });
+    // return res.status(200).json({
+    //   status: 200,
+    //   data: entrenamientoActualizado
+    // });
+
+    if (entrenamientoActualizado.status === 200) {
+      return res.status(200).json({
+        status: 200, 
+        data: entrenamientoActualizado.data });
+    } else {
+        return res.status(entrenamientoActualizado.status).json({ error: entrenamientoActualizado.error });
+    } 
 
   } catch (error) {
     const mensaje = error instanceof Error ? error.message : "Error interno del servidor";
