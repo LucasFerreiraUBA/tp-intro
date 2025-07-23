@@ -48,8 +48,6 @@ formEditar.addEventListener("submit", async (e) =>{
 })
 
 export const AbrirModalEditar = ej => {
-    modalEditar.showModal();
-
     formEditar.id.value = ej.id;
     formEditar.grupo_muscular.value = ej.grupo_muscular;
     formEditar.ejercicio.value = ej.ejercicio;
@@ -61,6 +59,7 @@ export const AbrirModalEditar = ej => {
     formEditar.tiempo_descanso.value = ej.tiempo_descanso;
     formEditar.unidad_descanso.value = ej.unidad_descanso_ejercicio;
     formEditar.descripcion.value = ej.descripcion ?? "";
+    modalEditar.showModal();
 }
 const editarEjercicio = async (datos) => {
     const ejercicio_URL = `${RUTAS.EJERCICIOS}/${datos.id}`;
