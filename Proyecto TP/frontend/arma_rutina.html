@@ -388,7 +388,7 @@
                 formEdit.dia_semana.value = entrenamiento.dia_semana;
                 formEdit.objetivo.value = entrenamiento.objetivo ?? "";
                 formEdit.nivel_usuario.value = entrenamiento.nivel_usuario ?? "";
-                formEdit.duracion_minutos.value = entrenamiento.duracion_minutos ?? 0;
+                formEdit.duracion_minutos.value = entrenamiento.duracion_minutos;
                 formEdit.unidad.value = entrenamiento.unidad_descanso?.toLowerCase() ?? "";
                 formEdit.descripcion.value = entrenamiento.descripcion ?? "";
                 formEdit.setAttribute("data-id-entrenamiento", entrenamiento.id);
