@@ -83,8 +83,8 @@ async function createEjercicio(
       'SELECT id FROM grupo_muscular WHERE nombre = $1',
       [grupo_muscular_nombre]
     );
-    const UnidadesDescansoValidos = ['seg', 'min'];
-    const PesosValidos = ['lb', 'kg'];
+    // const UnidadesDescansoValidos = ['seg', 'min'];
+    // const PesosValidos = ['lb', 'kg'];
 
     if (descripcion.length > 100) {
         console.error("La descripción es demasiado larga");
@@ -101,10 +101,10 @@ async function createEjercicio(
     } else if (peso < 0) {
         console.error("El peso no puede ser negativo");  
         return null; 
-    } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
-        throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
-    } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
-        throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
+    // } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
+    //     throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
+    // } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
+    //     throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
     } else if (peso > 2000) {
         console.error("El peso no puede ser mayor a 2000");
         return null; 
@@ -186,8 +186,8 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ej
     WHERE id = $10 RETURNING *`, 
   [ejercicio, repeticiones, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion, id]);
 
-  const UnidadesDescansoValidos = ['seg', 'min'];
-  const PesosValidos = ['lb', 'kg'];
+  // const UnidadesDescansoValidos = ['seg', 'min'];
+  // const PesosValidos = ['lb', 'kg'];
 
     if (descripcion.length > 100) {
         console.error("La descripción es demasiado larga");
@@ -204,10 +204,10 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ej
     } else if (peso < 0) {
         console.error("El peso no puede ser negativo");  
         return null; 
-    } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
-        throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
-    } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
-        throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
+    // } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
+    //     throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
+    // } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
+    //     throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
     } else if (peso > 2000) {
         console.error("El peso no puede ser mayor a 2000");
         return null; 
@@ -277,8 +277,8 @@ async function updateEjercicioById(
     id
   ]);
 
-  const UnidadesDescansoValidos = ['seg', 'min'];
-  const PesosValidos = ['lb', 'kg'];
+  // const UnidadesDescansoValidos = ['seg', 'min'];
+  // const PesosValidos = ['lb', 'kg'];
 
     if (descripcion.length > 100) {
         console.error("La descripción es demasiado larga");
@@ -295,10 +295,10 @@ async function updateEjercicioById(
     } else if (peso < 0) {
         console.error("El peso no puede ser negativo");  
         return null; 
-    } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
-        throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
-    } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
-        throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
+    // } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
+    //     throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
+    // } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
+    //     throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
     } else if (peso > 2000) {
         console.error("El peso no puede ser mayor a 2000");
         return null; 

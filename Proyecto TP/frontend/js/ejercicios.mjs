@@ -76,6 +76,6 @@ const editarEjercicio = async (datos) => {
 
 const GetMusculos = async (ruta) =>{
     const respuesta = await fetch(ruta).then( res => res.json());
-    return respuesta;
+    return respuesta.data;
 
 }
