@@ -59,7 +59,7 @@ export const AbrirModalEditar = ej => {
     formEditar.repeticiones.value = ej.repeticiones;
     formEditar.peso.value = ej.peso;
     formEditar.unidad_peso.value = ej.unidad_peso_ejercicio;
-    formEditar.rir.value = ej.rir ?? 1;
+    formEditar.rir.value = ej.rir;
     formEditar.tiempo_descanso.value = ej.tiempo_descanso;
     formEditar.unidad_descanso.value = ej.unidad_descanso_ejercicio;
     formEditar.descripcion.value = ej.descripcion ?? "";
