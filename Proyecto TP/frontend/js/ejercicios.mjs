@@ -27,9 +27,6 @@ formEditar.addEventListener("submit", async (e) =>{
     } else if (seriesEdit <= 0  || repeticionesEdit <= 0) {
         alert("Las series y repeticiones deben ser números positivos.");
         return; 
-    } else if (isNaN(seriesEdit) || isNaN(repeticionesEdit)) {
-        alert("Las series y repeticiones deben ser números válidos.");
-        return; 
     } 
 
     const musculos = await GetMusculos(RUTAS.MUSCULOS)

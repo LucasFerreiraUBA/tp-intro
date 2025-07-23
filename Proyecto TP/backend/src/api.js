@@ -171,13 +171,6 @@ app.post("/api/ejercicios", async (req, res) => {
   }
 });
 
-// delete
-
-// delete personaje
-/*
-curl --request DELET http://localhost:3000/api/personajes/id
-*/
-
 app.delete(
   "/api/entrenamientos/:entrenamientoId/ejercicios/:rutinaId",
   async (req, res) => {

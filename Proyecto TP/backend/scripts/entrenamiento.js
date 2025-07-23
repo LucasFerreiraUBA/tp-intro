@@ -102,19 +102,19 @@ async function createEntrenamiento(data) {
     if (!dia_semana || !objetivo || !nivel_usuario) {
       throw new Error('Faltan campos obligatorios');
     } else if (unidad_descanso && !UnidadesDescansoValidas.includes(unidad_descanso)) {
-      throw new Error('Unidad de descanso inválida');
+        throw new Error('Unidad de descanso inválida');
     } else if (descripcion && descripcion.length > 100) {
-      throw new Error('La descripción no puede superar los 100 caracteres');
+        throw  new Error('La descripción no puede superar los 100 caracteres');
     } else if (objetivo && objetivo.length > 50) {
-      throw new Error('El objetivo no puede superar los 50 caracteres');
+        throw  new Error('El objetivo no puede superar los 50 caracteres');
     } else if (nivel_usuario && !nivelesValidos.includes(nivel_usuario)) {
-      throw new Error(`El nivel de usuario debe ser: ${nivelesValidos.join(', ')}`)
+        throw  new Error(`El nivel de usuario debe ser: ${nivelesValidos.join(', ')}`);
     } else if (dia_semana && !DiasValidos.includes(dia_semana)) {
-      throw new Error(`El dia de la semana debe ser:' ${DiasValidos.join(', ')}`);
+        throw  new Error(`El dia de la semana debe ser:' ${DiasValidos.join(', ')}`);
     } else if (ejercicios && !Array.isArray(ejercicios)) {
-      throw new Error('Ejercicios debe ser un array');
+        throw  new Error('Ejercicios debe ser un array');
     } else if (comidas && !Array.isArray(comidas)) {
-      throw new Error('Comidas debe ser un array');
+        throw  new Error('Comidas debe ser un array');
     } else if (duracion_minutos !== undefined && duracion_minutos !== null && duracion_minutos !== '') {
         const minutos = Number(duracion_minutos);
         if (isNaN(minutos) || minutos <= 0) {
