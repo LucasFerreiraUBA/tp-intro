@@ -94,16 +94,24 @@ async function createComida(nombre_comida, tipo_comida, calorias, proteinas, car
 }
 
 async function deleteComida(entrenamientoId, alimentacionId) {
-  const result = await dbClient.query(
-    "DELETE FROM entrenamiento_alimentacion WHERE entrenamiento_id = $1 AND alimentacion_id = $2",
-    [entrenamientoId, alimentacionId]
-  );
 
-  if (result.rowCount === 0) {
+    // 1. Eliminar la relación en tabla puente
+    await dbClient.query(
+        "DELETE FROM entrenamiento_alimentacion WHERE entrenamiento_id = $1 AND alimentacion_id = $2",
+        [entrenamientoId, alimentacionId]
+    );
+
+    // 2. Eliminar el ejercicio en alimentacion
+    const result = await dbClient.query(
+        "DELETE FROM alimentacion WHERE id = $1",
+        [alimentacionId]
+    );
+
+    if (result.rowCount === 0) {
     return null;
-  }
+    }
 
-  return true;
+    return true;
 }
 
 async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas, carbohidratos, grasas, descripcion) {
