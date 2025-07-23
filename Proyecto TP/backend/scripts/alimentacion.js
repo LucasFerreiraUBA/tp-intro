@@ -25,7 +25,7 @@ async function getAllComidas() {
             a.descripcion
         FROM
             alimentacion a
-        JOIN
+        LEFT JOIN
             arma_rutina ar ON a.rutina_id = ar.id    
         `);
     return result.rows;    
@@ -45,7 +45,7 @@ async function getOneComida(id) {
             a.descripcion
         FROM
             alimentacion a
-        JOIN
+        LEFT JOIN
             arma_rutina ar ON a.rutina_id = ar.id
         WHERE
             a.id = $1

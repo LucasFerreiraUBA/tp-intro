@@ -32,7 +32,7 @@ CREATE TABLE alimentacion (
     proteinas INT NOT NULL,
     carbohidratos INT NOT NULL,
     grasas INT NOT NULL,
-    rutina_id INT REFERENCES arma_rutina(id) ON DELETE SET NULL,
+    rutina_id INT REFERENCES arma_rutina(id) ON DELETE CASCADE,
     descripcion VARCHAR(100)
 );
 
