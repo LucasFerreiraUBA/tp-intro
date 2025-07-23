@@ -297,7 +297,7 @@
             };
 
             try {
-                const respuesta = await fetch("http://localhost:3000/api/entrenamientos", {
+                const respuesta = await fetch(`${RUTAS.ENTRENAMIENTOS}`, {
                     method: "POST",
                     headers: {"Content-type": "application/json"},
                     body: JSON.stringify(datos)
@@ -375,7 +375,7 @@
 
         async function abrirModalPorId(id) {
             try {
-                const respuesta = await fetch(`http://localhost:3000/api/entrenamientos/${id}`);
+                const respuesta = await fetch(`${RUTAS.ENTRENAMIENTOS}/${id}`);
                 
                 if (!respuesta.ok) {
                     alert("No se pudo obtener el entrenamiento.");
@@ -419,7 +419,7 @@
         function tablaEntrenos(){
             document.getElementsByClassName("body-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
 
-            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
+            const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}`;
 
             fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
                 return response.json();
@@ -494,7 +494,7 @@
         }
 
         function deleteEntrenamiento(id){
-            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+            const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}/${id}`;
             fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEntrenos()); // vuelve a cargar la tabla
         }
     </script>

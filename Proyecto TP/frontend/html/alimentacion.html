@@ -62,8 +62,10 @@
                 </div>
             </footer>
         </div>
-        <script>
-            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
+        <script type="module">
+            import {RUTAS} from "../constantes/rutas.mjs"
+            const arma_rutinaBackURL = `${RUTAS.EJERCICIOS}`;
+            
 
             fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
                 return response.json();
