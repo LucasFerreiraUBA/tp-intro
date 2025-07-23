@@ -422,8 +422,12 @@
                 }
                 newRow.appendChild(tiempoDescanso);
 
-                const descripcion = document.createElement("td");
-                descripcion.innerHTML = ej.descripcion ?? "-";
+                const descripcion = document.createElement("td"); // descripcion
+                descripcion.innerHTML = ej.descripcion && ej.descripcion.trim() !== ""
+                    ? (ej.descripcion.length > 40 
+                        ? ej.descripcion.slice(0, 40) + "..." 
+                        : ej.descripcion)
+                    : "-"; // si son mas de 40 caracteres, corta y agrega "..."
                 newRow.appendChild(descripcion);
 
                 const NewEditar = document.createElement("td"); // Editar
