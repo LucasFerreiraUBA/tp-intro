@@ -63,7 +63,7 @@
             </footer>
         </div>
         <script type="module">
-            import {RUTAS} from "constantes/rutas.mjs"
+            import {RUTAS} from "./constantes/rutas.mjs"
             const arma_rutinaBackURL = `${RUTAS.EJERCICIOS}`;
             
 
@@ -73,7 +73,6 @@
                 const table = document.querySelector("tbody");
                 data.data.forEach(Alimento => {
                     const newRow = document.createElement("tr");
-
                     const DiaSemana = document.createElement("td"); 
                     DiaSemana.innerHTML = Alimento.dia_semana;
                     newRow.appendChild(DiaSemana);
