@@ -19,8 +19,8 @@ El sistema permite al usuario gestionar sus ejercicios diarios, ajustar parámet
 
 ### Integrantes
 
-- Diaz LandaburuTomas
-- Sedano Tiago 
+- Diaz Landaburu Tomas
+- Sedano Tiago Nehuen
 - Ferreira Lucas 
 - Riera Rodrigo
 <b>
@@ -31,15 +31,20 @@ El sistema permite al usuario gestionar sus ejercicios diarios, ajustar parámet
 
 Para levantar el proyecto ejecutar 
 
-1. Ingresar en la carpeta Pryecto TP
+1. Ingresar en la carpeta Proyecto TP
 ```
 cd Proyecto\ TP/
 ```
-2. Una vez en la carpeta, ejecutar:
+2. Una vez en la carpeta, ejecutar (para levantar el Backend):
 ```
 make init-all
 ```
 3. Para levantar el Frontend (en una terminal aparte), ejecutar;
+
+```
+npm install cors
+```
+
 ```
 make run-frontend
 ```

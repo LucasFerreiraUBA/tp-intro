@@ -159,17 +159,50 @@ async function createEjercicio(
 
 }
 
+// async function deleteEjercicio(entrenamientoId, rutinaId) {
+//   const result = await dbClient.query(
+//     "DELETE FROM entrenamiento_ejercicio WHERE entrenamiento_id = $1 AND rutina_id = $2",
+//     [entrenamientoId, rutinaId]
+//   );
+
+//   if (result.rowCount === 0) {
+//     return null;
+//   }
+
+//   return true;
+// }
+
 async function deleteEjercicio(entrenamientoId, rutinaId) {
-  const result = await dbClient.query(
-    "DELETE FROM entrenamiento_ejercicio WHERE entrenamiento_id = $1 AND rutina_id = $2",
-    [entrenamientoId, rutinaId]
-  );
+  const client = await dbClient.connect();
 
-  if (result.rowCount === 0) {
-    return null;
+  try {
+    await client.query('BEGIN');
+
+    // 1. Eliminar la relación en tabla intermedia
+    await client.query(
+      "DELETE FROM entrenamiento_ejercicio WHERE entrenamiento_id = $1 AND rutina_id = $2",
+      [entrenamientoId, rutinaId]
+    );
+
+    // 2. Eliminar el ejercicio en arma_rutina
+    const result = await client.query(
+      "DELETE FROM arma_rutina WHERE id = $1",
+      [rutinaId]
+    );
+
+    await client.query('COMMIT');
+
+    if (result.rowCount === 0) {
+      return null; // no se eliminó el ejercicio (probablemente no existía)
+    }
+
+    return true;
+  } catch (err) {
+    await client.query('ROLLBACK');
+    throw err;
+  } finally {
+    client.release();
   }
-
-  return true;
 }
 
 async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ejercicio, grupo_muscular_id, rir, tiempo_descanso, unidad_descanso_ejercicio, descripcion) {

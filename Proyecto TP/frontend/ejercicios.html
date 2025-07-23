@@ -322,6 +322,7 @@
             const series = formEj.series.value.trim();
             const repeticiones = formEj.repeticiones.value.trim();
             const rir = formEj.rir.value.trim();
+            const TiempoDescanso = formEj.tiempo_descanso.value.trim();
             
             // Validaciones
             if (descripcion.length > 100) {
@@ -336,7 +337,10 @@
             } else if (rir < 0){
                 alert("El RIR debe ser un numero positivo");
                 return;
-            }
+            } else if (TiempoDescanso <= 0){
+                alert("El Tiempo de Descanso debe ser un numero positivo");
+                return;
+            } 
 
             const datos = {
                 entrenamiento_id: id, // id del entrenamiento
@@ -347,7 +351,7 @@
                 peso: parseFloat(formEj.peso.value),
                 unidad_peso_ejercicio: formEj.unidad_peso.value,
                 rir: parseInt(rir),
-                tiempo_descanso: parseFloat(formEj.tiempo_descanso.value),
+                tiempo_descanso: parseFloat(TiempoDescanso),
                 unidad_descanso_ejercicio: formEj.unidad_descanso.value,
                 descripcion: descripcion
             };

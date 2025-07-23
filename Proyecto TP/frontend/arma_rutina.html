@@ -291,7 +291,7 @@
                 dia_semana: dia,
                 objetivo: objetivo,
                 nivel_usuario: nivel,
-                duracion_minutos: parseInt(duracion),
+                duracion_minutos: parseFloat(duracion),
                 unidad_descanso: form.unidad.value.toLowerCase(),
                 descripcion: descripcion
             };
@@ -346,7 +346,6 @@
                 return;
             } else if (duracionEdit !== undefined && duracionEdit !== null && duracionEdit !== '') {
                 const duracionNumerica = Number(duracionEdit);
-
                 if (isNaN(duracionNumerica) || duracionNumerica <= 0) {
                     alert("La duración debe ser un número positivo.");
                     return;
@@ -357,7 +356,7 @@
                 dia_semana : diaEdit,
                 objetivo : objetivoEdit,
                 nivel_usuario: nivelEdit,
-                duracion_minutos : parseInt(duracionEdit),
+                duracion_minutos : parseFloat(duracionEdit),
                 unidad_descanso : formEdit.unidad.value.toLowerCase() ?? "",
                 descripcion: descripcionEdit
             };
