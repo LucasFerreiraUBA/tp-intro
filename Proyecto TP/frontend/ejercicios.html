@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
         <!-- CSS -->
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="css/style.css">
         <title>Arma rutina</title>
     </head>
     <body>
@@ -294,7 +294,8 @@
             </footer>
         </div>
     <script type="module">
-        import { AbrirModalEditar } from "../js/ejercicios.mjs"
+        import { AbrirModalEditar } from "./js/ejercicios.mjs"
+        import {RUTAS} from "./constantes/rutas.mjs"
         const urlParams = new URLSearchParams(window.location.search);
         const id = urlParams.get("id");
         tablaEjercicios();
@@ -352,7 +353,7 @@
             };
 
             try {
-                const respuesta = await fetch("http://localhost:3000/api/ejercicios", {
+                const respuesta = await fetch(`${RUTAS.EJERCICIOS}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(datos)
@@ -374,7 +375,7 @@
         function tablaEjercicios(){
             document.getElementsByClassName("ejercicio-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
         
-            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos/" + id;
+            const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}/${id}`;
 
             fetch(arma_rutinaBackURL)
             .then((response) => response.json())
@@ -471,7 +472,7 @@
     }
 
     function deleteEjercicio(entrenamiento_id, rutina_id){
-        const arma_rutinaBackURL = `http://localhost:3000/api/entrenamientos/${entrenamiento_id}/ejercicios/${rutina_id}`;
+        const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}/${entrenamiento_id}/ejercicios/${rutina_id}`;
         fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
 }
 

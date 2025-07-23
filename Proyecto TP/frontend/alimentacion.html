@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
          <!-- CSS -->
-        <link rel="stylesheet" href="../css/style.css">
+        <link rel="stylesheet" href="css/style.css">
         <title>Alimentacion</title>
     </head>
     <body>
@@ -62,8 +62,10 @@
                 </div>
             </footer>
         </div>
-        <script>
-            const arma_rutinaBackURL = "http://localhost:3000/api/entrenamientos";
+        <script type="module">
+            import {RUTAS} from "./constantes/rutas.mjs"
+            const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}`;
+            
 
             fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
                 return response.json();
@@ -71,7 +73,6 @@
                 const table = document.querySelector("tbody");
                 data.data.forEach(Alimento => {
                     const newRow = document.createElement("tr");
-
                     const DiaSemana = document.createElement("td"); 
                     DiaSemana.innerHTML = Alimento.dia_semana;
                     newRow.appendChild(DiaSemana);
