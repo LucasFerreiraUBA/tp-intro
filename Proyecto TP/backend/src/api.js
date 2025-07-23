@@ -1,3 +1,13 @@
+// if (entrenamiento.status === 201) {
+    //return res.status(201).json({
+    //     status: 201, 
+    //     data: entrenamiento.data });
+    // } else {
+    //     return res.status(entrenamiento.status).json({ error: entrenamiento.error });
+    // } 
+
+
+
 const express = require("express");
 var cors = require("cors"); // Importamos cors para permitir peticiones desde el frontend
 
@@ -540,11 +550,15 @@ app.post("/api/entrenamientos", async (req, res) => {
         error: "Error al crear el entrenamiento",
       });
     }
+  
+    if (entrenamiento.status === 201) {
+      return res.status(201).json({
+        status: 201, 
+        data: entrenamiento.data });
+    } else {
+        return res.status(entrenamiento.status).json({ error: entrenamiento.error });
+    } 
 
-    return res.status(201).json({
-      status: 201,
-      data: entrenamiento,
-    });
   } catch (error) {
     const mensaje =
       error instanceof Error ? error.message : "Error interno del servidor";
