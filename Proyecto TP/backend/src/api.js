@@ -42,8 +42,20 @@ app.get("/api/health", (req, res) => {
 });
 //---------------------------------------------- grupo_muscular ---------------------------------------------------------------------------
 app.get("/api/grupo_muscular", async (req, res) => {
-  const grupo_musculares = await getAllGrupo_musculares();
-  res.json(grupo_musculares);
+  try{
+    const grupo_musculares = await getAllGrupo_musculares();
+    return res.status(200).json({
+      status: 200,
+      data: grupo_musculares,
+    });
+  } catch (error) {
+    const mensaje =
+      error instanceof Error ? error.message : "Error interno del servidor";
+    return res.status(500).json({
+      status: 500,
+      error: mensaje,
+    });
+  }
 });
 
 //---------------------------------------------- ejercicios ---------------------------------------------------------------------------
@@ -515,21 +527,6 @@ app.post("/api/entrenamientos", async (req, res) => {
       return res.status(400).json({
         status: 400,
         error: "Faltan datos obligatorios",
-      });
-    }
-
-    // Validaciones de longitud
-    if (objetivo.length > 25) {
-      return res.status(400).json({
-        status: 400,
-        error: "El objetivo no puede exceder los 25 caracteres",
-      });
-    }
-
-    if (descripcion && descripcion.length > 100) {
-      return res.status(400).json({
-        status: 400,
-        error: "La descripción no puede exceder los 100 caracteres",
       });
     }
 

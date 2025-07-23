@@ -275,13 +275,17 @@
             } else if (descripcion.length > 100) {
                 alert("La descripción es muy larga.");
                 return; // No cont  inúa si la descripción es demasiado larga
-            } else if (duracion <= 0) {
-                alert("La duracion debe ser un numero positivo.");
-                return;
             } else if (nivel === "") {
                 alert("El campo 'Nivel de usuario' es obligatorio.");
                 return;
-            }
+            } else if (duracion !== undefined && duracion !== null && duracion !== '') {
+                const duracionNumerica = Number(duracion);
+
+                if (isNaN(duracionNumerica) || duracionNumerica <= 0) {
+                    alert("La duración debe ser un número positivo.");
+                    return;
+                }
+            } 
 
             const datos = {
                 dia_semana: dia,
@@ -337,13 +341,17 @@
             } else if (descripcionEdit.length > 100) {
                 alert("La descripción es muy larga.");
                 return; // No cont  inúa si la descripción es demasiado larga
-            } else if (duracionEdit <= 0) {
-                alert("La duracion debe ser un numero positivo.");
-                return;
-            } else if (nivelEdit === "") {
+            }  else if (nivelEdit === "") {
                 alert("El campo 'Nivel de usuario' es obligatorio.");
                 return;
-            }
+            } else if (duracionEdit !== undefined && duracionEdit !== null && duracionEdit !== '') {
+                const duracionNumerica = Number(duracionEdit);
+
+                if (isNaN(duracionNumerica) || duracionNumerica <= 0) {
+                    alert("La duración debe ser un número positivo.");
+                    return;
+                }
+            } 
 
             const data = {
                 dia_semana : diaEdit,
