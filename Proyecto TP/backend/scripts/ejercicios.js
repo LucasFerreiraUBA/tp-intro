@@ -83,6 +83,7 @@ async function createEjercicio(
       'SELECT id FROM grupo_muscular WHERE nombre = $1',
       [grupo_muscular_nombre]
     );
+
      const UnidadesDescansoValidos = ['Seg', 'Min'];
      const PesosValidos = ['Lb', 'Kg'];
 
@@ -204,6 +205,7 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ej
     } else if (peso < 0) {
         console.error("El peso no puede ser negativo");  
         return null; 
+
      } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
          throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
      } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
@@ -276,6 +278,7 @@ async function updateEjercicioById(
     descripcion,
     id
   ]);
+
 
    const UnidadesDescansoValidos = ['Seg', 'Min'];
    const PesosValidos = ['Lb', 'Kg'];
