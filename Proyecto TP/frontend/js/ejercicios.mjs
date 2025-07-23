@@ -16,6 +16,7 @@ formEditar.addEventListener("submit", async (e) =>{
     const ejercicioEdit = formEditar.ejercicio.value.trim();
     const seriesEdit = formEditar.series.value.trim();
     const repeticionesEdit = formEditar.repeticiones.value.trim();
+    const rirEdit = formEditar.rir.value.trim();
     
     // Validaciones
     if (descripcionEdit.length > 100) {
@@ -27,7 +28,10 @@ formEditar.addEventListener("submit", async (e) =>{
     } else if (seriesEdit <= 0  || repeticionesEdit <= 0) {
         alert("Las series y repeticiones deben ser números positivos.");
         return; 
-    } 
+    } else if (rirEdit < 0){
+        alert("El RIR debe ser un numero positivo");
+        return;
+    }
 
     const musculos = await GetMusculos(RUTAS.MUSCULOS)
     const musculo = musculos.find( m => m.nombre == formEditar.grupo_muscular.value)
@@ -39,7 +43,7 @@ formEditar.addEventListener("submit", async (e) =>{
         repeticiones: parseInt(repeticionesEdit),
         peso: parseFloat(formEditar.peso.value),
         unidad_peso_ejercicio: formEditar.unidad_peso.value,
-        rir: parseInt(formEditar.rir.value),
+        rir: parseInt(rirEdit),
         tiempo_descanso: parseFloat(formEditar.tiempo_descanso.value),
         unidad_descanso_ejercicio: formEditar.unidad_descanso.value,
         descripcion: descripcionEdit
