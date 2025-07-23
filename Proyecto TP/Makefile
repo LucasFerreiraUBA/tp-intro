@@ -33,3 +33,6 @@ init-all:
 
 run-frontend:
 	http-server --cors
+
+run-database-client:
+	cd backend && npm start

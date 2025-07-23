@@ -397,10 +397,10 @@
             fetch(arma_rutinaBackURL)
             .then((response) => response.json())
             .then((data) => {
-                document.getElementById("titulo-alimentacion").textContent = `${data.dia_semana}`; /*especifica el dia del entrenamiento como titulo*/
+                document.getElementById("titulo-alimentacion").textContent = `${data.data.dia_semana}`; /*especifica el dia del entrenamiento como titulo*/
                 const tbody = document.querySelector("table.table tbody");
 
-                data.comidas.forEach((com) => {
+                data.data.comidas.forEach((com) => {
                     console.log(com)
                 const newRow = document.createElement("tr");
                 newRow.setAttribute("data-id",com.id)

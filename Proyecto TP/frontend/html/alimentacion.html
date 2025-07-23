@@ -69,7 +69,7 @@
                 return response.json();
             }).then((data) => { // una vez que consulta vuelve con la data
                 const table = document.querySelector("tbody");
-                data.forEach(Alimento => {
+                data.data.forEach(Alimento => {
                     const newRow = document.createElement("tr");
 
                     const DiaSemana = document.createElement("td"); 
