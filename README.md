@@ -43,6 +43,9 @@ make init-all
 ```
 3. Para levantar el Frontend (en una terminal aparte), ejecutar;
 ```
+npm install -g http-server
+```
+```
 make run-frontend
 ```
 <hr>
