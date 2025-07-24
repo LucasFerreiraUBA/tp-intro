@@ -58,22 +58,6 @@ async function getOneEntrenamiento(id) {
   };
 }
 
-
-    // SELECT
-    //   a.id,
-    //   a.nombre_comida,
-    //   a.tipo_comida,
-    //   a.calorias,
-    //   a.proteinas,
-    //   a.carbohidratos,
-    //   a.grasas,
-    // ar.ejercicio AS ejercicio_relacionado,
-    // a.descripcion
-    // FROM entrenamiento_alimentacion ea
-    // JOIN alimentacion a ON a.id = ea.alimentacion_id
-    // LEFT JOIN arma_rutina ar ON a.rutina_id = ar.id
-    // WHERE ea.entrenamiento_id = $1
-
 // crear un nuevo entrenamiento relacionandolo con los ejercicios y comidas
 async function createEntrenamiento(data) {
  try {

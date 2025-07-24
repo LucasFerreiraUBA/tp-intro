@@ -85,46 +85,35 @@ async function createEjercicio(
       [grupo_muscular_nombre]
     );
 
-     const UnidadesDescansoValidos = ['Seg', 'Min'];
-     const PesosValidos = ['Lb', 'Kg'];
+    const UnidadesDescansoValidos = ['Seg', 'Min'];
+    const PesosValidos = ['Lb', 'Kg'];
 
     if (descripcion.length > 100) {
-        console.error("La descripción es demasiado larga");
-        return null; 
+        throw new Error("La descripción es demasiado larga"); 
     } else if (ejercicio.length > 50) {
-        console.error("El nombre del ejercicio es demasiado largo");
-        return null;
+        throw new Error("El nombre del ejercicio es demasiado largo");
     } else if (repeticiones < 1 || series < 1) {
-        console.error("Las repeticiones y series deben ser al menos 1");
-        return null; 
+        throw new Error("Las repeticiones y series deben ser al menos 1"); 
     } else if (repeticiones > 100 || series > 100) {
-        console.error("Las repeticiones y series no pueden ser mayores a 100");
-        return null;
+        throw new Error("Las repeticiones y series no pueden ser mayores a 100");
     } else if (peso < 0) {
-        console.error("El peso no puede ser negativo");  
-        return null; 
-     } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
-         throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
-     } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
-         throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
+        throw new Error("El peso no puede ser negativo");   
+    } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
+        throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
+    } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
+        throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
     } else if (peso > 2000) {
-        console.error("El peso no puede ser mayor a 2000");
-        return null; 
+        throw new Error("El peso no puede ser mayor a 2000"); 
     } else if (tiempo_descanso < 0) {
-        console.error("El tiempo de descanso no puede ser negativo");
-        return null; 
+        throw new Error("El tiempo de descanso no puede ser negativo"); 
     } else if (tiempo_descanso > 1000) {
-        console.error("El tiempo de descanso es demasiado largo");
-        return null; 
+        throw new Error("El tiempo de descanso es demasiado largo"); 
     } else if (isNaN(series) || isNaN(repeticiones)) {
-        alert("Las series y repeticiones deben ser números válidos.");
-        return; 
+        throw new Error("Las series y repeticiones deben ser números válidos.");
     } else if (isNaN(peso)) {
-        alert("El peso debe ser un número válido.");
-        return;
+        throw new Error("El peso debe ser un número válido.");
     } else if (isNaN(rir)) {
-        alert("El RIR debe ser un número válido.");
-        return; 
+        throw new Error("El RIR debe ser un número válido.");
     }
 
     if (grupoResult.rowCount === 0) {
@@ -199,45 +188,33 @@ async function updateEjercicio(id, ejercicio, repeticiones, peso, unidad_peso_ej
    const UnidadesDescansoValidos = ['Seg', 'Min'];
    const PesosValidos = ['Lb', 'Kg'];
 
-    if (descripcion.length > 100) {
-        console.error("La descripción es demasiado larga");
-        return null; 
-    } else if (ejercicio.length > 50) {
-        console.error("El nombre del ejercicio es demasiado largo");
-        return null;
-    } else if (repeticiones < 1 || series < 1) {
-        console.error("Las repeticiones y series deben ser al menos 1");
-        return null; 
-    } else if (repeticiones > 100 || series > 100) {
-        console.error("Las repeticiones y series no pueden ser mayores a 100");
-        return null;
-    } else if (peso < 0) {
-        console.error("El peso no puede ser negativo");  
-        return null; 
-
-     } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
-         throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
-     } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
-         throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
-    } else if (peso > 2000) {
-        console.error("El peso no puede ser mayor a 2000");
-        return null; 
-    } else if (tiempo_descanso < 0) {
-        console.error("El tiempo de descanso no puede ser negativo");
-        return null; 
-    } else if (tiempo_descanso > 1000) {
-        console.error("El tiempo de descanso es demasiado largo");
-        return null; 
-    } else if (isNaN(series) || isNaN(repeticiones)) {
-        alert("Las series y repeticiones deben ser números válidos.");
-        return; 
-    } else if (isNaN(peso)) {
-        alert("El peso debe ser un número válido.");
-        return;
-    } else if (isNaN(rir)) {
-        alert("El RIR debe ser un número válido.");
-        return; 
-    }
+  if (descripcion.length > 100) {
+      throw new Error("La descripción es demasiado larga"); 
+  } else if (ejercicio.length > 50) {
+      throw new Error("El nombre del ejercicio es demasiado largo");
+  } else if (repeticiones < 1 || series < 1) {
+      throw new Error("Las repeticiones y series deben ser al menos 1"); 
+  } else if (repeticiones > 100 || series > 100) {
+      throw new Error("Las repeticiones y series no pueden ser mayores a 100");
+  } else if (peso < 0) {
+      throw new Error("El peso no puede ser negativo");   
+  } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
+      throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
+  } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
+      throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
+  } else if (peso > 2000) {
+      throw new Error("El peso no puede ser mayor a 2000"); 
+  } else if (tiempo_descanso < 0) {
+      throw new Error("El tiempo de descanso no puede ser negativo"); 
+  } else if (tiempo_descanso > 1000) {
+      throw new Error("El tiempo de descanso es demasiado largo"); 
+  } else if (isNaN(series) || isNaN(repeticiones)) {
+      throw new Error("Las series y repeticiones deben ser números válidos."); 
+  } else if (isNaN(peso)) {
+      throw new Error("El peso debe ser un número válido.");
+  } else if (isNaN(rir)) {
+      throw new Error("El RIR debe ser un número válido."); 
+  }
 
   if (result.rows.length === 0) {
     return null
@@ -289,47 +266,36 @@ async function updateEjercicioById(
   ]);
 
 
-   const UnidadesDescansoValidos = ['Seg', 'Min'];
-   const PesosValidos = ['Lb', 'Kg'];
+  const UnidadesDescansoValidos = ['Seg', 'Min'];
+  const PesosValidos = ['Lb', 'Kg'];
 
-    if (descripcion.length > 100) {
-        console.error("La descripción es demasiado larga");
-        return null; 
-    } else if (ejercicio.length > 50) {
-        console.error("El nombre del ejercicio es demasiado largo");
-        return null;
-    } else if (repeticiones < 1 || series < 1) {
-        console.error("Las repeticiones y series deben ser al menos 1");
-        return null; 
-    } else if (repeticiones > 100 || series > 100) {
-        console.error("Las repeticiones y series no pueden ser mayores a 100");
-        return null;
-    } else if (peso < 0) {
-        console.error("El peso no puede ser negativo");  
-        return null; 
-     } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
-         throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
-     } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
-         throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
-    } else if (peso > 2000) {
-        console.error("El peso no puede ser mayor a 2000");
-        return null; 
-    } else if (tiempo_descanso < 0) {
-        console.error("El tiempo de descanso no puede ser negativo");
-        return null; 
-    } else if (tiempo_descanso > 1000) {
-        console.error("El tiempo de descanso es demasiado largo");
-        return null; 
-    } else if (isNaN(series) || isNaN(repeticiones)) {
-        alert("Las series y repeticiones deben ser números válidos.");
-        return; 
-    } else if (isNaN(peso)) {
-        alert("El peso debe ser un número válido.");
-        return;
-    } else if (isNaN(rir)) {
-        alert("El RIR debe ser un número válido.");
-        return; 
-    }
+  if (descripcion.length > 100) {
+      throw new Error("La descripción es demasiado larga"); 
+  } else if (ejercicio.length > 50) {
+      throw new Error("El nombre del ejercicio es demasiado largo");
+  } else if (repeticiones < 1 || series < 1) {
+      throw new Error("Las repeticiones y series deben ser al menos 1"); 
+  } else if (repeticiones > 100 || series > 100) {
+      throw new Error("Las repeticiones y series no pueden ser mayores a 100");
+  } else if (peso < 0) {
+      throw new Error("El peso no puede ser negativo");   
+  } else if (unidad_descanso_ejercicio && !UnidadesDescansoValidos.includes(unidad_descanso_ejercicio)) {
+      throw new Error(`La unidad de descanso debe ser: ${UnidadesDescansoValidos.join(', ')}`);
+  } else if (unidad_peso_ejercicio && !PesosValidos.includes(unidad_peso_ejercicio)) {
+      throw new Error(`La unidad de peso debe ser: ${PesosValidos.join(', ')}`);
+  } else if (peso > 2000) {
+      throw new Error("El peso no puede ser mayor a 2000"); 
+  } else if (tiempo_descanso < 0) {
+      throw new Error("El tiempo de descanso no puede ser negativo"); 
+  } else if (tiempo_descanso > 1000) {
+      throw new Error("El tiempo de descanso es demasiado largo"); 
+  } else if (isNaN(series) || isNaN(repeticiones)) {
+      throw new Error("Las series y repeticiones deben ser números válidos."); 
+  } else if (isNaN(peso)) {
+      throw new Error("El peso debe ser un número válido.");
+  } else if (isNaN(rir)) {
+      throw new Error("El RIR debe ser un número válido."); 
+  }
 
 
   if (result.rows.length === 0) {

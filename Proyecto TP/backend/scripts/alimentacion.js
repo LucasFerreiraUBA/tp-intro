@@ -30,19 +30,15 @@ async function createComida(nombre_comida, tipo_comida, calorias, proteinas, car
     const TipoComidaValido = ['Desayuno', 'Almuerzo', 'Merienda', 'Cena'];
 
     if (descripcion.length > 100) {
-        console.error("La descripción es demasiado larga");
-        return null; 
+        throw new Error("La descripción es demasiado larga");
     } else if (nombre_comida.length > 50) {
-        console.error("El nombre de la comida es demasiado largo");
-        return null;
-    }   else if (calorias < 0 || proteinas < 0 || grasas < 0 || carbohidratos < 0) {
-        console.error("Las calorias, proteinas, grasas y los carbohidratos no pueden ser numeros negativos");  
-        return null; 
-    }   else if (isNaN(calorias) || isNaN(proteinas) || isNaN(grasas) || isNaN(carbohidratos)) {
-        alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
-        return; 
-     } else if (tipo_comida && !TipoComidaValido.includes(tipo_comida)) {
-         throw new Error(`El tipo de comida debe ser: ${TipoComidaValido.join(', ')}`);
+        throw new Error("El nombre de la comida es demasiado largo");
+    } else if (calorias < 0 || proteinas < 0 || grasas < 0 || carbohidratos < 0) {
+        throw new Error("Las calorias, proteinas, grasas y los carbohidratos no pueden ser numeros negativos");   
+    } else if (isNaN(calorias) || isNaN(proteinas) || isNaN(grasas) || isNaN(carbohidratos)) {
+        throw new Error("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
+    } else if (tipo_comida && !TipoComidaValido.includes(tipo_comida)) {
+        throw new Error(`El tipo de comida debe ser: ${TipoComidaValido.join(', ')}`);
     }
 
     const alimentacion_id = result.rows[0].id;
@@ -97,17 +93,13 @@ async function updateComida(id, nombre_comida, tipo_comida, calorias, proteinas,
     const TipoComidaValido = ['Desayuno', 'Almuerzo', 'Merienda', 'Cena'];
 
     if (descripcion.length > 100) {
-        console.error("La descripción es demasiado larga");
-        return null; 
+        throw new Error("La descripción es demasiado larga"); 
     } else if (nombre_comida.length > 50) {
-        console.error("El nombre de la comida es demasiado largo");
-        return null;
-    }   else if (calorias < 0 || proteinas < 0 || grasas < 0 || carbohidratos < 0) {
-        console.error("Las calorias, proteinas, grasas y los carbohidratos no pueden ser numeros negativos");  
-        return null; 
-    }   else if (isNaN(calorias) || isNaN(proteinas) || isNaN(grasas) || isNaN(carbohidratos)) {
-        alert("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
-        return; 
+        throw new Error("El nombre de la comida es demasiado largo");
+    } else if (calorias < 0 || proteinas < 0 || grasas < 0 || carbohidratos < 0) {
+        throw new Error("Las calorias, proteinas, grasas y los carbohidratos no pueden ser numeros negativos");   
+    } else if (isNaN(calorias) || isNaN(proteinas) || isNaN(grasas) || isNaN(carbohidratos)) {
+        throw new Error("Las calorias, proteinas, grasas y los carbohidratos deben ser números válidos.");
     } else if (tipo_comida && !TipoComidaValido.includes(tipo_comida)) {
         throw new Error(`El tipo de comida debe ser: ${TipoComidaValido.join(', ')}`);
     }
