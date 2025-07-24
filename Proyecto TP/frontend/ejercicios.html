@@ -337,10 +337,13 @@
             } else if (rir < 0){
                 alert("El RIR debe ser un numero positivo");
                 return;
-            } else if (TiempoDescanso <= 0){
+            } else if (TiempoDescanso < 0){
                 alert("El Tiempo de Descanso debe ser un numero positivo");
                 return;
-            } 
+            }  else if (TiempoDescanso === 0) {
+                alert("El Tiempo de Descanso no debe ser 0");
+                return;
+            }
 
             const datos = {
                 entrenamiento_id: id, // id del entrenamiento
