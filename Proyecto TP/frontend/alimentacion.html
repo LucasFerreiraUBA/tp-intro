@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+         <!-- CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <title>Alimentacion</title>
+    </head>
+    <body>
+        <div class="envoltorio-pagina">
+            <!-- HEADER -->
+            <header class="header" id="header">
+            <!-- Sección de navegación -->
+                <a href="index.html" class="txt-atlas" aria-label="Texto de la marca de la página llamada Atlas+">Atlas+</a>
+                <nav class="container-contenido-header" aria-label="Navegación principal">
+                    <ul class="nav_list" id="nav-list">
+                        <li class="nav-link">
+                             <a class="txt-home" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="txt-home" href="quienes_somos.html">Quienes Somos</a>
+                        </li>
+                        <li>
+                            <a class="nav-rutinas-btn" href="rutinas_alimentacion.html">Armá tu rutina</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section class="section-table">
+                    <div class="entrenamiento-title">
+                        <div>
+                            <h1>Organiza tu alimentacion</h1>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dia de la Semana </th>
+                                <th>Calorias totales</th>
+                                <th>Proteinas totales</th>
+                                <th>Carbohidratos totales</th>
+                                <th>Grasas totales</th>
+                                <th>Ver</th>
+                            </tr>
+                        </thead>
+                        <tbody class="body-table"></tbody>
+                    </table>
+                </section>
+            </main>
+            <footer class="footer-seccion">
+                <div class="footer-container">
+                    <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
+                    <div class="equipo-facultad">
+                        <ul>Rodrigo Riera</ul>
+                        <ul>Tomas Diaz</ul>
+                        <ul>Tiago Nehuen Sedano</ul>
+                        <ul>Lucas Ferreira</ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <script type="module">
+            import {RUTAS} from "./constantes/rutas.mjs"
+            const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}`;
+            
+
+            fetch(arma_rutinaBackURL).then((response) => { // se va a consultar al back
+                return response.json();
+            }).then((data) => { // una vez que consulta vuelve con la data
+                const table = document.querySelector("tbody");
+                data.data.forEach(Alimento => {
+                    const newRow = document.createElement("tr");
+                    const DiaSemana = document.createElement("td"); 
+                    DiaSemana.innerHTML = Alimento.dia_semana;
+                    newRow.appendChild(DiaSemana);
+
+                    const caloriasTotales = document.createElement("td"); 
+                    caloriasTotales.innerHTML = Alimento.calorias ?? "-";
+                    newRow.appendChild(caloriasTotales);
+
+                    const proteinasTotales = document.createElement("td");
+                    proteinasTotales.innerHTML = Alimento.proteinas ?? "-";
+                    newRow.appendChild(proteinasTotales);
+
+                    const carboTotales = document.createElement("td"); 
+                    carboTotales.innerHTML = Alimento.carbohidratos ?? "-";
+                    newRow.appendChild(carboTotales);
+
+                    const grasasTotales = document.createElement("td"); 
+                    grasasTotales.innerHTML = Alimento.grasas ?? "-";
+                    newRow.appendChild(grasasTotales);
+
+                    const NewVer = document.createElement("td"); // Ver
+                    const VerModal = document.createElement("a");
+                    VerModal.className = "button";
+                    VerModal.innerHTML = "Ver";
+                    VerModal.href = "comidas.html?id=" + Alimento.id; // id= querry param
+                    NewVer.appendChild(VerModal);
+                    newRow.appendChild(NewVer);
+            
+                    table.appendChild(newRow);
+                });
+            });
+        
+        </script>
+    </body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"href="https://cdn.jsdelivr.net/npm/bulma@1.0.4/css/bulma.min.css">
+        <!-- CSS -->
+        <link rel="stylesheet" href="css/style.css">
+        <title>Arma rutina</title>
+    </head>
+    <body>
+        <div class="envoltorio-pagina">
+            <!-- HEADER -->
+            <header class="header" id="header">
+            <!-- Sección de navegación -->
+                <a href="index.html" class="txt-atlas" aria-label="Texto de la marca de la página llamada Atlas+">Atlas+</a>
+                <nav class="container-contenido-header" aria-label="Navegación principal">
+                    <ul class="nav_list" id="nav-list">
+                        <li>
+                            <a class="txt-home" href="index.html">Inicio</a>
+                        </li>
+                        <li class="nav-link">
+                            <a class="txt-home" href="quienes_somos.html">Quienes Somos</a>
+                        </li>
+                        <li>
+                            <a class="nav-rutinas-btn" href="rutinas_alimentacion.html">Armá tu rutina</a>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+            <main>
+                <section class="section-table">
+                    <div class="entrenamiento-title">
+                        <div>
+                            <h1 id="titulo-ejercicios"></h1>
+                        </div>
+                        <div>
+                            <button class="button" id="button-volver"><a href="arma_rutina.html">Volver</a></button>
+                            <button class="button" id="btn-abrir-modal">Agregar</button>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Grupo Muscular</th>
+                                <th>Ejercicio</th>
+                                <th>Series</th>
+                                <th>Repeticiones</th>
+                                <th>Peso</th>
+                                <th>RIR</th>
+                                <th>Tiempo de Descanso</th>
+                                <th>Descripcion</th>
+                                <th>Editar</th>
+                                <th>Borrar</th>
+                            </tr>
+                        </thead>
+                        <tbody class="ejercicio-table"></tbody>
+                    </table>
+                </section>
+            </main>
+            <!--- MODAL PARA AGREGAR EJERCICIO -->
+            <dialog id="modal-agregar-ejercicio" class="modal-editar"> 
+                <form method="dialog" id="form-agregar-ejercicio">
+                    <h2 class="title is-4">Agregar ejercicio</h2>
+
+                    <div class="field">
+                        <label class="label">Grupo Muscular</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="grupo_muscular" id="grupo_muscular" required>
+                                    <option value="" disabled selected>Seleccioná un Grupo Muscular</option>
+                                    <option value="Abdominales">Abdominales</option>
+                                    <option value="Aductores">Aductores</option>
+                                    <option value="Antebrazos">Antebrazos</option>
+                                    <option value="Bíceps">Bíceps</option>
+                                    <option value="Cuádriceps">Cuádriceps</option>
+                                    <option value="Deltoides">Deltoides</option>
+                                    <option value="Espalda">Espalda</option>
+                                    <option value="Gemelos">Gemelos</option>
+                                    <option value="Glúteos">Glúteos</option>
+                                    <option value="Hombros">Hombros</option>
+                                    <option value="Isquiotibiales">Isquiotibiales</option>
+                                    <option value="Pecho">Pecho</option>
+                                    <option value="Piernas">Piernas</option>
+                                    <option value="Trapecio">Trapecio</option>
+                                    <option value="Tríceps">Tríceps</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Ejercicio</label>
+                        <div class="control">
+                            <input class="input" type="text" name="ejercicio" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Series</label>
+                        <div class="control">
+                            <input class="input" type="number" name="series" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Repeticiones</label>
+                        <div class="control">
+                            <input class="input" type="number" name="repeticiones" required>
+                         </div>
+                    </div>
+
+                    <div class="field"> 
+                        <label class="label">Peso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="peso" id="peso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_peso" required>
+                                        <option value="Kg">Kg</option>
+                                        <option value="Lb">Lb</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">RIR</label>
+                        <div class="control">
+                            <input class="input" type="number" name="rir">
+                        </div>
+                    </div>
+
+                    <div class="field"> 
+                        <label class="label">Tiempo de descanso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="tiempo_descanso" id="tiempo_descanso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_descanso" required>
+                                        <option value="Min">Min</option>
+                                        <option value="Seg">Seg</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-success">Guardar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
+            <!-- MODAL PARA EDITAR EJERCICIO -->
+            <dialog id="modal-editar-ejercicio" class="modal-editar"> 
+                <form method="dialog" id="form-editar-ejercicio">
+                    <h2 class="title is-4">Editar ejercicio</h2>
+
+                    <input type="hidden" name="id">
+
+                    <!-- Reutilizamos los mismos campos del modal de agregar -->
+                    <div class="field">
+                        <label class="label">Grupo Muscular</label>
+                        <div class="control">
+                            <div class="select is-fullwidth">
+                                <select name="grupo_muscular" required>
+                                    <option value="Abdominales">Abdominales</option>
+                                    <option value="Aductores">Aductores</option>
+                                    <option value="Antebrazos">Antebrazos</option>
+                                    <option value="Bíceps">Bíceps</option>
+                                    <option value="Cuádriceps">Cuádriceps</option>
+                                    <option value="Deltoides">Deltoides</option>
+                                    <option value="Espalda">Espalda</option>
+                                    <option value="Gemelos">Gemelos</option>
+                                    <option value="Glúteos">Glúteos</option>
+                                    <option value="Hombros">Hombros</option>
+                                    <option value="Isquiotibiales">Isquiotibiales</option>
+                                    <option value="Pecho">Pecho</option>
+                                    <option value="Piernas">Piernas</option>
+                                    <option value="Trapecio">Trapecio</option>
+                                    <option value="Tríceps">Tríceps</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Ejercicio</label>
+                        <div class="control">
+                            <input class="input" type="text" name="ejercicio" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Series</label>
+                        <div class="control">
+                            <input class="input" type="number" name="series" required>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Repeticiones</label>
+                        <div class="control">
+                            <input class="input" type="number" name="repeticiones" required>
+                        </div>
+                    </div>
+
+                    <div class="field"> 
+                        <label class="label">Peso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="peso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_peso" required>
+                                        <option value="Kg">Kg</option>
+                                        <option value="Lb">Lb</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">RIR</label>
+                        <div class="control">
+                            <input class="input" type="number" name="rir">
+                        </div>
+                    </div>
+
+                    <div class="field"> 
+                        <label class="label">Tiempo de descanso</label> 
+                        <div class="field has-addons"> 
+                            <div class="control is-expanded"> 
+                                <input class="input" type="number" name="tiempo_descanso" id="tiempo_descanso" step="any">
+                            </div> 
+                            <div class="control">
+                                <div class="select">
+                                    <select name="unidad_descanso" required>
+                                        <option value="Min">Min</option>
+                                        <option value="Seg">Seg</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descripción</label>
+                        <div class="control">
+                            <textarea class="textarea" name="descripcion"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="field is-grouped">
+                        <div class="control">
+                            <button type="submit" class="button is-info">Modificar</button>
+                        </div>
+                        <div class="control">
+                            <button type="button" id="cancelar-modal-editar" class="button">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+            </dialog>
+
+            <footer class="footer-seccion">
+                <div class="footer-container">
+                    <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
+                    <div class="equipo-facultad">
+                        <ul>Rodrigo Riera</ul>
+                        <ul>Tomas Diaz</ul>
+                        <ul>Tiago Nehuen Sedano</ul>
+                        <ul>Lucas Ferreira</ul>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    <script type="module">
+        import { AbrirModalEditar } from "./js/ejercicios.mjs"
+        import {RUTAS} from "./constantes/rutas.mjs"
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get("id");
+        tablaEjercicios();
+
+        const modal = document.getElementById("modal-agregar-ejercicio");
+        const formEj = document.getElementById("form-agregar-ejercicio");
+
+        //abrir modal
+        document.getElementById("btn-abrir-modal").addEventListener("click", () => {
+            modal.showModal();
+        });
+
+        //cerrar modal
+        document.getElementById("cancelar-modal").addEventListener("click", () => {
+            modal.close();
+        });
+        
+        //enviar nuevo ejercicio
+        formEj.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const descripcion = formEj.descripcion.value.trim();
+            const ejercicio = formEj.ejercicio.value.trim();
+            const series = formEj.series.value.trim();
+            const repeticiones = formEj.repeticiones.value.trim();
+            const rir = formEj.rir.value.trim();
+            const TiempoDescanso = formEj.tiempo_descanso.value.trim();
+            
+            // Validaciones
+            if (descripcion.length > 100) {
+                alert("La descripción no puede superar los 100 caracteres.");
+                return; 
+            } else if (ejercicio.length > 50) {
+                alert("El nombre del ejercicio es demasiado largo.");
+                return; 
+            } else if (series <= 0  || repeticiones <= 0) {
+                alert("Las series y repeticiones deben ser números positivos.");
+                return; 
+            } else if (rir < 0){
+                alert("El RIR debe ser un numero positivo");
+                return;
+            } else if (TiempoDescanso < 0){
+                alert("El Tiempo de Descanso debe ser un numero positivo");
+                return;
+            }  else if (TiempoDescanso === 0) {
+                alert("El Tiempo de Descanso no debe ser 0");
+                return;
+            }
+
+            const datos = {
+                entrenamiento_id: id, // id del entrenamiento
+                grupo_muscular: formEj.grupo_muscular.value,
+                ejercicio: ejercicio,
+                series: parseInt(series),
+                repeticiones: parseInt(repeticiones),
+                peso: parseFloat(formEj.peso.value),
+                unidad_peso_ejercicio: formEj.unidad_peso.value,
+                rir: parseInt(rir),
+                tiempo_descanso: parseFloat(TiempoDescanso),
+                unidad_descanso_ejercicio: formEj.unidad_descanso.value,
+                descripcion: descripcion
+            };
+
+            try {
+                const respuesta = await fetch(`${RUTAS.EJERCICIOS}`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(datos)
+                });
+
+            if (respuesta.ok) {
+                modal.close();
+                formEj.reset();
+                tablaEjercicios(); // recarga la tabla
+                alert("Ejercicio agregado correctamente");
+            } else {
+                alert("Error al agregar el ejercicio");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        });
+
+        function tablaEjercicios(){
+            document.getElementsByClassName("ejercicio-table")[0].innerHTML = ""; // limpia la tabla antes de cargarla
+        
+            const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}/${id}`;
+
+            fetch(arma_rutinaBackURL)
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById("titulo-ejercicios").textContent = `${data.data.dia_semana}`; /*especifica el dia del entrenamiento como titulo*/
+                const tbody = document.querySelector("table.table tbody");
+
+                data.data.ejercicios.forEach((ej) => {
+                const newRow = document.createElement("tr");
+                newRow.setAttribute("data-id",ej.id)
+
+                const grupoMuscular = document.createElement("td");
+                grupoMuscular.innerHTML = ej.grupo_muscular ?? "-"; 
+                newRow.appendChild(grupoMuscular);
+
+                const ejercicio = document.createElement("td");
+                ejercicio.innerHTML = ej.ejercicio ?? "-";
+                newRow.appendChild(ejercicio);
+
+                const series = document.createElement("td");
+                series.innerHTML = ej.series ?? "-"; 
+                newRow.appendChild(series);
+
+                const repeticiones = document.createElement("td");
+                repeticiones.innerHTML = ej.repeticiones ?? "-";
+                newRow.appendChild(repeticiones);
+
+                const Peso = document.createElement("td");
+                const peso = ej.peso;
+                const unidad_peso = ej.unidad_peso_ejercicio ?? ""; // Agrega unidad de peso si existe
+                if (peso !== undefined && peso !== null && peso !== "") {
+                    Peso.innerHTML = `${peso} ${unidad_peso}`.trim();
+                } else {
+                    Peso.innerHTML = "-";
+                }
+                newRow.appendChild(Peso);
+
+                const rir = document.createElement("td");
+                rir.innerHTML = ej.rir ?? "-";
+                newRow.appendChild(rir);
+
+                const tiempoDescanso = document.createElement("td");
+                const tiempo = ej.tiempo_descanso;
+                const unidad_descanso = ej.unidad_descanso_ejercicio ?? ""; 
+                if (tiempo !== undefined && tiempo !== null && tiempo !== "") {
+                    tiempoDescanso.innerHTML = `${tiempo} ${unidad_descanso}`.trim();
+                } else {
+                    tiempoDescanso.innerHTML = "-";
+                }
+                newRow.appendChild(tiempoDescanso);
+
+                const descripcion = document.createElement("td"); // descripcion
+                descripcion.innerHTML = ej.descripcion && ej.descripcion.trim() !== ""
+                    ? (ej.descripcion.length > 40 
+                        ? ej.descripcion.slice(0, 40) + "..." 
+                        : ej.descripcion)
+                    : "-"; // si son mas de 40 caracteres, corta y agrega "..."
+                newRow.appendChild(descripcion);
+
+                const NewEditar = document.createElement("td"); // Editar
+                const EditarLink = document.createElement("a");
+                EditarLink.className = "button";
+                EditarLink.innerHTML = "Editar";
+                EditarLink.onclick = () => {
+
+                    AbrirModalEditar(ej);
+
+                }
+                // EditarLink.href = "ejercicios.html?id=" + ej.id; //
+                NewEditar.appendChild(EditarLink);
+                newRow.appendChild(NewEditar);
+        
+                const NewBorrar = document.createElement("td"); // Borrar
+                const BorrarLink = document.createElement("a");
+
+                BorrarLink.className = "button";
+                BorrarLink.innerHTML = "Borrar";
+                BorrarLink.href = "#";
+                BorrarLink.onclick = function(){
+                    if(confirm("Estas seguro de que deseas eliminar este ejercicio?")){
+                        deleteEjercicio(id, ej.id);
+                        alert("Ejercicio eliminado correctamente");
+                    }
+                };
+                NewBorrar.appendChild(BorrarLink);
+                newRow.appendChild(NewBorrar);
+
+                tbody.appendChild(newRow);
+                });
+            })
+            .catch((error) => {
+                console.error("Error al cargar los ejercicios:", error);
+            });
+    }
+
+    function deleteEjercicio(entrenamiento_id, rutina_id){
+        const arma_rutinaBackURL = `${RUTAS.ENTRENAMIENTOS}/${entrenamiento_id}/ejercicios/${rutina_id}`;
+        fetch(arma_rutinaBackURL, {method: 'DELETE'}).then(() => tablaEjercicios()); // vuelve a cargar la tabla
+}
+
+
+    </script>
+    <script src="js/ejercicios.mjs" type="module" ></script>
+
+    </body>
+</html>
+
+
