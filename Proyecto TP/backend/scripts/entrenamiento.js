@@ -26,6 +26,7 @@ async function getAllEntrenamientos() {
     ORDER BY e.id;`
     );
   return result.rows;
+  
 }
 
 // obtener un entrenamiento por id, incluyendo ejercicios y comidas
