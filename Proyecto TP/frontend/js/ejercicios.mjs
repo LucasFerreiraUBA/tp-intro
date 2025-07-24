@@ -32,10 +32,13 @@ formEditar.addEventListener("submit", async (e) =>{
     } else if (rirEdit < 0){
         alert("El RIR debe ser un numero positivo");
         return;
-    } else if (TiempoDescansoEdit <= 0){
+    } else if (TiempoDescansoEdit < 0){
         alert("El Tiempo de Descanso debe ser un numero positivo");
         return;
-    } 
+    } else if (TiempoDescansoEdit === 0){
+        alert("El Tiempo de Descanso no debe ser 0");
+        return;
+    }
 
     const musculos = await GetMusculos(RUTAS.MUSCULOS)
     const musculo = musculos.find( m => m.nombre == formEditar.grupo_muscular.value)
