@@ -16,6 +16,8 @@ El sistema permite al usuario gestionar sus ejercicios diarios, ajustar parámet
 - Frontend: HTML, CSS, JavaScript
 - Backend: Node.js, Express
 - Base de datos: PostgreSQL
+- Hosting (frontend y backend): Render
+- Hosting de PostgreSQL: Supabase
 
 ### Integrantes
 
@@ -40,11 +42,11 @@ cd Proyecto\ TP/
 make init-all
 ```
 3. Para levantar el Frontend (en una terminal aparte), ejecutar;
-
-```
-npm install cors
-```
-
 ```
 make run-frontend
 ```
+<hr>
+
+### Para acceder a la pagina ya hosteada
+
+- https://atlas-cq8j.onrender.com/index.html
