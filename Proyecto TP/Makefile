@@ -25,10 +25,10 @@ recreate-db:
 	cd ./backend && docker compose up -d
 
 init-all:
+	cd backend && npm i
 	cd backend && docker compose down -v
 	cd backend && sudo rm -rf ./.volumes/postgres/data
 	cd backend && docker compose up -d
-	sleep 5
 	make start-backend
 
 run-frontend:
