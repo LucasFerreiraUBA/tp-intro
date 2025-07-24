@@ -129,10 +129,6 @@
                     </div>
                 </form>
             </dialog>
-
-
-
-
             <!-- MODAL EDITAR COMIDA -->
             <dialog id="modal-editar-comida" class="modal-editar"> 
                 <form id="form-editar-comida">
@@ -205,10 +201,6 @@
                     </div>
                 </form>
             </dialog>
-            <!--  -->
-
-
-
             <footer class="footer-seccion">
                 <div class="footer-container">
                     <h2 class="copyrightTeam" alt="Copyright 404 not found">404 not found</h2>
@@ -251,7 +243,7 @@
             
             // enviar nueva comida
             formCom.addEventListener("submit", async (e) => {
-                e.preventDefault();
+                e.preventDefault(); // evita comportamientos predeterminados del navegfnavegador (en un formulario que se recargue la pagina)
 
                 const descripcion = formCom.descripcion.value.trim();
                 const comida = formCom.nombre_comida.value.trim();
@@ -326,7 +318,7 @@
             formCom_editar.addEventListener("submit", async (e) => {
                 e.preventDefault();
 
-                const idComida = formCom_editar.dataset.comidaId;
+                const idComida = formCom_editar.dataset.comidaId; // capturar el ID de la comida que el usuario eligió para editar
 
                 const descripcionEdit = formCom_editar.descripcion.value.trim();
                 const comidaEdit = formCom_editar.nombre_comida.value.trim();
