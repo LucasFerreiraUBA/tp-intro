@@ -63,9 +63,6 @@ Este proyecto es una plataforma web que permite gestionar rutinas de ejercicios,
 
 ## 📅 Entrenamientos
 
-### Vista General
-_(No hay imagen general de entrenamientos)_
-
 ### Alta de Entrenamiento
 ![Alta Entrenamiento](entrenamiento/entrenamiento_alta.png)
 
