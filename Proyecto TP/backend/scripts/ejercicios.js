@@ -34,6 +34,7 @@ async function getAllEjercicios() {
   return result.rows;
 }
 
+
 async function getAllGrupo_musculares() {
   const result = await dbClient.query("SELECT * FROM grupo_muscular");
   return result.rows;

@@ -12,45 +12,12 @@ const dbClient = new Pool({
 });
 
 async function getAllComidas() {
-    const result = await dbClient.query(`
-        SELECT
-            a.id,
-            a.nombre_comida,
-            a.tipo_comida,
-            a.calorias,
-            a.proteinas,
-            a.carbohidratos,
-            a.grasas,
-            ar.ejercicio as ejercicio_relacionado,
-            a.descripcion
-        FROM
-            alimentacion a
-        LEFT JOIN
-            arma_rutina ar ON a.rutina_id = ar.id    
-        `);
+    const result = await dbClient.query("SELECT * FROM alimentacion");
     return result.rows;    
 }
 
 async function getOneComida(id) {
-    const result = await dbClient.query(`
-        SELECT
-            a.id,
-            a.nombre_comida,
-            a.tipo_comida,
-            a.calorias,
-            a.proteinas,
-            a.carbohidratos,
-            a.grasas,
-            ar.ejercicio as ejercicio_relacionado,
-            a.descripcion
-        FROM
-            alimentacion a
-        LEFT JOIN
-            arma_rutina ar ON a.rutina_id = ar.id
-        WHERE
-            a.id = $1
-        LIMIT 1
-        `, [id]);
+    const result = await dbClient.query("SELECT * FROM alimentacion WHERE a.id = $1 LIMIT 1", [id]);
     return result.rows[0];    
 }
 
